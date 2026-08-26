@@ -4,12 +4,17 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
-### Planned
+### Changed — Identidad de producto Nexora
 
-- arquitectura por capas;
-- integración Firebase;
-- autenticación;
-- módulos funcionales del caso.
+- Se adopta **Nexora** como nombre oficial del producto.
+- Descriptor: **Plataforma móvil de gestión y convivencia residencial**.
+- Slogan: **Tu comunidad, conectada.**
+- Se documenta la historia, propuesta de valor, misión, visión y pilares.
+- El nombre técnico del paquete cambia a `nexora-mobile`.
+- El nombre visible de Expo cambia a `Nexora`.
+- El slug y scheme de Expo cambian a `nexora`.
+- Se formaliza la especificación de requisitos del caso y sus decisiones pendientes.
+- Se corrige la documentación arquitectónica para distinguir flujo de ejecución y dirección de dependencias.
 
 ## Baseline inicial — 2026-08-26
 

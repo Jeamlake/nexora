@@ -15,6 +15,7 @@ No desarrollar nuevas funcionalidades directamente sobre `main`.
 - `docs/...` para documentación.
 - `refactor/...` para refactorización.
 - `test/...` para pruebas.
+- `chore/...` para mantenimiento, configuración o tareas técnicas sin funcionalidad de negocio.
 
 Ejemplos:
 
@@ -22,6 +23,7 @@ Ejemplos:
 - `feature/visitor-qr`
 - `fix/expired-pass`
 - `docs/firebase-setup`
+- `chore/nexora-branding`
 
 ## Commits
 
@@ -48,6 +50,7 @@ Verificar:
 - que no existan secretos;
 - que TypeScript no tenga errores;
 - que las dependencias sigan siendo compatibles con Expo;
+- que los requisitos afectados estén identificados;
 - que la documentación afectada esté actualizada.
 
 ## Dependencias
@@ -66,6 +69,12 @@ Nunca subir:
 - service accounts;
 - claves privadas.
 
+Las variables con prefijo `EXPO_PUBLIC_` forman parte del bundle cliente y no deben contener secretos.
+
 ## Arquitectura
 
 Las nuevas funcionalidades deben respetar la separación descrita en `docs/03-architecture.md`.
+
+## Requisitos
+
+Los cambios funcionales deben relacionarse con los requisitos documentados en `docs/08-requirements.md`. Si un requisito cambia o se aclara, la documentación debe actualizarse en el mismo Pull Request.

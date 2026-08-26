@@ -1,108 +1,128 @@
 # 01. Descripción general del proyecto
 
-## Nombre
+## Nombre del producto
 
-**Condominio Alerta Comunitaria**
+**Nexora**
 
-## Tipo de solución
+## Descriptor
 
-Aplicación móvil multiplataforma para administración y comunicación de condominios.
+**Plataforma móvil de gestión y convivencia residencial**
 
-## Problema
+## Slogan
 
-Las operaciones de un condominio suelen encontrarse fragmentadas entre mensajería instantánea, llamadas, documentos físicos y comunicaciones informales.
+**Tu comunidad, conectada.**
 
-El proyecto busca centralizar comunicación, control de accesos, incidencias y alertas dentro de una sola aplicación.
+## Contexto
 
-## Actores
+El caso académico plantea que la gestión de edificios y urbanizaciones cerradas puede concentrarse en grupos de mensajería caóticos, dificultando la comunicación comunitaria y la coordinación de procesos residenciales.
+
+Nexora toma ese escenario como punto de partida para centralizar comunicación oficial, participación, visitantes, incidencias y respuesta temprana ante emergencias.
+
+## Origen de la propuesta
+
+Durante el análisis del caso se identificó como problema articulador la **fragmentación de la gestión residencial**.
+
+A partir de esta situación se plantea Nexora: una aplicación que busca reunir en un único entorno digital los principales procesos de convivencia y coordinación de una comunidad residencial.
+
+La narrativa completa de producto se encuentra en [00-product-identity.md](00-product-identity.md).
+
+## Problema central
+
+> En el contexto planteado, la gestión residencial requiere un canal digital centralizado que integre comunicación oficial, participación, gestión de visitantes, incidencias y respuesta temprana ante emergencias.
+
+## Objetivo general
+
+Diseñar y desarrollar una aplicación móvil multiplataforma que centralice procesos de gestión y convivencia residencial, conectando a residentes, administración/directiva y seguridad mediante flujos estructurados de comunicación, acceso, incidencias y alertas.
+
+## Actores principales
 
 ### Administración / Directiva
 
-Administra residentes, publica avisos, crea encuestas y supervisa incidencias y eventos.
+Administra residentes, unidades, avisos, encuestas e incidencias.
 
 ### Residente
 
-Usuario asociado a una unidad. Puede recibir información, votar, generar pases, reportar incidencias y activar alertas.
+Usuario asociado a una unidad. Puede recibir información, participar, generar pases de visita, reportar incidencias y activar alertas.
 
-### Guardia / Seguridad
+### Guardia de Seguridad
 
-Valida accesos mediante QR y participa en la atención de alertas.
+Valida accesos mediante QR y participa en la atención de eventos de seguridad y emergencia.
 
 ## Módulos previstos
 
 ### Usuarios y acceso
 
-- autenticación;
+- autenticación mediante correo/celular y contraseña o cuenta de Google;
 - recuperación de contraseña;
-- roles;
-- asociación residente/unidad;
-- contactos de emergencia;
-- activación/desactivación;
-- biometría;
-- registro de acceso.
+- roles diferenciados;
+- validación y asociación residente/unidad;
+- hasta tres contactos de emergencia por residente;
+- activación/desactivación de residentes;
+- autenticación biométrica;
+- registro de hora de inicio de sesión.
 
 ### Avisos y encuestas
 
-- avisos;
-- imágenes;
-- vigencia;
+- avisos con título, descripción, imagen y vigencia;
 - categorías;
-- segmentación;
-- encuestas simples o múltiples;
+- segmentación por torre, pabellón o manzana;
+- encuestas de opción única o múltiple;
+- control de voto;
 - historial;
-- resultados.
+- resultados configurables en tiempo real o al cierre;
+- prioridad alta/obligatoria según la definición pendiente del requisito.
 
 ### Visitantes
 
-- preautorización;
-- nombre, fecha y horario;
-- QR único;
-- compartir invitación;
-- escaneo;
-- control de primer uso;
-- entrada/salida;
-- cancelación;
+- preautorización con nombre, fecha y hora estimada;
+- QR único asociado a cada invitación;
+- compartir pase mediante aplicaciones del dispositivo;
+- escaneo con cámara por seguridad;
+- invalidación después del primer uso válido;
+- registro de entrada y salida;
+- cancelación previa al uso;
 - notificación al residente.
 
 ### Alerta comunitaria
 
 Tipos iniciales:
 
-- emergencia médica;
+- médica;
 - incendio;
 - seguridad.
 
 Flujo previsto:
 
-- activación rápida;
-- vibración y sonido;
-- geolocalización;
-- distribución en tiempo real;
-- avisos a vecinos y seguridad;
-- contactos de emergencia;
-- estados de atención;
-- historial.
+- botón accesible desde la pantalla principal;
+- vibración y sonido en emisor y receptores;
+- captura de geolocalización;
+- distribución en tiempo real a vecinos afectados y seguridad/directiva;
+- simulación de aviso por correo con ubicación a contactos de emergencia;
+- respuestas de atención;
+- historial con fecha, tipo, unidad y estado de resolución.
 
 ### Incidencias
 
 - fotografía;
 - descripción;
-- ubicación;
-- estado;
-- seguimiento;
-- notificación;
-- estadísticas.
+- ubicación dentro del condominio;
+- estados Pendiente / En atención / Resuelto;
+- seguimiento y notificación al reportante;
+- gráfico mensual para administradores.
 
-## Requisitos no funcionales relevantes
+## Requisitos no funcionales destacados
 
-- baja latencia en emergencias;
-- disponibilidad;
-- QR impredecibles y temporales;
-- experiencia simple en situaciones críticas;
-- crecimiento hasta cientos de unidades;
-- cifrado en tránsito y almacenamiento;
-- separación por capas;
-- accesibilidad.
+El caso establece, entre otros objetivos de calidad:
+
+- llegada promedio de la alerta en aproximadamente 3 segundos;
+- disponibilidad mínima del 99 % para el módulo de alertas;
+- QR temporales e impredecibles;
+- escalabilidad hasta 500 unidades residenciales concurrentes;
+- cifrado de datos sensibles en tránsito y en reposo;
+- arquitectura por capas;
+- accesibilidad orientada también a adultos mayores.
+
+La especificación completa, incluyendo ambigüedades que deben resolverse antes de implementar, se mantiene en [08-requirements.md](08-requirements.md).
 
 ## Alcance actual
 
@@ -114,6 +134,7 @@ Solo está implementado el **baseline técnico**:
 - Expo Router;
 - Android Emulator;
 - Git/GitHub;
+- identidad Nexora;
 - documentación inicial.
 
 Las funcionalidades de negocio todavía no están implementadas.

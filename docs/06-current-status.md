@@ -20,6 +20,7 @@ Fecha de corte: 2026-08-26.
 
 ### Proyecto
 
+- Identidad Nexora definida.
 - React Native.
 - Expo SDK 57.
 - TypeScript.
@@ -28,6 +29,7 @@ Fecha de corte: 2026-08-26.
 - `package-lock.json`.
 - Git.
 - GitHub.
+- requisitos del caso documentados y trazables.
 
 ### Calidad inicial
 
@@ -70,6 +72,6 @@ Probado correctamente en:
 
 ## Situación
 
-**Fase de baseline técnico y documentación inicial.**
+**Fase de baseline técnico, definición del producto y documentación de requisitos.**
 
 No debe presentarse todavía como aplicación funcional completa.

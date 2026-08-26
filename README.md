@@ -1,19 +1,29 @@
-# Condominio Alerta Comunitaria
+# Nexora
 
-Aplicación móvil multiplataforma orientada a la gestión de condominios, comunicación comunitaria, control de visitantes, reporte de incidencias y atención temprana de emergencias.
+**Tu comunidad, conectada.**
 
-> **Estado actual:** baseline técnico funcional. El entorno, el proyecto base, Android y GitHub están preparados. Las funcionalidades de negocio todavía están en fase de implementación.
+Nexora es una plataforma móvil de gestión y convivencia residencial diseñada para centralizar comunicación, participación comunitaria, visitantes, incidencias y respuesta temprana ante emergencias.
 
-## Objetivo
+> **Estado actual:** baseline técnico operativo y documentación inicial. Las funcionalidades de negocio todavía no están implementadas.
 
-Centralizar en una aplicación móvil:
+## ¿Por qué nace Nexora?
 
-- usuarios, residentes, directiva y seguridad;
-- avisos y encuestas;
-- preautorización de visitantes mediante QR;
-- alertas comunitarias de emergencia;
-- reportes de incidencias;
-- notificaciones y comunicación en tiempo real.
+En el escenario analizado, la información y los procesos de una comunidad residencial pueden quedar repartidos entre grupos de mensajería, llamadas, mensajes privados y registros manuales.
+
+El problema no es únicamente la ausencia de herramientas digitales, sino la **fragmentación de la gestión residencial**.
+
+Nexora propone reunir los principales procesos de convivencia en una sola aplicación para conectar a residentes, administración y seguridad mediante flujos organizados y trazables.
+
+## Propuesta de valor
+
+> Centralizar la vida digital de una comunidad residencial en una sola aplicación.
+
+## Pilares
+
+- **Comunicar:** avisos e información oficial.
+- **Participar:** encuestas y decisiones comunitarias.
+- **Gestionar:** visitantes e incidencias.
+- **Proteger:** alertas y respuesta comunitaria.
 
 ## Stack principal
 
@@ -45,6 +55,7 @@ Consulta [`docs/README.md`](docs/README.md).
 
 Documentos principales:
 
+- [Identidad de producto](docs/00-product-identity.md)
 - [Descripción del proyecto](docs/01-project-overview.md)
 - [Stack tecnológico](docs/02-tech-stack.md)
 - [Arquitectura](docs/03-architecture.md)
@@ -52,9 +63,10 @@ Documentos principales:
 - [Instalación en otra computadora](docs/05-installation-and-setup.md)
 - [Estado actual](docs/06-current-status.md)
 - [Roadmap](docs/07-roadmap.md)
+- [Requisitos y decisiones pendientes](docs/08-requirements.md)
 - [Decisiones arquitectónicas](docs/adr/)
 
-## Flujo de trabajo
+## Desarrollo
 
 `main` representa el estado estable.
 
@@ -65,14 +77,15 @@ Las nuevas tareas deben realizarse en ramas como:
 - `docs/...`
 - `refactor/...`
 - `test/...`
+- `chore/...`
 
 Consulta [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Seguridad
 
-No subir credenciales privadas, contraseñas, claves administrativas ni archivos `.env` reales.
+No subir contraseñas, claves privadas, service accounts, tokens administrativos ni archivos `.env` reales.
 
-Se proporciona `.env.example` como referencia.
+`.env.example` documenta únicamente los nombres de variables que el proyecto podrá requerir. Las variables `EXPO_PUBLIC_*` forman parte de la configuración cliente y no deben utilizarse para secretos privados.
 
 ## Licencia
 
@@ -80,4 +93,4 @@ Proyecto académico privado. No se ha definido una licencia pública.
 
 ---
 
-Baseline documentado: 2026-08-26.
+Identidad Nexora adoptada: 2026-08-26.

@@ -33,7 +33,7 @@ Instalar y utilizar **Node.js 22 LTS**.
 En GitHub Desktop:
 
 1. elegir clonar repositorio;
-2. seleccionar `condominio-alerta-comunitaria`;
+2. seleccionar `nexora-mobile`;
 3. escoger una carpeta local con espacio suficiente;
 4. finalizar.
 

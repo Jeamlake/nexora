@@ -8,7 +8,7 @@ El baseline fue establecido el 2026-08-26.
 
 ## React Native
 
-**Versión:** `0.86.2`
+**Versión:** `0.86.3`
 
 ### Uso
 
@@ -34,7 +34,7 @@ React Native ofrece un buen equilibrio entre productividad, capacidad móvil y r
 
 ## Expo
 
-**Versión:** `~57.0.16`
+**Versión:** `~57.0.17`
 
 ### Uso
 
@@ -46,10 +46,10 @@ Aporta inicialización, navegación, compatibilidad de paquetes, APIs móviles, 
 
 El proyecto fue creado con Expo SDK 57 y validado con las versiones compatibles instaladas por su template:
 
-- Expo `~57.0.16`
-- React Native `0.86.2`
+- Expo `~57.0.17`
+- React Native `0.86.3`
 - React `19.2.3`
-- Expo Router `~57.0.16`
+- Expo Router `~57.0.17`
 
 No se actualizará una versión mayor solo por existir una más nueva. Toda actualización debe pasar validaciones de Expo, librerías nativas, Firebase y Android/iOS.
 
@@ -82,7 +82,7 @@ JavaScript permitiría desarrollar la misma aplicación, pero con menos garantí
 
 ## Expo Router
 
-**Versión:** `~57.0.16`
+**Versión:** `~57.0.17`
 
 ### Uso
 

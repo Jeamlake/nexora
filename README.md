@@ -29,11 +29,11 @@ Nexora propone reunir los principales procesos de convivencia en una sola aplica
 
 | Tecnología | Baseline | Uso |
 | --- | --- | --- |
-| React Native | `0.86.2` | Desarrollo móvil Android/iOS |
-| Expo | `~57.0.16` | Framework y toolchain |
+| React Native | `0.86.3` | Desarrollo móvil Android/iOS |
+| Expo | `~57.0.17` | Framework y toolchain |
 | React | `19.2.3` | Componentes e interfaz |
 | TypeScript | `~6.0.3` | Lenguaje principal |
-| Expo Router | `~57.0.16` | Navegación basada en archivos |
+| Expo Router | `~57.0.17` | Navegación basada en archivos |
 | Node.js | `v22.21.1` | Entorno de desarrollo |
 | Android | API 36 | Plataforma Android de referencia |
 | Firebase | Pendiente de integración | Backend administrado |

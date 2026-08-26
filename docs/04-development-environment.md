@@ -3,10 +3,10 @@
 ## Baseline validado
 
 - Node.js: `v22.21.1`
-- Expo: `~57.0.16`
-- React Native: `0.86.2`
+- Expo: `~57.0.17`
+- React Native: `0.86.3`
 - React: `19.2.3`
-- Expo Router: `~57.0.16`
+- Expo Router: `~57.0.17`
 - Firebase CLI: `15.28.1`
 - EAS CLI: `eas-cli/22.5.0 win32-x64 node-v22.21.1`
 - Android: API 36

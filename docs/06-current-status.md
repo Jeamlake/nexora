@@ -26,6 +26,7 @@ Fecha de corte: 2026-08-26.
 - TypeScript.
 - Expo Router.
 - Estructura base de arquitectura por capas creada.
+- Modelo de dominio inicial de usuarios/residencia creado.
 - estructura `src/app`.
 - `package-lock.json`.
 - Git.
@@ -73,6 +74,6 @@ Probado correctamente en:
 
 ## Situación
 
-**Fase de arquitectura base y preparación del desarrollo funcional.**
+**Fase de modelado del dominio y preparación de los primeros casos de uso.**
 
 No debe presentarse todavía como aplicación funcional completa.

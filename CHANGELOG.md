@@ -4,6 +4,14 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
+### Added — Domain core
+
+- Se crean las entidades `User`, `Resident`, `Unit` y `EmergencyContact`.
+- Se definen los roles de usuario del caso.
+- Se modela la asociación entre residente y unidad.
+- Se incorpora la regla de máximo tres contactos de emergencia.
+- Se documenta el modelo inicial en `docs/09-domain-model.md`.
+
 ### Added — Arquitectura base
 
 - Se crea la estructura física inicial de las capas Presentation, Domain y Data.

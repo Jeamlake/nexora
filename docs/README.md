@@ -15,6 +15,7 @@ La documentación de **Nexora** sigue el enfoque **docs as code**: vive junto al
 | [06-current-status.md](06-current-status.md) | Estado real |
 | [07-roadmap.md](07-roadmap.md) | Próximas fases |
 | [08-requirements.md](08-requirements.md) | Requisitos funcionales/no funcionales, trazabilidad y decisiones pendientes |
+| [09-domain-model.md](09-domain-model.md) | Primer modelo de dominio implementado |
 
 ## Architecture Decision Records
 

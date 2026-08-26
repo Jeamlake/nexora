@@ -1,56 +1,83 @@
-# Welcome to your Expo app 👋
+# Condominio Alerta Comunitaria
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicación móvil multiplataforma orientada a la gestión de condominios, comunicación comunitaria, control de visitantes, reporte de incidencias y atención temprana de emergencias.
 
-## Get started
+> **Estado actual:** baseline técnico funcional. El entorno, el proyecto base, Android y GitHub están preparados. Las funcionalidades de negocio todavía están en fase de implementación.
 
-1. Install dependencies
+## Objetivo
 
-   ```bash
-   npm install
-   ```
+Centralizar en una aplicación móvil:
 
-2. Start the app
+- usuarios, residentes, directiva y seguridad;
+- avisos y encuestas;
+- preautorización de visitantes mediante QR;
+- alertas comunitarias de emergencia;
+- reportes de incidencias;
+- notificaciones y comunicación en tiempo real.
 
-   ```bash
-   npx expo start
-   ```
+## Stack principal
 
-In the output, you'll find options to open the app in a
+| Tecnología | Baseline | Uso |
+| --- | --- | --- |
+| React Native | `0.86.2` | Desarrollo móvil Android/iOS |
+| Expo | `~57.0.16` | Framework y toolchain |
+| React | `19.2.3` | Componentes e interfaz |
+| TypeScript | `~6.0.3` | Lenguaje principal |
+| Expo Router | `~57.0.16` | Navegación basada en archivos |
+| Node.js | `v22.21.1` | Entorno de desarrollo |
+| Android | API 36 | Plataforma Android de referencia |
+| Firebase | Pendiente de integración | Backend administrado |
+| Git / GitHub | Activo | Control de versiones y colaboración |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Estado verificado
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Expo Doctor: 21/21 checks correctos.
+- Dependencias compatibles con Expo SDK 57.
+- Android Emulator operativo.
+- Android 16 / API 36.
+- Expo Go operativo.
+- Metro Bundler compilando correctamente.
+- Repositorio Git y GitHub configurados.
 
-## Get a fresh project
+## Documentación
 
-When you're ready, run:
+Consulta [`docs/README.md`](docs/README.md).
 
-```bash
-npm run reset-project
-```
+Documentos principales:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- [Descripción del proyecto](docs/01-project-overview.md)
+- [Stack tecnológico](docs/02-tech-stack.md)
+- [Arquitectura](docs/03-architecture.md)
+- [Entorno de desarrollo](docs/04-development-environment.md)
+- [Instalación en otra computadora](docs/05-installation-and-setup.md)
+- [Estado actual](docs/06-current-status.md)
+- [Roadmap](docs/07-roadmap.md)
+- [Decisiones arquitectónicas](docs/adr/)
 
-### Other setup steps
+## Flujo de trabajo
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+`main` representa el estado estable.
 
-## Learn more
+Las nuevas tareas deben realizarse en ramas como:
 
-To learn more about developing your project with Expo, look at the following resources:
+- `feature/...`
+- `fix/...`
+- `docs/...`
+- `refactor/...`
+- `test/...`
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Consulta [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Join the community
+## Seguridad
 
-Join our community of developers creating universal apps.
+No subir credenciales privadas, contraseñas, claves administrativas ni archivos `.env` reales.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Se proporciona `.env.example` como referencia.
+
+## Licencia
+
+Proyecto académico privado. No se ha definido una licencia pública.
+
+---
+
+Baseline documentado: 2026-08-26.

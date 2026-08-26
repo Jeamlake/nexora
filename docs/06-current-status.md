@@ -25,6 +25,7 @@ Fecha de corte: 2026-08-26.
 - Expo SDK 57.
 - TypeScript.
 - Expo Router.
+- Estructura base de arquitectura por capas creada.
 - estructura `src/app`.
 - `package-lock.json`.
 - Git.
@@ -72,6 +73,6 @@ Probado correctamente en:
 
 ## Situación
 
-**Fase de baseline técnico, definición del producto y documentación de requisitos.**
+**Fase de arquitectura base y preparación del desarrollo funcional.**
 
 No debe presentarse todavía como aplicación funcional completa.

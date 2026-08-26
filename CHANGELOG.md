@@ -4,6 +4,13 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
+### Added — Arquitectura base
+
+- Se crea la estructura física inicial de las capas Presentation, Domain y Data.
+- Se crean áreas compartidas para configuración, constantes, tipos y utilidades.
+- Se documenta la responsabilidad de cada directorio dentro de `src/README.md`.
+- La estructura implementa el baseline descrito en `docs/03-architecture.md`.
+
 ### Changed — Identidad de producto Nexora
 
 - Se adopta **Nexora** como nombre oficial del producto.

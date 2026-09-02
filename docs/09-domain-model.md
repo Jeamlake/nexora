@@ -4,11 +4,11 @@
 
 Este documento describe el **primer modelo de dominio implementado** en Nexora.
 
-No representa todavía autenticación, persistencia en Firebase, pantallas ni flujos funcionales completos.
+No representa todavía autenticación, persistencia, comunicación con la API, pantallas ni flujos funcionales completos.
 
 ## Objetivo
 
-Modelar las entidades mínimas necesarias para iniciar el módulo de usuarios y residencia sin acoplar el dominio a Firebase ni a la interfaz.
+Modelar las entidades mínimas necesarias para iniciar el módulo de usuarios y residencia sin acoplar el dominio a una API, base de datos o interfaz concreta.
 
 ## Entidades implementadas
 
@@ -107,7 +107,7 @@ Todavía no se implementan:
 - recuperación de contraseña;
 - biometría;
 - persistencia;
-- Firebase;
+- API o persistencia;
 - validación administrativa del registro;
 - UI;
 - casos de uso;
@@ -115,4 +115,4 @@ Todavía no se implementan:
 
 ## Regla arquitectónica
 
-Las entidades de `src/domain/entities` no dependen de Expo, React Native, Firebase ni de componentes visuales.
+Las entidades de `src/domain/entities` no dependen de Expo, React Native, NestJS, Prisma, PostgreSQL, Firebase ni de componentes visuales.

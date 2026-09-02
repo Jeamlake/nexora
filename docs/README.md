@@ -16,14 +16,16 @@ La documentación de **Nexora** sigue el enfoque **docs as code**: vive junto al
 | [07-roadmap.md](07-roadmap.md) | Próximas fases |
 | [08-requirements.md](08-requirements.md) | Requisitos funcionales/no funcionales, trazabilidad y decisiones pendientes |
 | [09-domain-model.md](09-domain-model.md) | Primer modelo de dominio implementado |
+| [10-backend-transition.md](10-backend-transition.md) | Entregables y secuencia de transición a `nexora-api` |
 
 ## Architecture Decision Records
 
 - [ADR-001: React Native con Expo](adr/ADR-001-react-native-expo.md)
 - [ADR-002: TypeScript](adr/ADR-002-typescript.md)
-- [ADR-003: Firebase](adr/ADR-003-firebase.md)
+- [ADR-003: Firebase (reemplazado)](adr/ADR-003-firebase.md)
 - [ADR-004: Arquitectura por capas](adr/ADR-004-layered-architecture.md)
+- [ADR-005: NestJS y PostgreSQL](adr/ADR-005-nestjs-postgresql.md)
 
 ## Regla de mantenimiento
 
-Si un cambio modifica la identidad del producto, requisitos, arquitectura, dependencias importantes, configuración, instalación, Firebase o deployment, la documentación relacionada debe actualizarse en el mismo Pull Request.
+Si un cambio modifica la identidad del producto, requisitos, arquitectura, contrato de API, dependencias importantes, configuración, instalación o despliegue, la documentación relacionada debe actualizarse en el mismo Pull Request.

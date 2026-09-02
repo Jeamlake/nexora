@@ -2,202 +2,100 @@
 
 ## Principio de selección
 
-Las tecnologías se eligen por compatibilidad, estabilidad, productividad, capacidad multiplataforma, acceso a hardware móvil y mantenibilidad; no únicamente por ser las más nuevas.
+Las tecnologías se eligen por compatibilidad, mantenibilidad, seguridad, productividad y ajuste al dominio. Una tecnología no se adopta únicamente por ser nueva o prometer escalabilidad.
 
-El baseline fue establecido el 2026-08-26.
+Este documento diferencia entre:
 
-## React Native
+- **instalado:** existe actualmente en `nexora-mobile`;
+- **aceptado:** existe una decisión arquitectónica, pero aún no se implementó;
+- **pendiente:** necesita una decisión o validación posterior.
 
-**Versión:** `0.86.3`
+## Aplicación móvil
 
-### Uso
+| Tecnología | Versión actual | Estado | Uso |
+| --- | --- | --- | --- |
+| React Native | `0.86.3` | Instalado | Aplicación Android/iOS |
+| Expo | `~57.0.19` | Instalado | Framework y toolchain |
+| React | `19.2.3` | Instalado | Componentes e interfaz |
+| TypeScript | `~6.0.3` | Instalado | Lenguaje con modo estricto |
+| Expo Router | `~57.0.18` | Instalado | Navegación basada en archivos |
 
-Desarrollo móvil Android/iOS compartiendo gran parte del código.
+Expo SDK 57 está asociado a React Native 0.86, React 19.2.3, React Native Web 0.21.0 y Node.js mínimo 22.13.x. Las dependencias Expo deben instalarse con `npx expo install` y validarse antes de fusionar cambios.
 
-### Razones
+El 2026-09-02 se alinearon los parches recomendados para SDK 57. Expo Doctor completó 21/21 comprobaciones después de actualizar `package.json` y `package-lock.json`.
 
-- multiplataforma;
-- ecosistema amplio;
-- integración con TypeScript;
-- acceso a capacidades nativas;
-- compatibilidad con Expo.
+## Backend principal
 
-### Alternativas consideradas
+La decisión aceptada es crear una API propia en un repositorio independiente llamado `nexora-api`.
 
-**Kotlin Android:** excelente integración nativa, pero una aplicación Kotlin Android tradicional no reutiliza la misma UI en iOS.
+| Tecnología | Estado | Uso |
+| --- | --- | --- |
+| NestJS | Aceptado, no creado | API y módulos de negocio |
+| TypeScript | Aceptado | Lenguaje del backend |
+| PostgreSQL | Aceptado, no creado | Fuente de verdad relacional |
+| Prisma | Aceptado, no creado | ORM y migraciones iniciales |
+| REST | Aceptado | Interfaz principal del móvil |
+| OpenAPI/Swagger | Aceptado | Contrato y documentación de la API |
+| WebSockets | Aceptado | Eventos para clientes conectados |
+| Docker | Aceptado | Infraestructura local reproducible |
 
-**Flutter:** multiplataforma y maduro, pero incorpora Dart y reduce la reutilización de TypeScript dentro del stack.
+Las versiones exactas del backend se decidirán al crear `nexora-api`, se fijarán en su lockfile y se documentarán en ese repositorio. No se inventan versiones antes de inicializarlo.
 
-### Decisión
+## Servicios especializados
 
-React Native ofrece un buen equilibrio entre productividad, capacidad móvil y reutilización tecnológica.
+| Servicio | Estado | Uso |
+| --- | --- | --- |
+| Firebase Cloud Messaging | Aceptado, pendiente | Notificaciones push |
+| Object Storage compatible con S3 | Proveedor pendiente | Fotografías de avisos e incidencias |
+| Autenticación | Decisión pendiente | Identidad, sesiones y proveedores externos |
 
-## Expo
+Firebase deja de ser el backend completo. Su decisión histórica se conserva en [ADR-003](adr/ADR-003-firebase.md) y fue reemplazada por [ADR-005](adr/ADR-005-nestjs-postgresql.md).
 
-**Versión:** `~57.0.17`
+## Tiempo real y segundo plano
 
-### Uso
+WebSockets y push resuelven situaciones diferentes:
 
-Framework y toolchain sobre React Native.
+- WebSocket distribuye eventos mientras la aplicación mantiene una conexión;
+- FCM permite notificar cuando la aplicación está en segundo plano o cerrada.
 
-Aporta inicialización, navegación, compatibilidad de paquetes, APIs móviles, Development Builds y EAS.
+Ninguna tecnología garantiza por sí sola el objetivo promedio de tres segundos. La latencia deberá medirse de extremo a extremo.
 
-### Razón de versión
+## Herramientas de desarrollo móvil
 
-El proyecto fue creado con Expo SDK 57 y validado con las versiones compatibles instaladas por su template:
+| Herramienta | Estado |
+| --- | --- |
+| Node.js 22 LTS | Estándar del equipo |
+| npm y `package-lock.json` | Instalados y versionados |
+| Git/GitHub | Activos |
+| Android API 36 | Baseline Android |
+| Expo Go | Útil para la fase inicial |
+| Expo Development Build | Requerido cuando se incorporen integraciones nativas |
+| EAS | Instalado en la estación inicial; configuración pendiente |
 
-- Expo `~57.0.17`
-- React Native `0.86.3`
-- React `19.2.3`
-- Expo Router `~57.0.17`
+## Alternativas descartadas por ahora
 
-No se actualizará una versión mayor solo por existir una más nueva. Toda actualización debe pasar validaciones de Expo, librerías nativas, Firebase y Android/iOS.
+### Firebase como backend completo
 
-## React
+Reduce infraestructura, pero no es la opción adoptada para centralizar relaciones, transacciones, autorización y auditoría de Nexora.
 
-**Versión:** `19.2.3`
+### Supabase como backend completo
 
-Proporciona el modelo de componentes usado por React Native. Se mantiene alineado con Expo y React Native.
+Es una alternativa válida basada en PostgreSQL y reduciría trabajo operativo. No fue elegida porque el proyecto busca mantener las reglas detrás de una API explícita y modular propia.
 
-## TypeScript
+### Microservicios
 
-**Versión:** `~6.0.3`
-
-### Razones
-
-El dominio tendrá usuarios, residentes, unidades, visitantes, pases, alertas, encuestas e incidencias.
-
-TypeScript aporta:
-
-- tipos estáticos;
-- autocompletado;
-- refactorización más segura;
-- detección temprana de errores.
-
-El proyecto utiliza `strict: true`.
-
-### Alternativa
-
-JavaScript permitiría desarrollar la misma aplicación, pero con menos garantías estáticas en una base de código creciente.
-
-## Expo Router
-
-**Versión:** `~57.0.17`
-
-### Uso
-
-Navegación basada en archivos dentro de `src/app`.
-
-### Razones
-
-- organización natural de rutas;
-- layouts;
-- deep linking;
-- menor configuración manual;
-- integración directa con Expo.
-
-## Node.js
-
-**Entorno validado:** `v22.21.1`
-
-### Estándar del equipo
-
-**Node.js 22 LTS**
-
-No se exige el mismo patch exacto si la versión sigue siendo compatible y pasa las validaciones del proyecto.
-
-## npm
-
-Administra dependencias, scripts y `package-lock.json`.
-
-`package-lock.json` debe permanecer versionado.
-
-No debe ejecutarse `npm audit fix --force` sin revisar los cambios propuestos.
-
-## Android
-
-### Baseline
-
-- Android 16;
-- API 36;
-- Build Tools 36.0.0;
-- Google APIs x86_64.
-
-La API elegida está alineada con el baseline de Expo SDK 57.
-
-## JDK
-
-### Estación inicial
-
-Temurin JDK 21 estaba instalado y fue suficiente para el flujo inicial con Expo Go.
-
-### Estándar recomendado del equipo
-
-**Temurin JDK 17 LTS** para trabajo nativo/Gradle hasta validar formalmente otra versión.
-
-## Firebase
-
-### Estado
-
-Seleccionado, pero todavía **no integrado**.
-
-Firebase CLI: `15.28.1`
-
-### Servicios previstos
-
-- Authentication;
-- Realtime Database;
-- Cloud Storage;
-- Cloud Messaging;
-- Cloud Functions.
-
-### Razones
-
-El caso requiere autenticación, eventos en tiempo real, archivos, notificaciones y lógica del servidor.
-
-### Alternativas
-
-**Supabase:** excelente si el modelo requiere PostgreSQL y relaciones SQL complejas.
-
-**Backend propio Node/NestJS:** control completo, pero mayor infraestructura, seguridad y mantenimiento.
-
-### Decisión
-
-Firebase reduce la infraestructura necesaria y encaja bien con el alcance actual.
-
-## EAS
-
-EAS CLI: `eas-cli/22.5.0 win32-x64 node-v22.21.1`
-
-Se utilizará posteriormente para:
-
-- Development Builds;
-- builds Android;
-- AAB;
-- distribución interna;
-- potenciales builds iOS.
-
-Todavía no se ha configurado EAS dentro del proyecto.
-
-## Git y GitHub
-
-Git controla versiones. GitHub aloja el repositorio remoto y facilita colaboración, Pull Requests e historial.
-
-`main` debe representar un estado estable.
-
-## Visual Studio Code
-
-Editor principal recomendado.
-
-Extensiones útiles:
-
-- ESLint;
-- Prettier;
-- React Native Tools;
-- GitLens.
+No existe una necesidad medida que justifique su complejidad. El punto de partida será un monolito modular que puede desplegarse horizontalmente y evolucionar después.
 
 ## Resumen
 
-Stack adoptado:
+```text
+React Native + Expo + TypeScript
+              |
+              v
+        NestJS + TypeScript
+              |
+              v
+     PostgreSQL + Prisma
 
-**React Native + Expo + TypeScript + Expo Router + Firebase + Git/GitHub**
+Complementos: WebSockets + FCM + Object Storage
+```

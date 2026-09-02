@@ -40,4 +40,4 @@ La estructura podrá combinarse con features cuando el tamaño lo justifique.
 
 ## Estado de implementación
 
-La decisión está aceptada, pero la estructura completa todavía no ha sido creada.
+La estructura base fue creada y el Domain Core inicial está implementado. Data todavía no contiene repositorios funcionales; sus futuras implementaciones consumirán `nexora-api` según ADR-005.

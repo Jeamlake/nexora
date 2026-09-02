@@ -24,18 +24,18 @@ Núcleo de negocio:
 - `repositories/`
 - `use-cases/`
 
-Domain no debe depender de Firebase ni de implementaciones de Data.
+Domain no debe depender de la API, NestJS, Prisma, Firebase ni de implementaciones de Data.
 
 ## `data/`
 
 Acceso a datos e implementaciones:
 
 - `datasources/`
-- `firebase/`
+- `api/`
 - `mappers/`
 - `repositories/`
 
-Data implementa contratos definidos por Domain.
+Data implementa contratos definidos por Domain. Los DTO recibidos desde la API deben convertirse mediante mappers antes de entrar al dominio.
 
 ## `shared/`
 

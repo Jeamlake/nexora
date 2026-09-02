@@ -22,7 +22,8 @@ Ejemplos:
 - `feature/authentication`
 - `feature/visitor-qr`
 - `fix/expired-pass`
-- `docs/firebase-setup`
+- `docs/api-contract`
+- `chore/expo-patches`
 - `chore/nexora-branding`
 
 ## Commits
@@ -40,7 +41,7 @@ Ejemplos:
 
 - `feat: add resident authentication`
 - `fix: prevent expired visitor pass validation`
-- `docs: update firebase setup`
+- `docs: update API setup`
 
 ## Antes de un Pull Request
 
@@ -52,6 +53,13 @@ Verificar:
 - que las dependencias sigan siendo compatibles con Expo;
 - que los requisitos afectados estén identificados;
 - que la documentación afectada esté actualizada.
+
+Validación mínima:
+
+```shell
+npm run check
+git diff --check
+```
 
 ## Dependencias
 
@@ -74,6 +82,17 @@ Las variables con prefijo `EXPO_PUBLIC_` forman parte del bundle cliente y no de
 ## Arquitectura
 
 Las nuevas funcionalidades deben respetar la separación descrita en `docs/03-architecture.md`.
+
+- Domain define entidades, reglas, casos de uso y contratos.
+- Data implementa esos contratos y puede comunicarse con `nexora-api`.
+- Presentation no debe acceder directamente a PostgreSQL, Prisma ni servicios del backend.
+- Los cambios del contrato móvil-API deben coordinarse entre repositorios y actualizar OpenAPI.
+
+## Preparación de colaboradores
+
+La instalación reproducible para Windows, macOS y Linux está documentada en `docs/05-installation-and-setup.md`.
+
+Se debe usar `npm ci` después de clonar o actualizar el lockfile. No compartir `node_modules`, `.env`, SDK locales ni credenciales.
 
 ## Requisitos
 

@@ -1,176 +1,272 @@
-# 05. Instalación y preparación de otra computadora
+# 05. Instalación y preparación en otra computadora
 
-Esta guía explica cómo preparar otra computadora Windows sin depender de rutas locales específicas.
+## Objetivo
 
-## Opción A — Desarrollo inicial con celular Android físico
+Esta guía permite que un colaborador con acceso a GitHub prepare `nexora-mobile` desde cero en Windows, macOS o Linux. No depende de las rutas utilizadas por la computadora original.
 
-### 1. Cuenta y acceso a GitHub
+El repositorio del backend `nexora-api` todavía no existe. Cuando sea creado tendrá su propia guía para NestJS, PostgreSQL y Docker.
 
-Crear/iniciar sesión en GitHub y solicitar acceso al repositorio privado.
+## Compatibilidad por plataforma
 
-https://github.com/
+| Tarea | Windows | macOS | Linux |
+| --- | :---: | :---: | :---: |
+| Editar TypeScript y ejecutar Metro | Sí | Sí | Sí |
+| Probar en dispositivo físico con Expo Go | Sí | Sí | Sí |
+| Android Emulator y compilación Android local | Sí | Sí | Sí |
+| iOS Simulator y compilación iOS local | No | Sí | No |
+| Compilaciones remotas con EAS | Sí | Sí | Sí |
 
-### 2. Instalar Git
+El desarrollo inicial puede realizarse con Expo Go. Cuando Nexora incorpore módulos o configuración nativa no incluidos allí, el equipo compartirá un Expo Development Build.
 
-https://git-scm.com/download/win
+## Requisitos comunes
 
-### 3. Instalar GitHub Desktop
+### 1. Acceso al repositorio
 
-https://desktop.github.com/
+El colaborador debe aceptar la invitación al repositorio privado `Jeamlake/nexora-mobile` e iniciar sesión en GitHub.
 
-### 4. Instalar Visual Studio Code
+### 2. Git
 
-https://code.visualstudio.com/
+Instalar Git desde [git-scm.com](https://git-scm.com/downloads) y verificar:
 
-### 5. Instalar NVM for Windows
+```shell
+git --version
+```
 
-https://github.com/coreybutler/nvm-windows/releases
+GitHub Desktop es opcional. Todos los pasos también pueden realizarse desde una terminal.
 
-Instalar y utilizar **Node.js 22 LTS**.
+### 3. Node.js
 
-### 6. Clonar el repositorio
+Instalar Node.js 22 LTS. Expo SDK 57 requiere como mínimo Node.js 22.13.x; el baseline comprobado del equipo es Node.js 22.21.1.
 
-En GitHub Desktop:
+Puede utilizarse el instalador oficial de [nodejs.org](https://nodejs.org/) o un administrador de versiones compatible con el sistema operativo.
 
-1. elegir clonar repositorio;
-2. seleccionar `nexora-mobile`;
-3. escoger una carpeta local con espacio suficiente;
-4. finalizar.
+Verificar:
 
-### 7. Abrir el proyecto
+```shell
+node --version
+npm --version
+```
 
-Abrir el repositorio en Visual Studio Code.
+No es necesario instalar Expo CLI globalmente. El proyecto usa la versión incluida en sus dependencias mediante `npx expo`.
 
-### 8. Restaurar dependencias
+## Clonar el proyecto
 
-El proyecto contiene `package.json` y `package-lock.json`.
+### Opción SSH
 
-Restaurar las dependencias desde esos archivos.
+Usar esta opción si el colaborador ya registró su clave SSH en GitHub:
 
-No copiar `node_modules` desde otra computadora.
+```shell
+git clone git@github.com:Jeamlake/nexora-mobile.git
+cd nexora-mobile
+```
 
-### 9. Instalar Expo Go
+### Opción HTTPS
 
-https://expo.dev/go
+```shell
+git clone https://github.com/Jeamlake/nexora-mobile.git
+cd nexora-mobile
+```
 
-Usar una versión compatible con el SDK del proyecto.
+Comprobar el repositorio:
 
-### 10. Red local
+```shell
+git remote -v
+git status
+```
 
-La computadora y el teléfono deben poder comunicarse por la misma red local.
+La rama `main` representa el estado estable. Una tarea nueva debe desarrollarse en su propia rama, según [CONTRIBUTING.md](../CONTRIBUTING.md).
 
-### 11. Iniciar Expo
+## Restaurar exactamente las dependencias
 
-Iniciar el servidor de desarrollo desde el proyecto.
+Desde la raíz del repositorio:
 
-### 12. Abrir la app
+```shell
+npm ci
+```
 
-Cargar el proyecto desde Expo Go.
+`npm ci` utiliza `package-lock.json` y evita que cada computadora resuelva versiones distintas. No se debe copiar `node_modules` desde otra computadora ni reemplazar `npm ci` por actualizaciones manuales.
 
----
+Si se necesita cambiar una dependencia de Expo, utilizar `npx expo install` en una rama dedicada y versionar juntos `package.json` y `package-lock.json`.
 
-## Opción B — Entorno completo con Android Emulator
+## Configuración local
 
-Además de los pasos anteriores:
+Copiar `.env.example` a `.env.local`.
 
-### 1. Instalar JDK 17 LTS
+Windows PowerShell:
 
-https://adoptium.net/temurin/releases/?version=17
+```powershell
+Copy-Item .env.example .env.local
+```
 
-Seleccionar Windows, x64 y JDK.
+macOS o Linux:
 
-### 2. Instalar Android Studio
+```shell
+cp .env.example .env.local
+```
 
-https://developer.android.com/studio
+El archivo contiene `EXPO_PUBLIC_API_URL`. La API todavía no existe, por lo que la variable no será utilizada funcionalmente en esta fase.
 
-### 3. Instalar componentes Android
+Cuando `nexora-api` se ejecute localmente, utilizar según el cliente:
 
-Desde SDK Manager verificar:
+| Cliente | Valor de ejemplo |
+| --- | --- |
+| Web o iOS Simulator | `http://localhost:3000/api/v1` |
+| Android Emulator estándar | `http://10.0.2.2:3000/api/v1` |
+| Dispositivo físico | `http://IP_LAN_DE_LA_COMPUTADORA:3000/api/v1` |
+| Backend remoto | URL HTTPS del entorno |
 
+Las variables `EXPO_PUBLIC_*` se incorporan al bundle del cliente y nunca deben contener secretos.
+
+## Validar la instalación
+
+Ejecutar la validación completa:
+
+```shell
+npm run check
+```
+
+Este script ejecuta TypeScript y Expo Doctor. Ambos deben terminar correctamente. Si Expo Doctor propone cambiar versiones, el colaborador no debe corregirlas unilateralmente: debe abrir una tarea o Pull Request de mantenimiento para que el equipo revise el lockfile completo.
+
+## Ejecutar con un dispositivo físico
+
+1. Instalar una versión de Expo Go compatible con SDK 57.
+2. Conectar computadora y dispositivo a una red que permita comunicación entre ambos.
+3. Ejecutar:
+
+```shell
+npm start
+```
+
+4. Escanear el QR mostrado por Expo.
+
+Si la red local bloquea la conexión, puede probarse temporalmente:
+
+```shell
+npx expo start --tunnel
+```
+
+El túnel resuelve la conexión con Metro, pero no vuelve accesible automáticamente una API local configurada con `localhost`.
+
+## Ejecutar en Android Emulator
+
+Disponible en Windows, macOS y Linux.
+
+### Herramientas
+
+- [Android Studio](https://developer.android.com/studio);
 - Android SDK Platform 36;
 - Android SDK Build-Tools 36.0.0;
 - Android SDK Platform-Tools;
 - Android Emulator;
-- Android SDK Command-Line Tools.
+- Android SDK Command-Line Tools;
+- JDK 17 LTS recomendado para el baseline nativo hasta validación posterior.
 
-### 4. Crear un dispositivo virtual
+Crear un dispositivo virtual Android API 36, iniciarlo y comprobar:
 
-Desde Device Manager:
+```shell
+adb devices
+```
 
-1. crear un Virtual Device;
-2. seleccionar un Pixel estándar;
-3. usar Android API 36;
-4. elegir Google APIs x86_64;
-5. finalizar.
+Después ejecutar:
 
-### 5. Virtualización
+```shell
+npm run android
+```
 
-Habilitar virtualización del procesador y un hipervisor compatible con Android Emulator.
+El nombre `Condominio_API_36` y la ruta `E:\AndroidAVD` pertenecen a la estación original; los colaboradores pueden usar cualquier nombre y ruta local.
 
-### 6. Variables locales
+## Ejecutar en iOS Simulator
 
-Configurar correctamente:
+La compilación iOS local requiere macOS y Xcode compatible con Expo SDK 57.
 
-- `JAVA_HOME`;
-- `ANDROID_HOME`;
-- Platform Tools en PATH.
+Con el simulador iniciado:
 
-Las rutas dependen de cada computadora.
+```shell
+npm run ios
+```
 
-### 7. Iniciar el emulador
+Windows y Linux pueden trabajar en el código compartido, probar Android y posteriormente utilizar EAS para compilar iOS de forma remota cuando el proyecto lo configure.
 
-Esperar que Android termine de arrancar.
+## Ejecutar en navegador
 
-### 8. Ejecutar el proyecto
+```shell
+npm run web
+```
 
-Iniciar Expo para Android. Expo debe detectar el dispositivo y abrir la app.
+La ejecución web sirve para ciclos rápidos, pero no reemplaza las pruebas de cámara, ubicación, biometría, notificaciones ni comportamiento Android/iOS.
 
----
+## Desarrollo con módulos nativos
 
-## Firebase CLI
+Expo Go es suficiente para el baseline actual. Cuando se integren notificaciones, biometría u otra configuración nativa, se añadirá `expo-dev-client` y se distribuirá un Development Build compatible al equipo.
 
-https://firebase.google.com/docs/cli
+No ejecutar `npx expo prebuild` ni versionar manualmente `android/` o `ios/` sin una decisión del proyecto. Nexora utiliza Continuous Native Generation y esas carpetas se mantienen ignoradas.
 
-Actualmente la CLI está instalada en la estación inicial, pero Firebase todavía no está integrado.
+## Flujo diario de colaboración
 
-## EAS
+Antes de comenzar una tarea:
 
-https://docs.expo.dev/eas/
+```shell
+git switch main
+git pull --ff-only origin main
+git switch -c tipo/nombre-corto
+npm ci
+```
 
-Se utilizará posteriormente para Development Builds y builds de distribución.
+Ejemplos de ramas:
 
-## No copiar entre computadoras
+- `feature/resident-profile`;
+- `docs/api-transition`;
+- `fix/unit-validation`;
+- `chore/expo-patches`.
 
-No compartir manualmente:
+Antes de abrir un Pull Request:
+
+```shell
+npm run check
+git diff --check
+git status
+```
+
+No hacer push directo a `main`. El Pull Request debe explicar qué cambió, qué requisito afecta y cómo se validó.
+
+## Archivos que no se comparten
 
 - `node_modules`;
-- Android SDK;
-- AVD;
-- caché npm;
-- caché Gradle;
-- `.env`;
-- credenciales.
+- `.env` y `.env.local`;
+- Android SDK y Xcode;
+- dispositivos virtuales;
+- cachés de npm, Gradle o Metro;
+- certificados, claves, tokens y credenciales.
 
-## Sí debe venir desde GitHub
+## Archivos que sí deben venir desde GitHub
 
-- código fuente;
-- `package.json`;
-- `package-lock.json`;
-- configuración Expo;
-- assets;
-- documentación;
+- código fuente y assets;
+- `package.json` y `package-lock.json`;
+- `app.json`;
 - `.env.example`;
+- configuración compartida;
+- documentación;
 - historial Git.
 
-## Verificación final
+## Diagnóstico mínimo
 
-Antes de desarrollar comprobar:
+Si algo falla, guardar en un reporte:
 
-- proyecto clonado;
-- Node 22 activo;
-- dependencias restauradas;
-- dispositivo Android disponible;
-- aplicación cargando;
-- repositorio Git funcional.
+- sistema operativo y versión;
+- `node --version`;
+- `npm --version`;
+- resultado de `npx expo-doctor`;
+- resultado de `npm exec tsc -- --noEmit`;
+- salida completa del comando que falló;
+- dispositivo o emulador utilizado;
+- `git status --short --branch`.
 
-Baseline de referencia: 2026-08-26.
+No incluir `.env`, tokens, claves ni datos personales en el reporte.
+
+## Referencias oficiales
+
+- [Expo SDK 57](https://docs.expo.dev/versions/v57.0.0/)
+- [Preparar el entorno de Expo](https://docs.expo.dev/get-started/set-up-your-environment/)
+- [Variables de entorno en Expo](https://docs.expo.dev/guides/environment-variables/)
+- [Development Builds](https://docs.expo.dev/develop/development-builds/introduction/)
+- [GitHub: conexión por SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)

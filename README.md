@@ -4,7 +4,7 @@
 
 Nexora es una plataforma móvil de gestión y convivencia residencial diseñada para centralizar comunicación, participación comunitaria, visitantes, incidencias y respuesta temprana ante emergencias.
 
-> **Estado actual:** baseline técnico operativo y documentación inicial. Las funcionalidades de negocio todavía no están implementadas.
+> **Estado actual:** Domain Core inicial y transición arquitectónica al backend propio documentados. Las funcionalidades de negocio y `nexora-api` todavía no están implementados.
 
 ## ¿Por qué nace Nexora?
 
@@ -29,20 +29,24 @@ Nexora propone reunir los principales procesos de convivencia en una sola aplica
 
 | Tecnología | Baseline | Uso |
 | --- | --- | --- |
-| React Native | `0.86.2` | Desarrollo móvil Android/iOS |
-| Expo | `~57.0.16` | Framework y toolchain |
+| React Native | `0.86.3` | Desarrollo móvil Android/iOS |
+| Expo | `~57.0.19` | Framework y toolchain |
 | React | `19.2.3` | Componentes e interfaz |
 | TypeScript | `~6.0.3` | Lenguaje principal |
-| Expo Router | `~57.0.16` | Navegación basada en archivos |
+| Expo Router | `~57.0.18` | Navegación basada en archivos |
 | Node.js | `v22.21.1` | Entorno de desarrollo |
 | Android | API 36 | Plataforma Android de referencia |
-| Firebase | Pendiente de integración | Backend administrado |
+| NestJS | Arquitectura aceptada; repositorio pendiente | API y reglas de negocio del servidor |
+| PostgreSQL | Arquitectura aceptada; pendiente | Persistencia relacional |
+| Prisma | Arquitectura aceptada; pendiente | ORM y migraciones del backend |
+| Firebase Cloud Messaging | Pendiente | Notificaciones push especializadas |
 | Git / GitHub | Activo | Control de versiones y colaboración |
 
 ## Estado verificado
 
-- Expo Doctor: 21/21 checks correctos.
-- Dependencias compatibles con Expo SDK 57.
+- TypeScript sin errores.
+- Expo Doctor: 21/21 checks correctos el 2026-09-02.
+- npm Audit: 14 vulnerabilidades moderadas transitivas; 0 High y 0 Critical. No se aplicó `--force`.
 - Android Emulator operativo.
 - Android 16 / API 36.
 - Expo Go operativo.
@@ -64,7 +68,26 @@ Documentos principales:
 - [Estado actual](docs/06-current-status.md)
 - [Roadmap](docs/07-roadmap.md)
 - [Requisitos y decisiones pendientes](docs/08-requirements.md)
+- [Modelo de dominio inicial](docs/09-domain-model.md)
+- [Transición al backend propio](docs/10-backend-transition.md)
 - [Decisiones arquitectónicas](docs/adr/)
+
+## Arquitectura objetivo
+
+```text
+Nexora Mobile
+React Native + Expo
+        |
+        | HTTPS / WebSocket
+        v
+NestJS modular monolith
+        |
+        +-- PostgreSQL / Prisma
+        +-- Firebase Cloud Messaging
+        +-- Object Storage
+```
+
+Firebase ya no es el backend principal. La evolución de esta decisión se conserva en [ADR-003](docs/adr/ADR-003-firebase.md) y [ADR-005](docs/adr/ADR-005-nestjs-postgresql.md).
 
 ## Desarrollo
 
@@ -79,7 +102,7 @@ Las nuevas tareas deben realizarse en ramas como:
 - `test/...`
 - `chore/...`
 
-Consulta [CONTRIBUTING.md](CONTRIBUTING.md).
+Consulta [CONTRIBUTING.md](CONTRIBUTING.md). Para preparar el proyecto en Windows, macOS o Linux, utiliza [la guía de instalación](docs/05-installation-and-setup.md).
 
 ## Seguridad
 

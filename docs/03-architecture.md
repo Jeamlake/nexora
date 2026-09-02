@@ -2,27 +2,41 @@
 
 ## Estado
 
-Este documento describe la **arquitectura objetivo**. El baseline actual todavía conserva principalmente la estructura generada por Expo.
+La estructura por capas y el Domain Core inicial ya existen en `nexora-mobile`. El backend descrito en este documento es la arquitectura aceptada, pero `nexora-api` todavía no ha sido creado.
 
-No debe confundirse arquitectura diseñada con funcionalidad ya implementada.
+No debe confundirse arquitectura diseñada con funcionalidad implementada.
 
-## Correspondencia con el requisito de mantenibilidad
+## Contexto del sistema
 
-El caso solicita una arquitectura en capas de:
+```text
+Usuarios
+   |
+   v
+Nexora Mobile
+React Native + Expo
+   |
+   | HTTPS / WebSocket
+   v
+Nexora API
+NestJS modular monolith
+   |
+   +-- PostgreSQL / Prisma
+   +-- Firebase Cloud Messaging
+   +-- Object Storage
+```
 
-- **presentación**;
-- **lógica de negocio**;
-- **acceso a datos**.
+La aplicación móvil nunca se conecta directamente a PostgreSQL. Los secretos y credenciales del servidor pertenecen exclusivamente a `nexora-api` y a su plataforma de despliegue.
 
-En Nexora se utilizarán los nombres:
+## Arquitectura interna del móvil
 
-- **Presentation** → presentación;
-- **Domain** → lógica de negocio;
-- **Data** → acceso a datos.
+El requisito académico solicita presentación, lógica de negocio y acceso a datos. Nexora utiliza:
 
-Firebase y otros servicios externos son detalles de infraestructura consumidos desde la capa Data.
+- **Presentation:** interfaz y estado visual;
+- **Domain:** entidades, reglas, contratos y casos de uso;
+- **Data:** adaptadores HTTP/WebSocket y mapeo de datos;
+- **Infrastructure:** servicios concretos utilizados detrás de Data.
 
-## Flujo de ejecución conceptual
+### Flujo de ejecución
 
 ```text
 Usuario
@@ -40,72 +54,21 @@ Repository Interface (Domain)
 Data Repository Implementation
   |
   v
-Firebase / servicios externos
+NestJS API
 ```
 
-El diagrama anterior representa el flujo de ejecución y la inversión de dependencias: **Domain define los contratos y Data los implementa**.
-
-## Regla de dependencias
+### Regla de dependencias
 
 ```text
 Presentation -> Domain
 Data         -> Domain
-Firebase     <- Data
+Data         -> API adapters
+Domain       -X-> Expo, React Native, NestJS, Prisma, Firebase
 ```
 
-**Domain no depende de Firebase ni de las implementaciones de Data.**
+Domain define los contratos. Data los implementa y traduce DTO externos a modelos de dominio.
 
-## Presentation
-
-Responsable de interacción con el usuario:
-
-- pantallas;
-- componentes;
-- navegación;
-- hooks de presentación;
-- estado visual.
-
-## Domain
-
-Núcleo de negocio:
-
-- entidades;
-- interfaces de repositorio;
-- casos de uso;
-- reglas;
-- tipos de dominio.
-
-Ejemplos futuros:
-
-- `Resident`
-- `Unit`
-- `VisitorPass`
-- `EmergencyAlert`
-- `Incident`
-- `Poll`
-
-## Data
-
-Responsable de acceso y persistencia:
-
-- implementaciones de repositorios;
-- datasources;
-- integración con Firebase;
-- mappers;
-- DTO;
-- adaptadores de servicios externos.
-
-## Infraestructura prevista
-
-- Firebase Authentication;
-- Firebase Realtime Database;
-- Firebase Cloud Storage;
-- Firebase Cloud Messaging;
-- Cloud Functions.
-
-Estas tecnologías están previstas, pero todavía no están integradas en el código.
-
-## Estructura objetivo
+## Estructura móvil
 
 ```text
 src/
@@ -119,8 +82,8 @@ src/
 │   ├── repositories/
 │   └── use-cases/
 ├── data/
+│   ├── api/
 │   ├── datasources/
-│   ├── firebase/
 │   ├── mappers/
 │   └── repositories/
 ├── shared/
@@ -130,15 +93,81 @@ src/
 └── config/
 ```
 
-La estructura completa todavía no está implementada.
+`src/app` es la frontera de rutas de Expo Router. El código de pantalla reutilizable debe migrar progresivamente a Presentation conforme se implementen funcionalidades.
 
-## Beneficios
+## Arquitectura del backend
 
-- separación de responsabilidades;
-- menor acoplamiento;
-- pruebas más sencillas;
-- sustitución futura de servicios;
-- mantenibilidad;
-- correspondencia explícita con el requisito académico de arquitectura por capas.
+El backend comenzará como un monolito modular, una sola unidad de despliegue con límites internos explícitos.
 
-Toda decisión importante debe registrarse mediante ADR en `docs/adr/`.
+```text
+src/
+├── modules/
+│   ├── auth/
+│   ├── users/
+│   ├── condominiums/
+│   ├── units/
+│   ├── residents/
+│   ├── visitors/
+│   ├── notices/
+│   ├── polls/
+│   ├── alerts/
+│   └── incidents/
+├── common/
+├── config/
+└── main.ts
+```
+
+Esta estructura es orientativa. `nexora-api` documentará su estructura real cuando sea creado.
+
+## Autoridad de las reglas
+
+La API y PostgreSQL deben proteger reglas críticas como:
+
+- autorización por rol y pertenencia a condominio;
+- unicidad del voto según la regla que se apruebe;
+- expiración y uso único del pase QR;
+- máximo de contactos de emergencia;
+- transiciones válidas de alertas e incidencias;
+- historial de cambios importantes.
+
+El móvil puede repetir validaciones para responder rápidamente al usuario, pero una llamada directa a la API no debe poder evadir las reglas.
+
+## Comunicación y tiempo real
+
+### REST
+
+REST será el canal principal para comandos y consultas. El contrato tendrá prefijo versionado, inicialmente `/api/v1`, y se publicará mediante OpenAPI.
+
+### WebSockets
+
+Se utilizarán para distribuir eventos a aplicaciones conectadas, por ejemplo una alerta creada o atendida. No sustituyen a la persistencia ni a la autorización.
+
+### Notificaciones push
+
+FCM avisará a dispositivos en segundo plano o cerrados. El evento se crea y persiste primero en la API; la notificación es un mecanismo de entrega, no la fuente de verdad.
+
+## Datos y archivos
+
+- PostgreSQL conserva datos estructurados, relaciones, estados y auditoría.
+- Prisma administra el acceso tipado y las migraciones iniciales.
+- Object Storage conserva fotografías y otros binarios.
+- PostgreSQL conserva la referencia, metadatos y permisos del archivo.
+
+## Escalabilidad
+
+La estrategia inicial consiste en:
+
+1. consultas e índices correctos;
+2. conexiones a PostgreSQL administradas;
+3. API sin estado local persistente;
+4. múltiples instancias solo cuando las métricas lo requieran;
+5. observabilidad y pruebas de carga antes de agregar infraestructura.
+
+Redis, colas y microservicios no forman parte del baseline. Se introducirán únicamente si resuelven un problema observado.
+
+## Decisiones relacionadas
+
+- [ADR-003: Firebase, reemplazado](adr/ADR-003-firebase.md)
+- [ADR-004: Arquitectura por capas](adr/ADR-004-layered-architecture.md)
+- [ADR-005: NestJS y PostgreSQL](adr/ADR-005-nestjs-postgresql.md)
+- [Plan de transición](10-backend-transition.md)

@@ -126,7 +126,7 @@ La especificación completa, incluyendo ambigüedades que deben resolverse antes
 
 ## Alcance actual
 
-Solo está implementado el **baseline técnico**:
+Está implementado el **baseline técnico y de dominio inicial**:
 
 - React Native;
 - Expo;
@@ -135,9 +135,23 @@ Solo está implementado el **baseline técnico**:
 - Android Emulator;
 - Git/GitHub;
 - identidad Nexora;
-- documentación inicial.
+- documentación técnica;
+- estructura por capas;
+- entidades iniciales `User`, `Resident`, `Unit` y `EmergencyContact`.
 
 Las funcionalidades de negocio todavía no están implementadas.
+
+## Contexto del sistema objetivo
+
+La aplicación móvil no accederá directamente a la base de datos. Consumirá una API propia mediante HTTPS y utilizará WebSockets para eventos en primer plano.
+
+```text
+Nexora Mobile -> NestJS API -> PostgreSQL
+                         |-> FCM
+                         |-> Object Storage
+```
+
+La decisión se documenta en [ADR-005](adr/ADR-005-nestjs-postgresql.md) y su ejecución se organiza en [10-backend-transition.md](10-backend-transition.md).
 
 ## Fecha del baseline
 

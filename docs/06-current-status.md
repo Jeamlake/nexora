@@ -1,78 +1,85 @@
 # 06. Estado actual
 
-Fecha de corte: 2026-08-26.
+Fecha de corte: 2026-09-02.
+
+## Resumen
+
+Nexora se encuentra al final de la fase de Domain Core y en transición formal hacia un backend propio. No existe todavía una aplicación funcional ni el repositorio `nexora-api`.
+
+## Repositorio
+
+- remoto: `git@github.com:Jeamlake/nexora-mobile.git`;
+- rama estable: `main`;
+- rama de trabajo: `feature/domain-core`;
+- la rama reúne el Domain Core y la transición arquitectónica por encima de `main`;
+- la integración a `main` debe realizarse mediante Pull Request.
 
 ## Completado
 
-### Entorno
+### Producto y requisitos
 
-- Node.js 22 configurado.
-- npm operativo.
-- Android SDK configurado.
-- Android API 36 instalada.
-- Build Tools 36.0.0.
-- ADB operativo.
-- Android Emulator operativo.
-- Windows Hypervisor Platform validado.
-- System Image Android 36 Google APIs x86_64.
-- Firebase CLI instalada.
-- EAS CLI instalada.
+- identidad Nexora;
+- problema, propuesta de valor y pilares;
+- requisitos funcionales y no funcionales;
+- ambigüedades del caso registradas;
+- documentación versionada.
 
-### Proyecto
+### Aplicación móvil
 
-- Identidad Nexora definida.
-- React Native.
-- Expo SDK 57.
-- TypeScript.
-- Expo Router.
-- Estructura base de arquitectura por capas creada.
-- estructura `src/app`.
-- `package-lock.json`.
-- Git.
-- GitHub.
-- requisitos del caso documentados y trazables.
+- React Native y Expo SDK 57;
+- TypeScript estricto;
+- Expo Router;
+- estructura Presentation, Domain y Data;
+- entidades `User`, `Resident`, `Unit` y `EmergencyContact`;
+- regla de máximo tres contactos de emergencia;
+- baseline Android probado con Expo Go.
 
-### Calidad inicial
+### Transición arquitectónica
 
-- Expo Doctor: 21/21 checks correctos.
-- Expo Install Check: dependencias compatibles.
-- npm Audit: 0 High, 0 Critical; existen vulnerabilidades moderadas transitivas.
-- No se aplicó `npm audit fix --force`.
+- Firebase marcado como backend principal reemplazado;
+- NestJS y PostgreSQL aceptados en ADR-005;
+- monolito modular seleccionado;
+- REST, OpenAPI, WebSockets, FCM y Object Storage ubicados en la arquitectura;
+- contrato de configuración `EXPO_PUBLIC_API_URL` documentado;
+- `src/data/api` reservado para el futuro adaptador.
 
-### Ejecución
+## Validación vigente
 
-Probado correctamente en:
-
-- Android 16;
-- API 36;
-- x86_64;
-- Expo Go;
-- Metro Bundler.
+- Node.js: `22.21.1` en la estación inicial;
+- npm: `10.9.4`;
+- TypeScript: sin errores;
+- Git: árbol de trabajo limpio antes de iniciar esta transición;
+- Expo Doctor del 2026-09-02: 21/21 comprobaciones después de alinear los parches de SDK 57;
+- dependencias reproducibles mediante `package-lock.json`;
+- npm Audit: 14 vulnerabilidades moderadas transitivas, 0 High y 0 Critical; no se aplicó una corrección forzada.
 
 ## No implementado todavía
 
-- Firebase dentro de la app;
+- `nexora-api`;
+- NestJS, PostgreSQL, Prisma y Docker;
+- cliente HTTP/WebSocket del móvil;
 - autenticación;
-- roles;
-- unidades;
-- residentes;
-- avisos;
-- encuestas;
-- visitantes;
-- QR;
-- escáner;
-- geolocalización;
-- botón de pánico;
-- notificaciones;
-- incidencias;
-- Cloud Functions;
+- repositorios y casos de uso funcionales;
+- pantallas de negocio;
+- avisos, encuestas y votos;
+- visitantes y QR;
+- alertas, ubicación y tiempo real;
 - FCM;
-- Development Build;
-- builds EAS;
-- pruebas automatizadas.
+- almacenamiento de fotografías;
+- incidencias;
+- Development Build y EAS configurados;
+- pruebas automatizadas y CI.
 
-## Situación
+## Decisiones pendientes
 
-**Fase de arquitectura base y preparación del desarrollo funcional.**
+- estrategia y proveedor de autenticación;
+- regla de voto por unidad o residente;
+- comportamiento de encuestas obligatorias;
+- umbral de toques del botón de pánico;
+- medición de disponibilidad y latencia;
+- criterios verificables de accesibilidad;
+- proveedores de hosting y Object Storage.
 
-No debe presentarse todavía como aplicación funcional completa.
+## Siguiente hito
+
+Completar la revisión y el merge de `feature/domain-core` mediante Pull Request. Después se creará `nexora-api` con su propio baseline reproducible.

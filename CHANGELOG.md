@@ -4,6 +4,13 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
+### Documentation — Plan del primer avance
+
+- Se registra el cierre del PR #4 y la integración del Domain Core en `main`.
+- Se divide el primer avance en diez pasos verificables.
+- Se define como corte funcional la autenticación y consulta del perfil residente-unidad desde PostgreSQL.
+- Se documentan las evidencias y la condición objetiva de finalización del avance.
+
 ### Changed — Transición al backend propio
 
 - Firebase deja de ser el backend principal y ADR-003 queda marcado como reemplazado.

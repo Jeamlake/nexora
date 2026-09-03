@@ -4,7 +4,7 @@
 
 Nexora es una plataforma móvil de gestión y convivencia residencial diseñada para centralizar comunicación, participación comunitaria, visitantes, incidencias y respuesta temprana ante emergencias.
 
-> **Estado actual:** Domain Core inicial y transición arquitectónica al backend propio documentados. Las funcionalidades de negocio y `nexora-api` todavía no están implementados.
+> **Estado actual:** Domain Core y transición al backend propio integrados en `main`. El Paso 1 del primer avance está documentado; las funcionalidades de negocio y `nexora-api` todavía no están implementados.
 
 ## ¿Por qué nace Nexora?
 
@@ -70,6 +70,7 @@ Documentos principales:
 - [Requisitos y decisiones pendientes](docs/08-requirements.md)
 - [Modelo de dominio inicial](docs/09-domain-model.md)
 - [Transición al backend propio](docs/10-backend-transition.md)
+- [Plan del primer avance](docs/11-first-advance-plan.md)
 - [Decisiones arquitectónicas](docs/adr/)
 
 ## Arquitectura objetivo

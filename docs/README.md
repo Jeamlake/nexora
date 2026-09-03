@@ -17,6 +17,7 @@ La documentación de **Nexora** sigue el enfoque **docs as code**: vive junto al
 | [08-requirements.md](08-requirements.md) | Requisitos funcionales/no funcionales, trazabilidad y decisiones pendientes |
 | [09-domain-model.md](09-domain-model.md) | Primer modelo de dominio implementado |
 | [10-backend-transition.md](10-backend-transition.md) | Entregables y secuencia de transición a `nexora-api` |
+| [11-first-advance-plan.md](11-first-advance-plan.md) | Pasos, evidencias y definición de terminado del primer avance |
 
 ## Architecture Decision Records
 

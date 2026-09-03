@@ -1,18 +1,19 @@
 # 06. Estado actual
 
-Fecha de corte: 2026-09-02.
+Fecha de corte: 2026-09-03.
 
 ## Resumen
 
-Nexora se encuentra al final de la fase de Domain Core y en transición formal hacia un backend propio. No existe todavía una aplicación funcional ni el repositorio `nexora-api`.
+Nexora completó el baseline móvil, el Domain Core inicial y la transición documental hacia un backend propio. La aplicación base ejecuta en Android, pero todavía no existen funcionalidades de negocio conectadas a datos reales ni el repositorio `nexora-api`.
 
 ## Repositorio
 
 - remoto: `git@github.com:Jeamlake/nexora-mobile.git`;
 - rama estable: `main`;
-- rama de trabajo: `feature/domain-core`;
-- la rama reúne el Domain Core y la transición arquitectónica por encima de `main`;
-- la integración a `main` debe realizarse mediante Pull Request.
+- PR #4 fusionado en `main` el 2026-09-02;
+- commit de integración: `8ad47fea8db69a006fe3d5a57b765d9ced86a1c2`;
+- `main` y `origin/main` verificados en el mismo commit al iniciar el primer avance;
+- la rama histórica `feature/domain-core` se conserva como referencia, pero ya no contiene trabajo pendiente de integración.
 
 ## Completado
 
@@ -82,4 +83,4 @@ Nexora se encuentra al final de la fase de Domain Core y en transición formal h
 
 ## Siguiente hito
 
-Completar la revisión y el merge de `feature/domain-core` mediante Pull Request. Después se creará `nexora-api` con su propio baseline reproducible.
+Ejecutar el [plan del primer avance](11-first-advance-plan.md). El siguiente paso técnico es crear `nexora-api` con un baseline reproducible de NestJS antes de configurar PostgreSQL y Prisma.

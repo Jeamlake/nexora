@@ -17,7 +17,6 @@ Este documento convierte la decisión de [ADR-005](adr/ADR-005-nestjs-postgresql
 
 ### Pendiente
 
-- revisar y fusionar `feature/domain-core` mediante Pull Request;
 - crear el repositorio `nexora-api`;
 - inicializar NestJS y fijar sus versiones;
 - configurar PostgreSQL, Prisma y Docker;
@@ -73,6 +72,8 @@ NestJS API
 ## Orden de los siguientes entregables
 
 ### Entregable A — Cerrar la transición del móvil
+
+**Estado: completado mediante el PR #4**
 
 - revisar esta documentación;
 - validar TypeScript y Expo;
@@ -148,3 +149,5 @@ La transición arquitectónica estará completamente operativa cuando:
 5. el móvil pueda comunicarse con la API usando `EXPO_PUBLIC_API_URL`;
 6. CI valide los dos repositorios;
 7. no existan secretos versionados.
+
+La secuencia detallada para completar el primer avance académico se mantiene en [11-first-advance-plan.md](11-first-advance-plan.md).

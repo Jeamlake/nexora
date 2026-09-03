@@ -4,7 +4,7 @@ Fecha de corte: 2026-09-03.
 
 ## Resumen
 
-Nexora completó el baseline móvil, el Domain Core inicial y la transición documental hacia un backend propio. La aplicación base ejecuta en Android, pero todavía no existen funcionalidades de negocio conectadas a datos reales ni el repositorio `nexora-api`.
+Nexora completó el baseline móvil, el Domain Core inicial y la decisión de adoptar un backend propio. El repositorio se reorganizó como monorepo: el móvil vive en `apps/mobile` y `apps/api` reserva la frontera del backend. Todavía no existen funcionalidades de negocio conectadas a datos reales ni una API NestJS inicializada.
 
 ## Repositorio
 
@@ -13,7 +13,8 @@ Nexora completó el baseline móvil, el Domain Core inicial y la transición doc
 - PR #4 fusionado en `main` el 2026-09-02;
 - commit de integración: `8ad47fea8db69a006fe3d5a57b765d9ced86a1c2`;
 - `main` y `origin/main` verificados en el mismo commit al iniciar el primer avance;
-- la rama histórica `feature/domain-core` se conserva como referencia, pero ya no contiene trabajo pendiente de integración.
+- la rama histórica `feature/domain-core` se conserva como referencia, pero ya no contiene trabajo pendiente de integración;
+- la transición a monorepo se desarrolla en `chore/monorepo-transition` antes de integrarse a `main`.
 
 ## Completado
 
@@ -42,7 +43,11 @@ Nexora completó el baseline móvil, el Domain Core inicial y la transición doc
 - monolito modular seleccionado;
 - REST, OpenAPI, WebSockets, FCM y Object Storage ubicados en la arquitectura;
 - contrato de configuración `EXPO_PUBLIC_API_URL` documentado;
-- `src/data/api` reservado para el futuro adaptador.
+- `apps/mobile/src/data/api` reservado para el futuro adaptador;
+- npm workspaces configurado en la raíz;
+- aplicación Expo trasladada a `apps/mobile`;
+- frontera `apps/api` reservada;
+- decisión de monorepositorio registrada en ADR-006.
 
 ## Validación vigente
 
@@ -50,13 +55,15 @@ Nexora completó el baseline móvil, el Domain Core inicial y la transición doc
 - npm: `10.9.4`;
 - TypeScript: sin errores;
 - Git: árbol de trabajo limpio antes de iniciar esta transición;
-- Expo Doctor del 2026-09-02: 21/21 comprobaciones después de alinear los parches de SDK 57;
+- Expo Doctor del 2026-09-03: 21/21 comprobaciones desde la raíz del monorepositorio;
+- configuración pública de Expo resuelta correctamente desde `apps/mobile`;
+- exportación web estática correcta desde `apps/mobile`, con cuatro rutas;
 - dependencias reproducibles mediante `package-lock.json`;
 - npm Audit: 14 vulnerabilidades moderadas transitivas, 0 High y 0 Critical; no se aplicó una corrección forzada.
 
 ## No implementado todavía
 
-- `nexora-api`;
+- aplicación NestJS dentro de `apps/api`;
 - NestJS, PostgreSQL, Prisma y Docker;
 - cliente HTTP/WebSocket del móvil;
 - autenticación;
@@ -83,4 +90,4 @@ Nexora completó el baseline móvil, el Domain Core inicial y la transición doc
 
 ## Siguiente hito
 
-Ejecutar el [plan del primer avance](11-first-advance-plan.md). El siguiente paso técnico es crear `nexora-api` con un baseline reproducible de NestJS antes de configurar PostgreSQL y Prisma.
+Ejecutar el [plan del primer avance](11-first-advance-plan.md). Después de integrar la reorganización, el siguiente paso técnico es inicializar un baseline reproducible de NestJS en `apps/api` antes de configurar PostgreSQL y Prisma.

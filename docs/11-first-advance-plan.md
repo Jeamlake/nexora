@@ -10,8 +10,8 @@ Este avance no termina todos los módulos de Nexora. Su propósito es construir 
 
 Al terminar el avance, un colaborador debe poder:
 
-1. clonar `nexora-mobile` y `nexora-api` en una computadora nueva;
-2. configurar las variables de entorno a partir de sus archivos de ejemplo;
+1. clonar el monorepositorio de Nexora en una computadora nueva;
+2. instalar todos los workspaces y configurar las variables de entorno a partir de sus archivos de ejemplo;
 3. levantar PostgreSQL mediante Docker Compose;
 4. aplicar las migraciones y cargar datos de demostración;
 5. iniciar la API y comprobar `GET /health` y Swagger;
@@ -24,25 +24,29 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 1 — Cerrar y documentar el punto de partida
 
-**Estado: completado**
+**Estado: implementado y validado en `chore/monorepo-transition`; integración a `main` pendiente**
 
 - verificar que `main` coincida con `origin/main`;
 - confirmar la integración del PR #4 y del Domain Core;
 - corregir referencias documentales que presentaban el merge como pendiente;
 - fijar el alcance, orden y condición de finalización del primer avance;
+- comparar monorepositorio y repositorios separados mediante variables explícitas;
+- registrar la decisión en ADR-006;
+- trasladar el móvil a `apps/mobile` y configurar npm workspaces;
+- reservar `apps/api` y `packages` sin presentar código futuro como implementado;
 - iniciar el trabajo posterior desde una rama separada de `main`.
 
-**Evidencia esperada:** repositorio móvil limpio, documentación coherente y este plan versionado.
+**Evidencia esperada:** monorepositorio reproducible, móvil funcional desde `apps/mobile`, documentación coherente y este plan versionado.
 
-### Paso 2 — Crear el repositorio `nexora-api`
+### Paso 2 — Inicializar `apps/api`
 
-- crear el repositorio independiente;
 - inicializar NestJS con TypeScript estricto;
 - definir scripts, versión de Node.js y administrador de paquetes;
-- añadir `.gitignore`, `.env.example`, README, licencia académica y guía de contribución;
-- configurar ramas protegidas y flujo mediante Pull Requests.
+- añadir `.env.example` y documentación específica del workspace;
+- integrar sus scripts con la raíz y el CI del monorepositorio;
+- mantener un despliegue independiente del móvil.
 
-**Evidencia esperada:** una API nueva que instala, compila y ejecuta en una computadora limpia.
+**Evidencia esperada:** el workspace de API instala, compila y ejecuta desde una computadora limpia.
 
 ### Paso 3 — Levantar PostgreSQL y Prisma
 
@@ -129,14 +133,14 @@ Al terminar el avance, un colaborador debe poder:
 - preparar cuentas seed, guion y evidencias de demostración;
 - revisar y fusionar los Pull Requests manteniendo `main` estable.
 
-**Evidencia esperada:** ambos repositorios reproducibles y demostración repetible del avance.
+**Evidencia esperada:** monorepositorio y workspaces reproducibles, con una demostración repetible del avance.
 
 ## Orden obligatorio
 
 ```text
 1. Punto de partida
         ↓
-2. Repositorio API
+2. Workspace API
         ↓
 3. PostgreSQL y Prisma
         ↓

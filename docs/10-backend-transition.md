@@ -2,33 +2,35 @@
 
 ## Propósito
 
-Este documento convierte la decisión de [ADR-005](adr/ADR-005-nestjs-postgresql.md) en una secuencia de entregables verificables. Distingue el estado real del móvil de la arquitectura futura para evitar documentar como terminado algo que aún no existe.
+Este documento convierte las decisiones de [ADR-005](adr/ADR-005-nestjs-postgresql.md) y [ADR-006](adr/ADR-006-monorepo.md) en una secuencia de entregables verificables. Distingue el estado real del móvil de la arquitectura futura para evitar documentar como terminado algo que aún no existe.
 
 ## Estado de la transición
 
-### Completado en `nexora-mobile`
+### Completado en el monorepositorio
 
 - Domain Core desacoplado de la infraestructura;
 - decisión de Firebase conservada como registro histórico y marcada como reemplazada;
 - NestJS y PostgreSQL aceptados como backend principal;
 - arquitectura, stack, roadmap y guía de instalación actualizados;
 - variable pública `EXPO_PUBLIC_API_URL` definida como contrato de configuración;
-- área `src/data/api` reservada para el futuro adaptador HTTP.
+- área `apps/mobile/src/data/api` reservada para el futuro adaptador HTTP;
+- decisión de monorepositorio registrada mediante ADR-006;
+- aplicación móvil trasladada a `apps/mobile`;
+- npm workspaces y lockfile raíz establecidos.
 
 ### Pendiente
 
-- crear el repositorio `nexora-api`;
-- inicializar NestJS y fijar sus versiones;
+- inicializar NestJS en `apps/api` y fijar sus versiones;
 - configurar PostgreSQL, Prisma y Docker;
 - definir autenticación mediante un ADR separado;
 - crear OpenAPI y el endpoint de salud;
 - implementar el primer corte vertical de usuarios/residentes;
-- implementar el cliente HTTP en `nexora-mobile`;
+- implementar el cliente HTTP en `apps/mobile`;
 - añadir pruebas de contrato e integración.
 
-## Responsabilidad de cada repositorio
+## Responsabilidad de cada workspace
 
-### `nexora-mobile`
+### `apps/mobile`
 
 - interfaz y navegación;
 - experiencia móvil;
@@ -38,7 +40,7 @@ Este documento convierte la decisión de [ADR-005](adr/ADR-005-nestjs-postgresql
 - adaptadores HTTP dentro de Data;
 - almacenamiento seguro de tokens en el dispositivo.
 
-### `nexora-api`
+### `apps/api`
 
 - autenticación y autorización del servidor;
 - reglas de negocio definitivas;
@@ -81,9 +83,9 @@ NestJS API
 - abrir Pull Request;
 - fusionar únicamente después de revisión.
 
-### Entregable B — Baseline de `nexora-api`
+### Entregable B — Baseline de `apps/api`
 
-- repositorio y políticas Git;
+- workspace y políticas Git del monorepositorio;
 - NestJS con TypeScript estricto;
 - configuración validada;
 - PostgreSQL reproducible mediante Docker Compose;
@@ -142,12 +144,12 @@ La API aún no existe. Estos valores documentan el contrato futuro y no implican
 
 La transición arquitectónica estará completamente operativa cuando:
 
-1. ambos repositorios puedan instalarse desde cero siguiendo su documentación;
+1. todos los workspaces puedan instalarse desde cero siguiendo su documentación;
 2. PostgreSQL pueda levantarse de forma reproducible;
 3. `GET /health` responda;
 4. Swagger exponga el contrato;
 5. el móvil pueda comunicarse con la API usando `EXPO_PUBLIC_API_URL`;
-6. CI valide los dos repositorios;
+6. CI valide las dos aplicaciones y el conjunto del monorepositorio;
 7. no existan secretos versionados.
 
 La secuencia detallada para completar el primer avance académico se mantiene en [11-first-advance-plan.md](11-first-advance-plan.md).

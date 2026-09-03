@@ -4,6 +4,20 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
+### Changed — Organización como monorepositorio
+
+- Se acepta ADR-006 después de comparar repositorios separados, monorepo y paquete mezclado.
+- La aplicación Expo se traslada a `apps/mobile`.
+- `apps/api` reserva la futura aplicación NestJS sin presentarla como implementada.
+- `packages` queda reservado para código con varios consumidores reales.
+- La raíz incorpora npm workspaces, scripts agregados y un único lockfile.
+- Se elimina el script destructivo `reset-project` heredado de la plantilla de Expo.
+- Se actualizan arquitectura, instalación, roadmap y contribución para la nueva estructura.
+- Se versiona el alcance, las decisiones previas y la aceptación de los cuatro avances académicos.
+- Se documentan responsabilidades, variables de asignación, estados y revisión para los cuatro colaboradores.
+- Se añade una plantilla de Pull Request común para todo el monorepositorio.
+- Se añade una guía específica para ejecutar y configurar `apps/mobile`.
+
 ### Documentation — Plan del primer avance
 
 - Se registra el cierre del PR #4 y la integración del Domain Core en `main`.
@@ -18,7 +32,7 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 - REST/OpenAPI, WebSockets, FCM y Object Storage quedan ubicados en la arquitectura objetivo.
 - Se reemplaza el área vacía `src/data/firebase` por `src/data/api`.
 - `.env.example` define `EXPO_PUBLIC_API_URL` como configuración pública del futuro cliente HTTP.
-- Se documentan los entregables y el orden de creación de `nexora-api`.
+- Se documentaron inicialmente los entregables para un backend separado; ADR-006 reemplaza después esa ubicación por `apps/api`.
 
 ### Changed — Compatibilidad Expo SDK 57
 

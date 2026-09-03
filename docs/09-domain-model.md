@@ -115,4 +115,4 @@ Todavía no se implementan:
 
 ## Regla arquitectónica
 
-Las entidades de `src/domain/entities` no dependen de Expo, React Native, NestJS, Prisma, PostgreSQL, Firebase ni de componentes visuales.
+Las entidades de `apps/mobile/src/domain/entities` no dependen de Expo, React Native, NestJS, Prisma, PostgreSQL, Firebase ni de componentes visuales.

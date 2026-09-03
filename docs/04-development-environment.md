@@ -11,6 +11,7 @@
 - EAS CLI: `eas-cli/22.5.0 win32-x64 node-v22.21.1`
 - Android: API 36
 - Android Emulator: Google APIs x86_64
+- Monorepo: npm workspaces con un único lockfile raíz
 
 ## Herramientas utilizadas
 
@@ -80,9 +81,13 @@ El repositorio puede instalarse en Windows, macOS y Linux. Android puede desarro
 
 La guía reproducible y neutral respecto al sistema operativo se encuentra en [05-installation-and-setup.md](05-installation-and-setup.md).
 
-## Backend futuro
+## Workspaces
 
-NestJS, PostgreSQL, Prisma y Docker pertenecen al futuro repositorio `nexora-api`. No son requisitos para ejecutar el baseline móvil actual.
+- `apps/mobile`: aplicación Expo instalada y validada;
+- `apps/api`: frontera reservada para el backend, todavía sin inicializar;
+- `packages`: reservado para código con varios consumidores reales.
+
+NestJS, PostgreSQL, Prisma y Docker se incorporarán a `apps/api` y a la infraestructura raíz. Todavía no son requisitos para ejecutar el baseline móvil actual.
 
 ## Variables y secretos
 
@@ -94,6 +99,6 @@ Nunca versionar:
 - tokens administrativos;
 - `.env` reales.
 
-Consultar `.env.example`.
+Consultar `apps/mobile/.env.example`. Cada aplicación tendrá su propio archivo de ejemplo y sus variables locales.
 
 `EXPO_PUBLIC_API_URL` será visible dentro del bundle móvil. Solo identifica el endpoint; las credenciales del backend nunca deben almacenarse en variables `EXPO_PUBLIC_*`.

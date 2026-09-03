@@ -38,13 +38,15 @@
 - guía multiplataforma para colaboradores;
 - configuración pública de la futura API;
 - parches compatibles de Expo SDK 57 alineados y validados;
-- PR #4 revisado y fusionado en `main`.
+- PR #4 revisado y fusionado en `main`;
+- decisión posterior de monorepositorio documentada en ADR-006;
+- móvil reorganizado bajo `apps/mobile` con npm workspaces.
 
-## Fase 3 — Baseline de `nexora-api`
+## Fase 3 — Baseline de `apps/api`
 
 **Estado: pendiente**
 
-- crear repositorio;
+- inicializar el workspace NestJS;
 - NestJS y TypeScript estricto;
 - monolito modular;
 - PostgreSQL mediante Docker Compose;
@@ -54,7 +56,7 @@
 - endpoint de salud;
 - pruebas básicas;
 - CI;
-- guía de instalación multiplataforma.
+- ampliar la guía monorepo para Windows, macOS y Linux.
 
 ## Fase 4 — Identidad, usuarios y residencia
 
@@ -130,4 +132,4 @@
 - manual técnico y de usuario;
 - presentación final.
 
-El detalle operativo de las fases 2 a 4 se encuentra en [10-backend-transition.md](10-backend-transition.md). El corte académico y los pasos verificables del primer avance se encuentran en [11-first-advance-plan.md](11-first-advance-plan.md).
+El detalle operativo de las fases 2 a 4 se encuentra en [10-backend-transition.md](10-backend-transition.md). Los cuatro cortes académicos se definen en [12-academic-advances.md](12-academic-advances.md) y los pasos verificables del primero en [11-first-advance-plan.md](11-first-advance-plan.md).

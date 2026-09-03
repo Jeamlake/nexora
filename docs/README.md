@@ -16,8 +16,10 @@ La documentación de **Nexora** sigue el enfoque **docs as code**: vive junto al
 | [07-roadmap.md](07-roadmap.md) | Próximas fases |
 | [08-requirements.md](08-requirements.md) | Requisitos funcionales/no funcionales, trazabilidad y decisiones pendientes |
 | [09-domain-model.md](09-domain-model.md) | Primer modelo de dominio implementado |
-| [10-backend-transition.md](10-backend-transition.md) | Entregables y secuencia de transición a `nexora-api` |
+| [10-backend-transition.md](10-backend-transition.md) | Entregables y secuencia de transición a `apps/api` |
 | [11-first-advance-plan.md](11-first-advance-plan.md) | Pasos, evidencias y definición de terminado del primer avance |
+| [12-academic-advances.md](12-academic-advances.md) | Alcance, decisiones y aceptación de los cuatro avances |
+| [13-team-coordination.md](13-team-coordination.md) | Responsabilidades, tareas, revisión e integración del equipo |
 
 ## Architecture Decision Records
 
@@ -26,6 +28,7 @@ La documentación de **Nexora** sigue el enfoque **docs as code**: vive junto al
 - [ADR-003: Firebase (reemplazado)](adr/ADR-003-firebase.md)
 - [ADR-004: Arquitectura por capas](adr/ADR-004-layered-architecture.md)
 - [ADR-005: NestJS y PostgreSQL](adr/ADR-005-nestjs-postgresql.md)
+- [ADR-006: Monorepositorio](adr/ADR-006-monorepo.md)
 
 ## Regla de mantenimiento
 

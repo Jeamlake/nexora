@@ -3,6 +3,7 @@
 - **Estado:** Aceptado
 - **Fecha:** 2026-09-02
 - **Reemplaza:** [ADR-003: Firebase como backend administrado](ADR-003-firebase.md)
+- **Modificado por:** [ADR-006: Monorepositorio](ADR-006-monorepo.md) para la ubicación del backend
 
 ## Contexto
 
@@ -27,7 +28,7 @@ El Domain Core del móvil ya está desacoplado de la persistencia. Firebase aún
 
 ## Decisión
 
-Crear `nexora-api` como repositorio independiente y desplegar inicialmente un **monolito modular** con:
+Crear la aplicación `apps/api` dentro del monorepositorio de Nexora y desplegarla inicialmente como un **monolito modular** con:
 
 - NestJS y TypeScript;
 - PostgreSQL como fuente de verdad;
@@ -98,7 +99,7 @@ La autenticación requiere un ADR separado por su impacto de seguridad. El objet
 - mayor trabajo inicial que un Backend as a Service;
 - responsabilidad sobre despliegue, seguridad, observabilidad y copias de respaldo;
 - necesidad de operar una base de datos;
-- dos repositorios y dos procesos de desarrollo.
+- configuración de workspaces y CI diferenciada para móvil y backend.
 
 ## Reglas de implementación
 

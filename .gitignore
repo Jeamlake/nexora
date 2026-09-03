@@ -38,9 +38,9 @@ yarn-error.*
 
 example
 
-# generated native folders
-/ios
-/android
+# generated native folders for the Expo workspace
+/apps/mobile/ios
+/apps/mobile/android
 
 # Local environment files
 .env

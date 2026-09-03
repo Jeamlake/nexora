@@ -2,9 +2,9 @@
 
 ## Objetivo
 
-Esta guía permite que un colaborador con acceso a GitHub prepare `nexora-mobile` desde cero en Windows, macOS o Linux. No depende de las rutas utilizadas por la computadora original.
+Esta guía permite que un colaborador con acceso a GitHub prepare el monorepositorio de Nexora desde cero en Windows, macOS o Linux. No depende de las rutas utilizadas por la computadora original.
 
-El repositorio del backend `nexora-api` todavía no existe. Cuando sea creado tendrá su propia guía para NestJS, PostgreSQL y Docker.
+El backend tendrá su propio workspace en `apps/api`. La carpeta ya está reservada, pero NestJS, PostgreSQL y Prisma todavía no han sido inicializados.
 
 ## Compatibilidad por plataforma
 
@@ -78,7 +78,7 @@ La rama `main` representa el estado estable. Una tarea nueva debe desarrollarse 
 
 ## Restaurar exactamente las dependencias
 
-Desde la raíz del repositorio:
+Desde la raíz del repositorio, restaurar todos los workspaces:
 
 ```shell
 npm ci
@@ -86,27 +86,27 @@ npm ci
 
 `npm ci` utiliza `package-lock.json` y evita que cada computadora resuelva versiones distintas. No se debe copiar `node_modules` desde otra computadora ni reemplazar `npm ci` por actualizaciones manuales.
 
-Si se necesita cambiar una dependencia de Expo, utilizar `npx expo install` en una rama dedicada y versionar juntos `package.json` y `package-lock.json`.
+Si se necesita cambiar una dependencia de Expo, entrar primero a `apps/mobile`, utilizar `npx expo install` en una rama dedicada y versionar juntos el `package.json` del móvil y el `package-lock.json` raíz.
 
 ## Configuración local
 
-Copiar `.env.example` a `.env.local`.
+Copiar `apps/mobile/.env.example` a `apps/mobile/.env.local`.
 
 Windows PowerShell:
 
 ```powershell
-Copy-Item .env.example .env.local
+Copy-Item apps/mobile/.env.example apps/mobile/.env.local
 ```
 
 macOS o Linux:
 
 ```shell
-cp .env.example .env.local
+cp apps/mobile/.env.example apps/mobile/.env.local
 ```
 
 El archivo contiene `EXPO_PUBLIC_API_URL`. La API todavía no existe, por lo que la variable no será utilizada funcionalmente en esta fase.
 
-Cuando `nexora-api` se ejecute localmente, utilizar según el cliente:
+Cuando `apps/api` se ejecute localmente, utilizar según el cliente:
 
 | Cliente | Valor de ejemplo |
 | --- | --- |
@@ -131,7 +131,7 @@ Este script ejecuta TypeScript y Expo Doctor. Ambos deben terminar correctamente
 
 1. Instalar una versión de Expo Go compatible con SDK 57.
 2. Conectar computadora y dispositivo a una red que permita comunicación entre ambos.
-3. Ejecutar:
+3. Desde la raíz, ejecutar:
 
 ```shell
 npm start
@@ -142,6 +142,7 @@ npm start
 Si la red local bloquea la conexión, puede probarse temporalmente:
 
 ```shell
+cd apps/mobile
 npx expo start --tunnel
 ```
 
@@ -199,7 +200,7 @@ La ejecución web sirve para ciclos rápidos, pero no reemplaza las pruebas de c
 
 Expo Go es suficiente para el baseline actual. Cuando se integren notificaciones, biometría u otra configuración nativa, se añadirá `expo-dev-client` y se distribuirá un Development Build compatible al equipo.
 
-No ejecutar `npx expo prebuild` ni versionar manualmente `android/` o `ios/` sin una decisión del proyecto. Nexora utiliza Continuous Native Generation y esas carpetas se mantienen ignoradas.
+Los comandos de EAS y Expo que no tengan un script raíz deben ejecutarse desde `apps/mobile`. No ejecutar `npx expo prebuild` ni versionar manualmente `apps/mobile/android` o `apps/mobile/ios` sin una decisión del proyecto. Nexora utiliza Continuous Native Generation y esas carpetas se mantienen ignoradas.
 
 ## Flujo diario de colaboración
 
@@ -241,9 +242,9 @@ No hacer push directo a `main`. El Pull Request debe explicar qué cambió, qué
 ## Archivos que sí deben venir desde GitHub
 
 - código fuente y assets;
-- `package.json` y `package-lock.json`;
-- `app.json`;
-- `.env.example`;
+- `package.json` y `package-lock.json` de la raíz;
+- `apps/mobile/package.json` y `apps/mobile/app.json`;
+- archivos `.env.example` de cada aplicación;
 - configuración compartida;
 - documentación;
 - historial Git.

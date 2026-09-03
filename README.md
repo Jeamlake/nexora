@@ -4,7 +4,7 @@
 
 Nexora es una plataforma móvil de gestión y convivencia residencial diseñada para centralizar comunicación, participación comunitaria, visitantes, incidencias y respuesta temprana ante emergencias.
 
-> **Estado actual:** Domain Core inicial y transición arquitectónica al backend propio documentados. Las funcionalidades de negocio y `nexora-api` todavía no están implementados.
+> **Estado actual:** repositorio reorganizado como monorepo. El móvil vive en `apps/mobile`; `apps/api` está reservado para el siguiente paso y todavía no contiene una API funcional.
 
 ## ¿Por qué nace Nexora?
 
@@ -36,7 +36,7 @@ Nexora propone reunir los principales procesos de convivencia en una sola aplica
 | Expo Router | `~57.0.18` | Navegación basada en archivos |
 | Node.js | `v22.21.1` | Entorno de desarrollo |
 | Android | API 36 | Plataforma Android de referencia |
-| NestJS | Arquitectura aceptada; repositorio pendiente | API y reglas de negocio del servidor |
+| NestJS | Arquitectura aceptada; workspace pendiente | API y reglas de negocio del servidor |
 | PostgreSQL | Arquitectura aceptada; pendiente | Persistencia relacional |
 | Prisma | Arquitectura aceptada; pendiente | ORM y migraciones del backend |
 | Firebase Cloud Messaging | Pendiente | Notificaciones push especializadas |
@@ -46,6 +46,7 @@ Nexora propone reunir los principales procesos de convivencia en una sola aplica
 
 - TypeScript sin errores.
 - Expo Doctor: 21/21 checks correctos el 2026-09-02.
+- Monorepo validado el 2026-09-03: instalación, TypeScript, configuración Expo y exportación web correctas desde la nueva estructura.
 - npm Audit: 14 vulnerabilidades moderadas transitivas; 0 High y 0 Critical. No se aplicó `--force`.
 - Android Emulator operativo.
 - Android 16 / API 36.
@@ -70,7 +71,22 @@ Documentos principales:
 - [Requisitos y decisiones pendientes](docs/08-requirements.md)
 - [Modelo de dominio inicial](docs/09-domain-model.md)
 - [Transición al backend propio](docs/10-backend-transition.md)
+- [Plan del primer avance](docs/11-first-advance-plan.md)
+- [Distribución de los cuatro avances](docs/12-academic-advances.md)
+- [Coordinación del equipo](docs/13-team-coordination.md)
 - [Decisiones arquitectónicas](docs/adr/)
+
+## Organización del monorepositorio
+
+```text
+apps/
+├── mobile/    Aplicación Expo existente
+└── api/       Frontera reservada para NestJS
+packages/      Código compartido solo cuando tenga varios consumidores
+docs/          Documentación transversal y ADR
+```
+
+La decisión, alternativas, variables y criterios de revisión están documentados en [ADR-006](docs/adr/ADR-006-monorepo.md).
 
 ## Arquitectura objetivo
 
@@ -108,7 +124,7 @@ Consulta [CONTRIBUTING.md](CONTRIBUTING.md). Para preparar el proyecto en Window
 
 No subir contraseñas, claves privadas, service accounts, tokens administrativos ni archivos `.env` reales.
 
-`.env.example` documenta únicamente los nombres de variables que el proyecto podrá requerir. Las variables `EXPO_PUBLIC_*` forman parte de la configuración cliente y no deben utilizarse para secretos privados.
+Cada aplicación mantiene su propio `.env.example`. Las variables `EXPO_PUBLIC_*` de `apps/mobile` forman parte de la configuración cliente y no deben utilizarse para secretos privados.
 
 ## Licencia
 

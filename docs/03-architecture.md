@@ -2,7 +2,7 @@
 
 ## Estado
 
-La estructura por capas y el Domain Core inicial ya existen en `nexora-mobile`. El backend descrito en este documento es la arquitectura aceptada, pero `nexora-api` todavía no ha sido creado.
+La estructura por capas y el Domain Core inicial existen en `apps/mobile`. El backend descrito en este documento es la arquitectura aceptada; `apps/api` está reservado, pero NestJS todavía no ha sido inicializado.
 
 No debe confundirse arquitectura diseñada con funcionalidad implementada.
 
@@ -25,7 +25,22 @@ NestJS modular monolith
    +-- Object Storage
 ```
 
-La aplicación móvil nunca se conecta directamente a PostgreSQL. Los secretos y credenciales del servidor pertenecen exclusivamente a `nexora-api` y a su plataforma de despliegue.
+La aplicación móvil nunca se conecta directamente a PostgreSQL. Los secretos y credenciales del servidor pertenecen exclusivamente a `apps/api` y a su plataforma de despliegue.
+
+## Arquitectura del repositorio
+
+```text
+nexora/
+├── apps/
+│   ├── mobile/
+│   └── api/
+├── packages/
+├── docs/
+├── package.json
+└── package-lock.json
+```
+
+El repositorio es único, pero cada aplicación conserva dependencias, configuración, variables y artefactos de despliegue propios. La raíz orquesta workspaces, documentación y validaciones transversales.
 
 ## Arquitectura interna del móvil
 
@@ -71,7 +86,7 @@ Domain define los contratos. Data los implementa y traduce DTO externos a modelo
 ## Estructura móvil
 
 ```text
-src/
+apps/mobile/src/
 ├── app/
 ├── presentation/
 │   ├── components/
@@ -93,14 +108,14 @@ src/
 └── config/
 ```
 
-`src/app` es la frontera de rutas de Expo Router. El código de pantalla reutilizable debe migrar progresivamente a Presentation conforme se implementen funcionalidades.
+`apps/mobile/src/app` es la frontera de rutas de Expo Router. El código de pantalla reutilizable debe migrar progresivamente a Presentation conforme se implementen funcionalidades.
 
 ## Arquitectura del backend
 
 El backend comenzará como un monolito modular, una sola unidad de despliegue con límites internos explícitos.
 
 ```text
-src/
+apps/api/src/
 ├── modules/
 │   ├── auth/
 │   ├── users/
@@ -117,7 +132,7 @@ src/
 └── main.ts
 ```
 
-Esta estructura es orientativa. `nexora-api` documentará su estructura real cuando sea creado.
+Esta estructura es orientativa. `apps/api` documentará su estructura real cuando sea inicializado.
 
 ## Autoridad de las reglas
 
@@ -170,4 +185,5 @@ Redis, colas y microservicios no forman parte del baseline. Se introducirán ún
 - [ADR-003: Firebase, reemplazado](adr/ADR-003-firebase.md)
 - [ADR-004: Arquitectura por capas](adr/ADR-004-layered-architecture.md)
 - [ADR-005: NestJS y PostgreSQL](adr/ADR-005-nestjs-postgresql.md)
+- [ADR-006: Monorepositorio](adr/ADR-006-monorepo.md)
 - [Plan de transición](10-backend-transition.md)

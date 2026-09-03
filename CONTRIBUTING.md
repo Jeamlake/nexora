@@ -26,6 +26,8 @@ Ejemplos:
 - `chore/expo-patches`
 - `chore/nexora-branding`
 
+Las ramas deben describir el resultado del cambio. No deben usar nombres de asistentes o herramientas ni la palabra `plan` como prefijo o propósito.
+
 ## Commits
 
 Se recomienda Conventional Commits:
@@ -84,16 +86,20 @@ Las variables con prefijo `EXPO_PUBLIC_` forman parte del bundle cliente y no de
 Las nuevas funcionalidades deben respetar la separación descrita en `docs/03-architecture.md`.
 
 - Domain define entidades, reglas, casos de uso y contratos.
-- Data implementa esos contratos y puede comunicarse con `nexora-api`.
+- Data implementa esos contratos y puede comunicarse con `apps/api`.
 - Presentation no debe acceder directamente a PostgreSQL, Prisma ni servicios del backend.
-- Los cambios del contrato móvil-API deben coordinarse entre repositorios y actualizar OpenAPI.
+- Los cambios del contrato móvil-API deben realizarse de forma atómica cuando sea posible y actualizar OpenAPI.
 
 ## Preparación de colaboradores
 
 La instalación reproducible para Windows, macOS y Linux está documentada en `docs/05-installation-and-setup.md`.
 
-Se debe usar `npm ci` después de clonar o actualizar el lockfile. No compartir `node_modules`, `.env`, SDK locales ni credenciales.
+Se debe usar `npm ci` desde la raíz después de clonar o actualizar el lockfile. No compartir `node_modules`, `.env`, SDK locales ni credenciales.
+
+Cada dependencia debe declararse en el workspace que la utiliza. Los comandos específicos de Expo se ejecutan desde `apps/mobile`; los checks agregados se ejecutan desde la raíz.
 
 ## Requisitos
 
 Los cambios funcionales deben relacionarse con los requisitos documentados en `docs/08-requirements.md`. Si un requisito cambia o se aclara, la documentación debe actualizarse en el mismo Pull Request.
+
+La asignación de responsables, revisores, dependencias y estados se encuentra en `docs/13-team-coordination.md`. Todo Pull Request utiliza `.github/pull_request_template.md`.

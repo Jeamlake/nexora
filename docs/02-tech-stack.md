@@ -6,7 +6,7 @@ Las tecnologías se eligen por compatibilidad, mantenibilidad, seguridad, produc
 
 Este documento diferencia entre:
 
-- **instalado:** existe actualmente en `nexora-mobile`;
+- **instalado:** existe actualmente en el monorepositorio;
 - **aceptado:** existe una decisión arquitectónica, pero aún no se implementó;
 - **pendiente:** necesita una decisión o validación posterior.
 
@@ -26,7 +26,7 @@ El 2026-09-02 se alinearon los parches recomendados para SDK 57. Expo Doctor com
 
 ## Backend principal
 
-La decisión aceptada es crear una API propia en un repositorio independiente llamado `nexora-api`.
+La decisión aceptada es crear una API propia dentro de `apps/api`. El móvil y la API serán aplicaciones independientes dentro del mismo monorepositorio, según [ADR-006](adr/ADR-006-monorepo.md).
 
 | Tecnología | Estado | Uso |
 | --- | --- | --- |
@@ -39,7 +39,7 @@ La decisión aceptada es crear una API propia en un repositorio independiente ll
 | WebSockets | Aceptado | Eventos para clientes conectados |
 | Docker | Aceptado | Infraestructura local reproducible |
 
-Las versiones exactas del backend se decidirán al crear `nexora-api`, se fijarán en su lockfile y se documentarán en ese repositorio. No se inventan versiones antes de inicializarlo.
+Las versiones exactas del backend se decidirán al inicializar `apps/api`, se fijarán en el lockfile raíz y se documentarán junto al workspace. No se inventan versiones antes de comprobarlas.
 
 ## Servicios especializados
 
@@ -71,6 +71,17 @@ Ninguna tecnología garantiza por sí sola el objetivo promedio de tres segundos
 | Expo Go | Útil para la fase inicial |
 | Expo Development Build | Requerido cuando se incorporen integraciones nativas |
 | EAS | Instalado en la estación inicial; configuración pendiente |
+
+## Organización de paquetes
+
+| Elemento | Estado | Uso |
+| --- | --- | --- |
+| npm workspaces | Instalado | Administrar las aplicaciones desde una raíz |
+| `apps/mobile` | Instalado | Aplicación React Native y Expo |
+| `apps/api` | Reservado | Futura aplicación NestJS |
+| `packages` | Reservado | Contratos o utilidades con varios consumidores reales |
+
+Existe un único `package-lock.json` en la raíz. Compartir repositorio no combina los artefactos de despliegue: móvil y API conservarán builds, variables, permisos y procesos independientes.
 
 ## Alternativas descartadas por ahora
 

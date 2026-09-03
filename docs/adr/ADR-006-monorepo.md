@@ -75,7 +75,7 @@ nexora/
 └── compose.yaml        # cuando se incorpore PostgreSQL
 ```
 
-El remoto conserva temporalmente el nombre `nexora-mobile` hasta realizar un cambio coordinado con los colaboradores. La estructura del monorepositorio no depende de ese nombre remoto.
+El remoto fue renombrado a `Jeamlake/nexora` después de integrar la reorganización y comunicar el cambio a los colaboradores. La estructura del monorepositorio no depende del nombre de una carpeta local.
 
 ## Responsabilidad de cada área
 
@@ -141,7 +141,12 @@ Solo contendrá código con consumidores reales en más de una aplicación. No s
 
 ## Nombre del repositorio
 
-El nombre objetivo es `nexora`, porque contendrá todo el producto y no solamente la aplicación móvil. El cambio del remoto y de la carpeta local se realizará como una operación coordinada después de integrar esta reorganización, comunicarla al equipo y verificar los clones existentes.
+El nombre `nexora` representa todo el producto y no solamente la aplicación móvil. El repositorio remoto fue renombrado el 2026-09-03. Los clones existentes deben actualizar `origin`; la carpeta local puede renombrarse después de cerrar las aplicaciones que la mantengan abierta.
+
+```shell
+git remote set-url origin git@github.com:Jeamlake/nexora.git
+git remote -v
+```
 
 ## Criterios para revisar la decisión
 

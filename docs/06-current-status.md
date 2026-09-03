@@ -8,7 +8,9 @@ Nexora completó el baseline móvil, el Domain Core inicial y la decisión de ad
 
 ## Repositorio
 
-- remoto: `git@github.com:Jeamlake/nexora-mobile.git`;
+- remoto: `git@github.com:Jeamlake/nexora.git`;
+- nombre oficial en GitHub: `Jeamlake/nexora`;
+- visibilidad verificada: pública;
 - rama estable: `main`;
 - PR #4 fusionado en `main` el 2026-09-02;
 - commit de integración: `8ad47fea8db69a006fe3d5a57b765d9ced86a1c2`;
@@ -87,6 +89,7 @@ Nexora completó el baseline móvil, el Domain Core inicial y la decisión de ad
 - medición de disponibilidad y latencia;
 - criterios verificables de accesibilidad;
 - proveedores de hosting y Object Storage.
+- licencia del código original de Nexora; el `LICENSE` actual fue heredado de la plantilla de Expo.
 
 ## Siguiente hito
 

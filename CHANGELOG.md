@@ -4,6 +4,14 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
+### Changed — Nombre del repositorio
+
+- El repositorio remoto cambia de `Jeamlake/nexora-mobile` a `Jeamlake/nexora` después de adoptar el monorepositorio.
+- La guía de clonación y el origen documentado utilizan la nueva URL.
+- El paquete raíz registra el repositorio oficial.
+- Se corrige la documentación: el repositorio está público; no se modificó su visibilidad.
+- Se registra como decisión pendiente la licencia del código original de Nexora, porque el `LICENSE` actual pertenece a la plantilla de Expo.
+
 ### Changed — Organización como monorepositorio
 
 - Se acepta ADR-006 después de comparar repositorios separados, monorepo y paquete mezclado.

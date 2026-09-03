@@ -4,7 +4,7 @@
 
 Nexora es una plataforma móvil de gestión y convivencia residencial diseñada para centralizar comunicación, participación comunitaria, visitantes, incidencias y respuesta temprana ante emergencias.
 
-> **Estado actual:** repositorio reorganizado como monorepo. El móvil vive en `apps/mobile`; `apps/api` está reservado para el siguiente paso y todavía no contiene una API funcional.
+> **Estado actual:** `Jeamlake/nexora` está organizado como monorepo. El móvil vive en `apps/mobile`; `apps/api` está reservado para el siguiente paso y todavía no contiene una API funcional.
 
 ## ¿Por qué nace Nexora?
 
@@ -128,7 +128,7 @@ Cada aplicación mantiene su propio `.env.example`. Las variables `EXPO_PUBLIC_*
 
 ## Licencia
 
-Proyecto académico privado. No se ha definido una licencia pública.
+El repositorio es público. El archivo `LICENSE` actual fue heredado de la plantilla de Expo y conserva el copyright de Expo; el equipo todavía debe tomar una decisión explícita sobre la licencia aplicable al código original de Nexora antes de la entrega final.
 
 ---
 

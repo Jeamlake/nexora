@@ -22,7 +22,7 @@ El desarrollo inicial puede realizarse con Expo Go. Cuando Nexora incorpore mód
 
 ### 1. Acceso al repositorio
 
-El colaborador debe aceptar la invitación al repositorio privado `Jeamlake/nexora-mobile` e iniciar sesión en GitHub.
+El repositorio oficial es `Jeamlake/nexora` y actualmente es público. Para enviar ramas o Pull Requests, cada colaborador debe iniciar sesión en GitHub y conservar el acceso de escritura asignado por la administración del repositorio.
 
 ### 2. Git
 
@@ -56,15 +56,15 @@ No es necesario instalar Expo CLI globalmente. El proyecto usa la versión inclu
 Usar esta opción si el colaborador ya registró su clave SSH en GitHub:
 
 ```shell
-git clone git@github.com:Jeamlake/nexora-mobile.git
-cd nexora-mobile
+git clone git@github.com:Jeamlake/nexora.git
+cd nexora
 ```
 
 ### Opción HTTPS
 
 ```shell
-git clone https://github.com/Jeamlake/nexora-mobile.git
-cd nexora-mobile
+git clone https://github.com/Jeamlake/nexora.git
+cd nexora
 ```
 
 Comprobar el repositorio:

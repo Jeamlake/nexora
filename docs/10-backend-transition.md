@@ -4,6 +4,8 @@
 
 Este documento convierte las decisiones de [ADR-005](adr/ADR-005-nestjs-postgresql.md) y [ADR-006](adr/ADR-006-monorepo.md) en una secuencia de entregables verificables. Distingue el estado real del móvil de la arquitectura futura para evitar documentar como terminado algo que aún no existe.
 
+Los hitos A–D de esta página son trabajos técnicos del primer avance; **no son los cuatro entregables del curso**, definidos en [12-academic-advances.md](12-academic-advances.md).
+
 ## Estado de la transición
 
 ### Completado en el monorepositorio
@@ -17,13 +19,18 @@ Este documento convierte las decisiones de [ADR-005](adr/ADR-005-nestjs-postgres
 - decisión de monorepositorio registrada mediante ADR-006;
 - aplicación móvil trasladada a `apps/mobile`;
 - npm workspaces y lockfile raíz establecidos.
+- base NestJS con configuración validada y prefijo `/api/v1`;
+- health check y contrato OpenAPI publicados;
+- pruebas, compilación y CI agregados al monorepositorio.
+
+### En curso
+
+Al 2026-09-08, el siguiente frente es la persistencia con PostgreSQL y Prisma. Consultar [estado y validaciones](06-current-status.md).
 
 ### Pendiente
 
-- inicializar NestJS en `apps/api` y fijar sus versiones;
 - configurar PostgreSQL, Prisma y Docker;
 - definir autenticación mediante un ADR separado;
-- crear OpenAPI y el endpoint de salud;
 - implementar el primer corte vertical de usuarios/residentes;
 - implementar el cliente HTTP en `apps/mobile`;
 - añadir pruebas de contrato e integración.
@@ -71,9 +78,9 @@ NestJS API
      +-- Object Storage
 ```
 
-## Orden de los siguientes entregables
+## Orden de los hitos técnicos
 
-### Entregable A — Cerrar la transición del móvil
+### Hito A — Cerrar la transición del móvil
 
 **Estado: completado mediante el PR #4**
 
@@ -83,19 +90,21 @@ NestJS API
 - abrir Pull Request;
 - fusionar únicamente después de revisión.
 
-### Entregable B — Baseline de `apps/api`
+### Hito B — Baseline de `apps/api`
 
-- workspace y políticas Git del monorepositorio;
-- NestJS con TypeScript estricto;
-- configuración validada;
+**Estado: parcial. Base HTTP completada; persistencia pendiente.**
+
+- workspace y políticas Git del monorepositorio: completado;
+- NestJS con TypeScript estricto: completado;
+- configuración validada: completado;
 - PostgreSQL reproducible mediante Docker Compose;
 - Prisma con primera migración vacía o de infraestructura;
-- Swagger/OpenAPI;
-- `GET /health`;
-- pruebas y CI;
-- guía de instalación para Windows, macOS y Linux.
+- Swagger/OpenAPI: completado;
+- `GET /api/v1/health`: completado;
+- pruebas y CI: completado;
+- guía de instalación para Windows, macOS y Linux: completado.
 
-### Entregable C — Autenticación
+### Hito C — Autenticación
 
 - ADR comparando proveedor administrado y autenticación propia;
 - modelo de identidad y sesión;
@@ -103,7 +112,7 @@ NestJS API
 - manejo seguro de access/refresh tokens;
 - pruebas de rutas protegidas.
 
-### Entregable D — Primer corte vertical
+### Hito D — Primer corte vertical
 
 Implementar una funcionalidad pequeña de extremo a extremo antes de generar todos los módulos:
 
@@ -138,7 +147,7 @@ Valores habituales durante desarrollo:
 | Dispositivo físico | `http://IP_LAN_DE_LA_COMPUTADORA:3000/api/v1` |
 | Entorno remoto | URL HTTPS asignada al entorno |
 
-La API aún no existe. Estos valores documentan el contrato futuro y no implican que las llamadas HTTP ya estén implementadas.
+El prefijo `/api/v1` ya está implementado. El cliente HTTP móvil sigue pendiente.
 
 ## Condición de finalización
 
@@ -146,7 +155,7 @@ La transición arquitectónica estará completamente operativa cuando:
 
 1. todos los workspaces puedan instalarse desde cero siguiendo su documentación;
 2. PostgreSQL pueda levantarse de forma reproducible;
-3. `GET /health` responda;
+3. `GET /api/v1/health` responda e incluya la futura dependencia de base de datos;
 4. Swagger exponga el contrato;
 5. el móvil pueda comunicarse con la API usando `EXPO_PUBLIC_API_URL`;
 6. CI valide las dos aplicaciones y el conjunto del monorepositorio;

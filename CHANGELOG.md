@@ -4,6 +4,29 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
+### API y comprobaciones — Base operativa (2026-09-08)
+
+- Se completa `apps/api` con NestJS 12, TypeScript estricto, ESM y configuración validada.
+- Se establece `/api/v1`, `GET /api/v1/health`, Swagger en `/docs` y OpenAPI JSON en `/docs/openapi.json`.
+- Se añaden validación global de entradas, respuestas de error uniformes, pruebas unitarias y tres pruebas HTTP.
+- La raíz incorpora typecheck de API, formato, pruebas e2e, compilación y un workflow de integración continua.
+- Se reemplaza la resolución de alias heredada por el soporte nativo de Vite y se retiran el script y la dependencia de despliegue no adoptados.
+- Se alinean `@expo/ui`, `expo`, `expo-glass-effect` y `expo-router` con los parches esperados por Expo SDK 57; Expo Doctor completa 21/21.
+- Se fija `multer` 2.3.0 como dependencia transitiva de `@nestjs/platform-express` para evitar los avisos altos de la versión 2.2.0.
+- La validación agregada pasa con seis pruebas unitarias, tres pruebas HTTP y compilación de API.
+
+### Documentación — Revisión y organización en español (2026-09-08)
+
+- Se organiza el índice por producto, arquitectura, trabajo diario y entregables.
+- Se añade una explicación de decisiones con motivos históricos, alternativas, límites y fuentes oficiales.
+- Se documenta un inventario de dependencias actuales y herramientas heredadas, sin atribuirles decisiones inexistentes.
+- Se reemplaza el README genérico de la API por una guía de Nexora en español.
+- Se corrigen estados obsoletos del monorepositorio y se separa la auditoría histórica de la implementación posterior.
+- Se registran pendientes de autenticación, datos, herramientas, rúbrica y dependencias entre entregables.
+- Se aclara que los hitos A–D de transición son trabajos técnicos del primer avance.
+- Se registran los resultados encontrados antes de implementar la base operativa; el estado vigente está en `docs/06-current-status.md`.
+
+
 ### Changed — Nombre del repositorio
 
 - El repositorio remoto cambia de `Jeamlake/nexora-mobile` a `Jeamlake/nexora` después de adoptar el monorepositorio.

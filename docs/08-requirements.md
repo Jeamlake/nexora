@@ -6,7 +6,7 @@ Este documento convierte el enunciado académico del caso **Gestión de Condomin
 
 Los identificadores internos de Nexora evitan depender de la numeración original, que contiene una duplicación del número 15 y omite el número 23.
 
-**Estado actual de todos los requisitos funcionales:** pendiente de implementación.
+**Estado al 2026-09-08:** ningún flujo funcional completo está implementado. Existen entidades y pruebas locales de la regla de tres contactos (RF-USR-04), lo que constituye avance parcial y no cumplimiento integral. Ver [estado actual](06-current-status.md).
 
 ## Convenciones
 
@@ -141,7 +141,7 @@ El caso solicita **simular** el envío de correo con ubicación. No debe convert
 
 ## Estado de implementación
 
-A fecha de 2026-08-26, estos requisitos están documentados pero **las funcionalidades de negocio todavía no están implementadas**.
+Los requisitos se documentaron inicialmente el 2026-08-26. Al corte del 2026-09-08 siguen pendientes los flujos completos; el progreso técnico se registra por separado en [estado actual](06-current-status.md).
 
 A medida que avance el desarrollo, cada requisito deberá relacionarse con:
 

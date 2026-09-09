@@ -4,7 +4,7 @@
 
 Esta guía permite que un colaborador con acceso a GitHub prepare el monorepositorio de Nexora desde cero en Windows, macOS o Linux. No depende de las rutas utilizadas por la computadora original.
 
-El backend tendrá su propio workspace en `apps/api`. La carpeta ya está reservada, pero NestJS, PostgreSQL y Prisma todavía no han sido inicializados.
+Al 2026-09-08, el monorepositorio contiene una base NestJS operativa en `apps/api`. PostgreSQL y Prisma siguen pendientes; no se debe regenerar NestJS sobre los archivos existentes. Ver [estado actual](06-current-status.md).
 
 ## Compatibilidad por plataforma
 
@@ -36,7 +36,7 @@ GitHub Desktop es opcional. Todos los pasos también pueden realizarse desde una
 
 ### 3. Node.js
 
-Instalar Node.js 22 LTS. Expo SDK 57 requiere como mínimo Node.js 22.13.x; el baseline comprobado del equipo es Node.js 22.21.1.
+Usar Node.js `>=22.22.3 <23`, según `engines` del paquete raíz. La estación revisada usa Node.js `22.22.3` y npm `10.9.8`; el gestor declarado es `npm@10.9.8`. El mínimo de Expo SDK 57 es 22.13.x, pero el requisito del repositorio es más estricto.
 
 Puede utilizarse el instalador oficial de [nodejs.org](https://nodejs.org/) o un administrador de versiones compatible con el sistema operativo.
 
@@ -90,23 +90,25 @@ Si se necesita cambiar una dependencia de Expo, entrar primero a `apps/mobile`, 
 
 ## Configuración local
 
-Copiar `apps/mobile/.env.example` a `apps/mobile/.env.local`.
+Copiar los archivos de ejemplo de cada aplicación a archivos locales.
 
 Windows PowerShell:
 
 ```powershell
 Copy-Item apps/mobile/.env.example apps/mobile/.env.local
+Copy-Item apps/api/.env.example apps/api/.env
 ```
 
 macOS o Linux:
 
 ```shell
 cp apps/mobile/.env.example apps/mobile/.env.local
+cp apps/api/.env.example apps/api/.env
 ```
 
-El archivo contiene `EXPO_PUBLIC_API_URL`. La API todavía no existe, por lo que la variable no será utilizada funcionalmente en esta fase.
+El archivo móvil contiene `EXPO_PUBLIC_API_URL`; el móvil todavía no la consume mediante un cliente HTTP funcional. La API usa `NODE_ENV` y `PORT`, carga sus archivos desde `apps/api` y rechaza valores inválidos al iniciar.
 
-Cuando `apps/api` se ejecute localmente, utilizar según el cliente:
+La API ya implementa el prefijo `/api/v1`. Utilizar según el cliente los siguientes valores:
 
 | Cliente | Valor de ejemplo |
 | --- | --- |
@@ -125,7 +127,17 @@ Ejecutar la validación completa:
 npm run check
 ```
 
-Este script ejecuta TypeScript y Expo Doctor. Ambos deben terminar correctamente. Si Expo Doctor propone cambiar versiones, el colaborador no debe corregirlas unilateralmente: debe abrir una tarea o Pull Request de mantenimiento para que el equipo revise el lockfile completo.
+Este script ejecuta lint de ambos workspaces, comprobación de formato de API, typecheck, pruebas unitarias, tres pruebas HTTP, compilación de API y Expo Doctor. Al 2026-09-08 todo el conjunto pasa y Expo Doctor completa 21/21; ver [resultados exactos](06-current-status.md).
+
+## Ejecutar la base API local
+
+Desde la raíz, en una terminal independiente:
+
+```shell
+npm run api:start:dev
+```
+
+Escucha en `PORT` o `3000`. Expone `GET /api/v1/health`, Swagger en `/docs` y OpenAPI JSON en `/docs/openapi.json`; no requiere PostgreSQL todavía. Los comandos y límites están en [la guía de API](../apps/api/README.md).
 
 ## Ejecutar con un dispositivo físico
 
@@ -256,8 +268,8 @@ Si algo falla, guardar en un reporte:
 - sistema operativo y versión;
 - `node --version`;
 - `npm --version`;
-- resultado de `npx expo-doctor`;
-- resultado de `npm exec tsc -- --noEmit`;
+- resultado de `npm run doctor` desde la raíz;
+- resultado de `npm run typecheck` desde la raíz;
 - salida completa del comando que falló;
 - dispositivo o emulador utilizado;
 - `git status --short --branch`.

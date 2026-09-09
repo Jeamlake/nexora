@@ -6,6 +6,8 @@ Aplicación cliente de Nexora construida con React Native, Expo SDK 57, Expo Rou
 
 El baseline y el Domain Core inicial están implementados. Todavía no existe autenticación ni conexión funcional con `apps/api`.
 
+Al 2026-09-08, los parches compatibles con Expo SDK 57 están alineados y Expo Doctor completa 21/21 comprobaciones. Las tres pruebas del límite de contactos también pasan. Consultar [estado actual](../../docs/06-current-status.md). Los motivos de las tecnologías están en [fundamentos](../../docs/14-decision-rationale.md).
+
 ## Ejecución desde la raíz
 
 ```shell

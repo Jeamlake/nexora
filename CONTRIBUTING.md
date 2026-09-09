@@ -63,6 +63,12 @@ npm run check
 git diff --check
 ```
 
+`check` cubre lint y tipos de ambos workspaces, formato de API, pruebas unitarias, pruebas HTTP de API, compilación y Expo Doctor. Consultar [estado actual](docs/06-current-status.md) para el resultado fechado y las limitaciones conocidas.
+
+## Idioma y organización documental
+
+Redactar documentación propia en español, conservando identificadores, rutas, nombres oficiales y licencias. Usar [el índice](docs/README.md) para ubicar cada tema. Registrar motivos y alternativas en un ADR; no presentar herramientas de plantilla como decisiones justificadas sin evidencia. Fechar el estado real y enlazar las decisiones pendientes.
+
 ## Dependencias
 
 No actualizar versiones mayores sin justificarlo.

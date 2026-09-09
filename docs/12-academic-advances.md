@@ -2,6 +2,8 @@
 
 ## Propósito
 
+Proyecto del curso **Desarrollo de Aplicaciones Móviles**. Esta distribución es el plan interno; fechas, rúbrica y formato exigido deben incorporarse y contrastarse antes de confirmar cada corte. Ver [decisiones pendientes](15-pending-decisions.md).
+
 Este documento divide la construcción completa de Nexora en cuatro avances acumulativos. Define alcance, decisiones previas, demostración y condición de aceptación para evitar que cada integrante interprete entregables diferentes.
 
 El roadmap técnico de [07-roadmap.md](07-roadmap.md) describe fases de ingeniería. Este documento agrupa esas fases en los cuatro cortes académicos del proyecto.
@@ -35,7 +37,7 @@ Probar la arquitectura completa mediante el primer flujo vertical móvil-API-Pos
 - aplicación Expo en `apps/mobile`;
 - API NestJS en `apps/api`;
 - PostgreSQL, Prisma, migraciones y seed;
-- configuración validada, Swagger y `GET /health`;
+- configuración validada, Swagger y `GET /api/v1/health`;
 - CI inicial;
 - autenticación, sesiones y cierre de sesión;
 - autorización para administrador/directiva, residente y seguridad;
@@ -96,6 +98,10 @@ Implementar los flujos cotidianos de comunicación, participación y control de 
 
 Administración publica un aviso y una encuesta; un residente consulta y vota; después crea una invitación y seguridad valida el QR una sola vez y registra la visita.
 
+### Dependencias que deben resolverse antes del avance 2
+
+RF-COM-01 incluye imágenes de avisos y el escaneo QR necesita cámara y permisos. Debe planificarse el acceso a archivos y comprobar el escaneo en dispositivo durante este avance, aunque el desarrollo detallado de almacenamiento y capacidades nativas figure en el avance 3. La revisión del calendario se sigue como PD-10 y PD-11; no se consideran funciones completadas por esta nota.
+
 ## Avance 3 — Emergencias, incidencias y capacidades nativas
 
 ### Objetivo
@@ -108,6 +114,7 @@ Completar los flujos críticos y comprobar su comportamiento en dispositivos rea
 - activación accesible con prevención de pulsaciones accidentales;
 - captura de ubicación;
 - persistencia y auditoría de la alerta;
+- simulación del correo con ubicación a contactos de emergencia (RF-ALT-05);
 - distribución autorizada por sector;
 - eventos WebSocket para clientes conectados;
 - FCM para segundo plano o aplicación cerrada;
@@ -207,5 +214,6 @@ Una modificación del contenido de un avance debe:
 ## Estado actual
 
 - **Avance activo:** 1.
-- **Paso activo:** reorganización y validación del monorepositorio.
-- **Siguiente paso después de integrar:** inicializar NestJS en `apps/api`.
+- **Completado al 2026-09-08:** monorepositorio, base móvil, workspace NestJS, configuración HTTP, health check, OpenAPI, pruebas y CI inicial.
+- **Siguiente paso:** PostgreSQL, Prisma, Docker Compose, primera migración y seed.
+- **Evidencia:** [estado actual](06-current-status.md); el primer entregable aún no está completo.

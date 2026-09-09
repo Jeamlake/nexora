@@ -4,6 +4,12 @@
 
 Organizar el trabajo de cuatro colaboradores sin duplicar esfuerzos, bloquear integraciones ni depender de acuerdos que solo existan en conversaciones.
 
+## Documentación y aprendizaje compartido
+
+Las guías y decisiones del equipo se redactan en español; se conservan identificadores y comandos técnicos. La ruta de lectura está en [el índice](README.md), las razones en [fundamentos](14-decision-rationale.md) y las decisiones abiertas en [pendientes](15-pending-decisions.md).
+
+Los frentes siguientes no asignan nombres ni fijan evaluación individual. Por tratarse de Desarrollo de Aplicaciones Móviles, el reparto debe permitir que todos expliquen y participen en la aplicación y su integración, con rotación según disponibilidad y rúbrica.
+
 ## Modelo de trabajo
 
 Los cuatro frentes son responsabilidades de trabajo, no cargos permanentes:

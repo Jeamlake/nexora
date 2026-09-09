@@ -44,3 +44,7 @@ Utilizar **React Native con Expo**.
 ## Revisión
 
 Revisar solo si aparece una limitación técnica demostrable.
+
+## Revisión documental del 2026-09-08
+
+La fecha y decisión original se conservan. Las razones, alternativas y límites se amplían en [fundamentos](../14-decision-rationale.md), contrastados con fuentes oficiales. El [inventario](../02-tech-stack.md) y el [estado actual](../06-current-status.md) distinguen la decisión de su implementación local o integrada.

@@ -107,11 +107,15 @@ Todavía no se implementan:
 - recuperación de contraseña;
 - biometría;
 - persistencia;
-- API o persistencia;
+- integración con la API;
 - validación administrativa del registro;
 - UI;
 - casos de uso;
 - repositorios.
+
+## Cambios locales observados el 2026-09-08
+
+La copia de trabajo incorpora una clase `Resident` que valida el máximo de contactos al construirse, copia el arreglo y congela la colección. Tres pruebas comprueban aceptación de tres contactos, rechazo del cuarto y aislamiento respecto del arreglo recibido. Esto no congela profundamente cada objeto de contacto ni valida una API; los cambios todavía están sin integrar. Ver [estado actual](06-current-status.md).
 
 ## Regla arquitectónica
 

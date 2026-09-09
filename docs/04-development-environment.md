@@ -1,104 +1,56 @@
 # 04. Entorno de desarrollo
 
-## Baseline validado
+## Referencia actual
 
-- Node.js: `v22.21.1`
-- Expo: `~57.0.19`
-- React Native: `0.86.3`
-- React: `19.2.3`
-- Expo Router: `~57.0.18`
-- Firebase CLI: `15.28.1` en la estación inicial; no es un requisito actual del móvil
-- EAS CLI: `eas-cli/22.5.0 win32-x64 node-v22.21.1`
-- Android: API 36
-- Android Emulator: Google APIs x86_64
-- Monorepo: npm workspaces con un único lockfile raíz
+Al 2026-09-08 se observaron Node.js `22.22.3` y npm `10.9.8`. La raíz exige `>=22.22.3 <23` y npm `>=10`. El [inventario](02-tech-stack.md) mantiene las versiones de aplicaciones; [estado actual](06-current-status.md) mantiene los resultados de comprobación.
 
-## Herramientas utilizadas
+Node.js ejecuta herramientas JavaScript y el servidor NestJS. npm instala dependencias y ejecuta scripts. Metro prepara el código del cliente para desarrollo; no sustituye a la API. TypeScript es el lenguaje/comprobador, no una base de datos.
 
-- Visual Studio Code;
-- Git;
-- GitHub Desktop;
-- NVM for Windows;
-- Node.js;
-- npm;
-- Android Studio;
-- Android SDK;
-- ADB;
-- Expo;
-- EAS CLI.
+## Herramientas y responsabilidad
 
-## Organización local de la estación inicial
+| Herramienta | Para qué se usa | Condición |
+| --- | --- | --- |
+| Node.js y npm | Ejecutar herramientas, workspaces y API | Requeridos |
+| Git | Historial y colaboración | Requerido para el flujo del equipo |
+| VS Code / otro editor | Edición y depuración | Elección del colaborador |
+| GitHub Desktop | Interfaz visual para Git | Opcional |
+| NVM / administrador equivalente | Seleccionar versión Node | Opcional |
+| Android Studio, SDK, Emulator y ADB | Preparar y probar Android | Necesarios para la ruta con emulador |
+| Expo Go | Iteración de la base móvil | Limitado a sus capacidades incluidas |
+| Compilación de desarrollo | Configuración y módulos nativos propios | Pendiente de incorporar |
+| EAS CLI | Compilación/distribución mediante EAS | Configuración pendiente |
+| Docker Compose | PostgreSQL local reproducible | Previsto; todavía no configurado |
 
-```text
-E:\Desarrollo
-├── Proyectos
-└── Cache
-    ├── npm
-    └── gradle
-```
+Las capacidades oficiales y motivos se enlazan desde [fundamentos](14-decision-rationale.md).
 
-AVD:
+## Referencia histórica de la estación inicial
 
-```text
-E:\AndroidAVD
-```
+El 2026-08-26 se documentó la puesta en marcha con Node.js `22.21.1`, Android API 36, Expo Go y el emulador `Condominio_API_36`. Las instalaciones originales de Firebase CLI y EAS CLI no son requisitos actuales para iniciar el móvil o la API local.
 
-Estas rutas son específicas de la estación inicial y no son obligatorias para otros desarrolladores.
+Rutas históricas:
 
-## Emulador validado
+~~~text
+E:/Desarrollo/Proyectos
+E:/Desarrollo/Cache/npm
+E:/Desarrollo/Cache/gradle
+E:/AndroidAVD
+~~~
 
-`Condominio_API_36`
+Esas rutas y el nombre del emulador no son obligatorios. La carpeta de trabajo de esta revisión es `C:/Desarrollo/Proyectos/nexora`; cada colaborador puede escoger la suya.
 
-- Android 16;
-- API 36;
-- Google APIs;
-- x86_64;
-- Windows Hypervisor Platform.
+## Plataformas y pruebas
 
-## Flujo verificado
+Android puede desarrollarse desde Windows, macOS o Linux. La compilación iOS local requiere macOS y Xcode. La salida web permite revisar parte de la interfaz, pero no valida cámara, ubicación, notificaciones ni segundo plano.
 
-```text
-Proyecto
-  ->
-Metro Bundler
-  ->
-Expo Go
-  ->
-Android Emulator
-  ->
-Aplicación visible
-```
+La existencia de soporte multiplataforma no acredita que Nexora haya sido probado en todas las plataformas. Consultar las comprobaciones fechadas del estado actual.
 
-## Expo Go
+## Configuración por aplicación
 
-Expo Go se usa en la fase inicial.
+- `apps/mobile` usa `EXPO_PUBLIC_API_URL` como contrato para el futuro cliente HTTP.
+- `apps/api` contiene la base NestJS; carga `apps/api/.env.local` o `.env`, valida `NODE_ENV` y `PORT`, y usa el puerto 3000 por defecto.
+- PostgreSQL, Prisma y Docker no están configurados.
+- `packages` sigue reservado para consumidores compartidos reales.
 
-Cuando se necesiten módulos o configuraciones nativas no disponibles en Expo Go se migrará a un **Expo Development Build**.
+Las variables públicas de Expo no pueden guardar secretos del servidor. Los archivos de ejemplo se versionan; los `.env` y credenciales reales pertenecen a cada entorno.
 
-## Compatibilidad del equipo
-
-El repositorio puede instalarse en Windows, macOS y Linux. Android puede desarrollarse localmente en los tres sistemas; iOS local requiere macOS. Las rutas de esta página son evidencia del equipo inicial, no requisitos para otros colaboradores.
-
-La guía reproducible y neutral respecto al sistema operativo se encuentra en [05-installation-and-setup.md](05-installation-and-setup.md).
-
-## Workspaces
-
-- `apps/mobile`: aplicación Expo instalada y validada;
-- `apps/api`: frontera reservada para el backend, todavía sin inicializar;
-- `packages`: reservado para código con varios consumidores reales.
-
-NestJS, PostgreSQL, Prisma y Docker se incorporarán a `apps/api` y a la infraestructura raíz. Todavía no son requisitos para ejecutar el baseline móvil actual.
-
-## Variables y secretos
-
-Nunca versionar:
-
-- contraseñas;
-- claves privadas;
-- service accounts;
-- tokens administrativos;
-- `.env` reales.
-
-Consultar `apps/mobile/.env.example`. Cada aplicación tendrá su propio archivo de ejemplo y sus variables locales.
-
-`EXPO_PUBLIC_API_URL` será visible dentro del bundle móvil. Solo identifica el endpoint; las credenciales del backend nunca deben almacenarse en variables `EXPO_PUBLIC_*`.
+Seguir [instalación](05-installation-and-setup.md) para preparar una computadora y [API](../apps/api/README.md) para ejecutar su base.

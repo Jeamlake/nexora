@@ -55,16 +55,17 @@ Con NVM for Windows 2.x también puede activarse explícitamente la versión:
 nvm use 22.22.3
 ```
 
-Si `node --version` funciona, pero `npm --version` muestra el código `NVM4306` y dice que el comando delegado no es confiable, reconstruir los accesos administrados por NVM:
+Si `node --version` funciona, pero `npm --version` muestra el código `NVM4306` y dice que el comando delegado no es confiable, reparar los permisos y la caché de verificación antes de reconstruir los accesos administrados por NVM:
 
 ```shell
+nvm doctor --autofix
 nvm reshim
 nvm use 22.22.3
 node --version
 npm --version
 ```
 
-Después de `nvm reshim`, cerrar y abrir la terminal integrada si conserva la ruta anterior. Este error ocurre antes de ejecutar los scripts de Nexora: primero debe responder npm y después se puede usar `npm ci`.
+Después de la reparación, cerrar la terminal integrada con la papelera y abrir una terminal Git Bash nueva si conserva el error. Este es un falso positivo conocido del modo `shim`: ocurre antes de ejecutar los scripts de Nexora. Primero debe responder npm y después se puede usar `npm ci`. Ver el [diagnóstico de NVM for Windows](https://github.com/nvm-windows/nvm/issues/1379).
 
 No es necesario instalar Expo CLI globalmente. El proyecto usa la versión incluida en sus dependencias mediante `npx expo`.
 

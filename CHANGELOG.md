@@ -14,6 +14,8 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 - Se alinean `@expo/ui`, `expo`, `expo-glass-effect` y `expo-router` con los parches esperados por Expo SDK 57; Expo Doctor completa 21/21.
 - Se fija `multer` 2.3.0 como dependencia transitiva de `@nestjs/platform-express` para evitar los avisos altos de la versión 2.2.0.
 - La validación agregada pasa con seis pruebas unitarias, tres pruebas HTTP y compilación de API.
+- La comprobación de formato de la API acepta los finales de línea nativos de Windows y Unix para evitar diferencias entre una copia local y CI.
+- La guía de instalación explica cómo recuperar npm con `nvm reshim` cuando NVM for Windows informa el código `NVM4306`.
 
 ### Documentación — Revisión y organización en español (2026-09-08)
 

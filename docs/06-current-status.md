@@ -47,8 +47,12 @@ Entorno observado: Node.js `22.22.3` y npm `10.9.8`.
 | Expo Doctor | **21/21** comprobaciones |
 | `npm run check` | Correcto; reúne todas las comprobaciones anteriores salvo `npm ci` |
 | `git diff --check` | Correcto |
+| API compilada | Responde `200` en health, Swagger y OpenAPI JSON |
+| Expo Web | Compila 1.297 módulos y responde `200` en `localhost:8081` |
 
 Los parches alineados mediante `npx expo install --fix` son `@expo/ui ~57.0.17`, `expo ~57.0.21`, `expo-glass-effect ~57.0.2` y `expo-router ~57.0.20`.
+
+La comprobación también cubrió una copia de trabajo de Windows con `core.autocrlf=true`. Prettier conserva el final de línea de cada sistema para que `npm run format:check` produzca el mismo resultado que CI. El código fuente no cambió por esta corrección.
 
 ## Auditoría de dependencias
 
@@ -60,7 +64,7 @@ La auditoría se registra como evidencia, pero no sustituye el análisis del alc
 
 ## Alcance y límites de la comprobación
 
-El workflow `.github/workflows/ci.yml` ejecuta `npm ci` y `npm run check` en pushes y Pull Requests de `main`. La validación local no incluye dispositivo físico, emulador, instalación de PostgreSQL, carga, disponibilidad ni flujo móvil-servidor porque esas piezas aún no existen.
+El workflow `.github/workflows/ci.yml` ejecuta `npm ci` y `npm run check` en pushes y Pull Requests de `main`. ADB está instalado en la estación revisada, pero no había un dispositivo o emulador conectado. La validación local no incluye dispositivo físico, emulador, instalación de PostgreSQL, carga, disponibilidad ni flujo móvil-servidor porque esas piezas aún no existen.
 
 ## Próximo paso
 

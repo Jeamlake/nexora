@@ -38,6 +38,8 @@ GitHub Desktop es opcional. Todos los pasos también pueden realizarse desde una
 
 Usar Node.js `>=22.22.3 <23`, según `engines` del paquete raíz. La estación revisada usa Node.js `22.22.3` y npm `10.9.8`; el gestor declarado es `npm@10.9.8`. El mínimo de Expo SDK 57 es 22.13.x, pero el requisito del repositorio es más estricto.
 
+El archivo `.nvmrc` fija `22.22.3` para administradores de versiones que necesitan un valor exacto. El rango de `engines` permanece como comprobación de compatibilidad para npm y otras herramientas.
+
 Puede utilizarse el instalador oficial de [nodejs.org](https://nodejs.org/) o un administrador de versiones compatible con el sistema operativo.
 
 Verificar:
@@ -45,6 +47,12 @@ Verificar:
 ```shell
 node --version
 npm --version
+```
+
+Con NVM for Windows 2.x también puede activarse explícitamente la versión:
+
+```shell
+nvm use 22.22.3
 ```
 
 No es necesario instalar Expo CLI globalmente. El proyecto usa la versión incluida en sus dependencias mediante `npx expo`.

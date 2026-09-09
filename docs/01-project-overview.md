@@ -14,6 +14,8 @@
 
 ## Contexto
 
+Proyecto del curso **Desarrollo de Aplicaciones Móviles**, organizado en [cuatro entregables acumulativos](12-academic-advances.md). Las razones de las decisiones se explican en [fundamentos](14-decision-rationale.md).
+
 El caso académico plantea que la gestión de edificios y urbanizaciones cerradas puede concentrarse en grupos de mensajería caóticos, dificultando la comunicación comunitaria y la coordinación de procesos residenciales.
 
 Nexora toma ese escenario como punto de partida para centralizar comunicación oficial, participación, visitantes, incidencias y respuesta temprana ante emergencias.
@@ -139,7 +141,7 @@ Está implementado el **baseline técnico y de dominio inicial**:
 - estructura por capas;
 - entidades iniciales `User`, `Resident`, `Unit` y `EmergencyContact`.
 
-Las funcionalidades de negocio todavía no están implementadas.
+Las funcionalidades de negocio completas todavía no están implementadas. La copia de trabajo añade una base NestJS y pruebas locales; consultar [estado actual](06-current-status.md) para separar integrado, local y pendiente.
 
 ## Contexto del sistema objetivo
 

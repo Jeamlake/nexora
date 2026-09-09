@@ -2,7 +2,7 @@
 
 ## Estado
 
-La estructura por capas y el Domain Core inicial existen en `apps/mobile`. El backend descrito en este documento es la arquitectura aceptada; `apps/api` está reservado, pero NestJS todavía no ha sido inicializado.
+La estructura por capas y el dominio inicial existen en `apps/mobile`. Al 2026-09-08, `apps/api` contiene una base NestJS operativa con configuración, `/api/v1`, health check, OpenAPI y manejo uniforme de errores. Los módulos de negocio, persistencia y comunicaciones de este documento siguen siendo el diseño objetivo. Consultar [estado actual](06-current-status.md) y [fundamentos](14-decision-rationale.md).
 
 No debe confundirse arquitectura diseñada con funcionalidad implementada.
 
@@ -112,11 +112,14 @@ apps/mobile/src/
 
 ## Arquitectura del backend
 
-El backend comenzará como un monolito modular, una sola unidad de despliegue con límites internos explícitos.
+El backend se construye como un monolito modular, una sola unidad de despliegue con límites internos explícitos.
 
 ```text
 apps/api/src/
+├── common/
+├── config/
 ├── modules/
+│   ├── health/             Implementado
 │   ├── auth/
 │   ├── users/
 │   ├── condominiums/
@@ -127,12 +130,12 @@ apps/api/src/
 │   ├── polls/
 │   ├── alerts/
 │   └── incidents/
-├── common/
-├── config/
+├── app.application.ts
+├── app.module.ts
 └── main.ts
 ```
 
-Esta estructura es orientativa. `apps/api` documentará su estructura real cuando sea inicializado.
+`common`, `config` y `modules/health` están implementados. Los demás módulos son orientativos y se crearán cuando corresponda a su flujo funcional. La estructura real actual se documenta en [apps/api/README.md](../apps/api/README.md).
 
 ## Autoridad de las reglas
 
@@ -159,7 +162,7 @@ Se utilizarán para distribuir eventos a aplicaciones conectadas, por ejemplo un
 
 ### Notificaciones push
 
-FCM avisará a dispositivos en segundo plano o cerrados. El evento se crea y persiste primero en la API; la notificación es un mecanismo de entrega, no la fuente de verdad.
+FCM se utilizará para notificar según plataforma, permisos y estado del dispositivo; no garantiza recepción con la aplicación cerrada en todas las condiciones ni una latencia fija. El evento se crea y persiste primero en la API; la notificación es un mecanismo de entrega, no la fuente de verdad. La integración móvil y los casos de segundo plano deben definirse y probarse.
 
 ## Datos y archivos
 

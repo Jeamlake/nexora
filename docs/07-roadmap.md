@@ -44,19 +44,22 @@
 
 ## Fase 3 — Baseline de `apps/api`
 
-**Estado: pendiente**
+**Estado: en curso; base HTTP completada y capa de datos pendiente**
 
-- inicializar el workspace NestJS;
-- NestJS y TypeScript estricto;
-- monolito modular;
+Completado y verificado en el corte del 2026-09-08:
+
+- workspace `@nexora/api` con NestJS y TypeScript estricto;
+- configuración de entorno validada;
+- prefijo `/api/v1`, Swagger/OpenAPI y endpoint de salud;
+- validación global y formato uniforme de errores;
+- pruebas unitarias, pruebas HTTP, compilación y CI;
+- guía monorepo para Windows, macOS y Linux.
+
+Pendiente para cerrar la fase:
+
 - PostgreSQL mediante Docker Compose;
-- Prisma y migraciones;
-- variables validadas;
-- Swagger/OpenAPI;
-- endpoint de salud;
-- pruebas básicas;
-- CI;
-- ampliar la guía monorepo para Windows, macOS y Linux.
+- Prisma, migraciones y seed;
+- comprobación de salud de la base de datos.
 
 ## Fase 4 — Identidad, usuarios y residencia
 

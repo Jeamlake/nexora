@@ -14,7 +14,7 @@ Al terminar el avance, un colaborador debe poder:
 2. instalar todos los workspaces y configurar las variables de entorno a partir de sus archivos de ejemplo;
 3. levantar PostgreSQL mediante Docker Compose;
 4. aplicar las migraciones y cargar datos de demostración;
-5. iniciar la API y comprobar `GET /health` y Swagger;
+5. iniciar la API y comprobar `GET /api/v1/health` y Swagger;
 6. ejecutar la aplicación móvil;
 7. iniciar sesión con una cuenta de prueba;
 8. consultar desde PostgreSQL el perfil, rol, unidad y hasta tres contactos de emergencia;
@@ -24,7 +24,7 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 1 — Cerrar y documentar el punto de partida
 
-**Estado: implementado y validado en `chore/monorepo-transition`; integración a `main` pendiente**
+**Estado: integrado mediante PR #5; renombrado del repositorio integrado mediante PR #6 (2026-09-03).**
 
 - verificar que `main` coincida con `origin/main`;
 - confirmar la integración del PR #4 y del Domain Core;
@@ -38,9 +38,11 @@ Al terminar el avance, un colaborador debe poder:
 
 **Evidencia esperada:** monorepositorio reproducible, móvil funcional desde `apps/mobile`, documentación coherente y este plan versionado.
 
-### Paso 2 — Inicializar `apps/api`
+### Paso 2 — Completar la base de `apps/api`
 
-- inicializar NestJS con TypeScript estricto;
+**Estado: completado y verificado en el corte del 2026-09-08.** La implementación dejó de ser una plantilla y no debe volver a generarse. Consultar [estado actual](06-current-status.md).
+
+- revisar la base NestJS existente y su configuración TypeScript;
 - definir scripts, versión de Node.js y administrador de paquetes;
 - añadir `.env.example` y documentación específica del workspace;
 - integrar sus scripts con la raíz y el CI del monorepositorio;
@@ -49,6 +51,8 @@ Al terminar el avance, un colaborador debe poder:
 **Evidencia esperada:** el workspace de API instala, compila y ejecuta desde una computadora limpia.
 
 ### Paso 3 — Levantar PostgreSQL y Prisma
+
+**Estado: siguiente paso.**
 
 - crear `compose.yaml` para desarrollo local;
 - configurar PostgreSQL sin versionar credenciales reales;
@@ -61,11 +65,13 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 4 — Completar el baseline de la API
 
+**Estado: base HTTP completada y verificada el 2026-09-08.** Al completar el paso 3, el health check se ampliará para comprobar la base de datos.
+
 - validar variables de entorno al arrancar;
 - establecer el prefijo `/api/v1`;
 - añadir validación global de entradas;
 - normalizar respuestas de error;
-- implementar `GET /health`;
+- implementar `GET /api/v1/health`;
 - publicar Swagger/OpenAPI;
 - añadir pruebas básicas y CI.
 
@@ -135,16 +141,20 @@ Al terminar el avance, un colaborador debe poder:
 
 **Evidencia esperada:** monorepositorio y workspaces reproducibles, con una demostración repetible del avance.
 
-## Orden obligatorio
+## Referencias de organización
+
+Las razones del stack están en [fundamentos](14-decision-rationale.md). La rúbrica, versiones de datos, autenticación y cierre de herramientas se siguen en [decisiones pendientes](15-pending-decisions.md).
+
+## Orden y progreso
 
 ```text
-1. Punto de partida
+1. Punto de partida — completado
         ↓
-2. Workspace API
+2. Workspace API — completado
         ↓
-3. PostgreSQL y Prisma
+3. PostgreSQL y Prisma — siguiente
         ↓
-4. Baseline NestJS
+4. Baseline NestJS — base HTTP completada; ampliar health después del paso 3
         ↓
 5. ADR de autenticación
         ↓
@@ -159,7 +169,7 @@ Al terminar el avance, un colaborador debe poder:
 10. Validación y entrega
 ```
 
-No se comenzarán módulos del segundo avance para ocultar una integración incompleta del primero. Si un paso revela un problema, se corrige en la capa responsable antes de continuar.
+El paso 4 se adelantó porque su base HTTP no dependía de PostgreSQL. El orden restante conserva las dependencias. No se comenzarán módulos del segundo avance para ocultar una integración incompleta del primero. Si un paso revela un problema, se corrige en la capa responsable antes de continuar.
 
 ## Fuera del primer avance
 

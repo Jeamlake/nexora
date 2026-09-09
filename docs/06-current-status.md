@@ -1,96 +1,67 @@
 # 06. Estado actual
 
-Fecha de corte: 2026-09-03.
+Corte: **2026-09-08**. Evidencia: archivos del repositorio, instalación limpia y comandos ejecutados desde la raíz.
 
-## Resumen
+## Implementado
 
-Nexora completó el baseline móvil, el Domain Core inicial y la decisión de adoptar un backend propio. El repositorio se reorganizó como monorepo: el móvil vive en `apps/mobile` y `apps/api` reserva la frontera del backend. Todavía no existen funcionalidades de negocio conectadas a datos reales ni una API NestJS inicializada.
+| Área | Estado comprobado |
+| --- | --- |
+| Organización | Monorepositorio con `apps/mobile`, `apps/api`, npm workspaces y un lockfile raíz |
+| Móvil | Expo SDK 57, rutas de plantilla, capas iniciales y regla de máximo tres contactos |
+| API | NestJS 12, ESM, TypeScript estricto, configuración validada y adaptador Express |
+| Contrato HTTP | Prefijo `/api/v1`, health check, Swagger, OpenAPI JSON y errores uniformes |
+| Calidad | Checks agregados, pruebas de ambos workspaces y workflow de GitHub Actions |
+| Documentación | Índice y guías en español con decisiones, cuatro avances y pendientes separados |
 
-## Repositorio
+La API expone:
 
-- remoto: `git@github.com:Jeamlake/nexora.git`;
-- nombre oficial en GitHub: `Jeamlake/nexora`;
-- visibilidad verificada: pública;
-- rama estable: `main`;
-- PR #4 fusionado en `main` el 2026-09-02;
-- commit de integración: `8ad47fea8db69a006fe3d5a57b765d9ced86a1c2`;
-- `main` y `origin/main` verificados en el mismo commit al iniciar el primer avance;
-- la rama histórica `feature/domain-core` se conserva como referencia, pero ya no contiene trabajo pendiente de integración;
-- la transición a monorepo se desarrolla en `chore/monorepo-transition` antes de integrarse a `main`.
+| Ruta | Resultado actual |
+| --- | --- |
+| `GET /api/v1/health` | Estado del proceso, nombre del servicio y marca de tiempo |
+| `GET /docs` | Interfaz Swagger |
+| `GET /docs/openapi.json` | Contrato OpenAPI |
 
-## Completado
+El health check comprueba el proceso HTTP. Incorporará dependencias cuando exista PostgreSQL u otro servicio obligatorio.
 
-### Producto y requisitos
+## Pendiente del primer avance
 
-- identidad Nexora;
-- problema, propuesta de valor y pilares;
-- requisitos funcionales y no funcionales;
-- ambigüedades del caso registradas;
-- documentación versionada.
+El móvil conserva la interfaz de plantilla y todavía no consume la API. Faltan PostgreSQL, Prisma, Docker Compose, migraciones, seed, decisión e implementación de autenticación, roles, residentes/unidades, cliente HTTP y pantallas de login y perfil.
 
-### Aplicación móvil
+Por tanto, **el primer entregable sigue incompleto**. El resultado esperado continúa siendo iniciar sesión en el móvil, obtener desde PostgreSQL el perfil residente-unidad y cerrar sesión.
 
-- React Native y Expo SDK 57;
-- TypeScript estricto;
-- Expo Router;
-- estructura Presentation, Domain y Data;
-- entidades `User`, `Resident`, `Unit` y `EmergencyContact`;
-- regla de máximo tres contactos de emergencia;
-- baseline Android probado con Expo Go.
+Avisos, encuestas, visitantes, alertas e incidencias corresponden a entregables posteriores. FCM, almacenamiento de fotografías, biometría y perfiles EAS tampoco están implementados.
 
-### Transición arquitectónica
+## Validación del 2026-09-08
 
-- Firebase marcado como backend principal reemplazado;
-- NestJS y PostgreSQL aceptados en ADR-005;
-- monolito modular seleccionado;
-- REST, OpenAPI, WebSockets, FCM y Object Storage ubicados en la arquitectura;
-- contrato de configuración `EXPO_PUBLIC_API_URL` documentado;
-- `apps/mobile/src/data/api` reservado para el futuro adaptador;
-- npm workspaces configurado en la raíz;
-- aplicación Expo trasladada a `apps/mobile`;
-- frontera `apps/api` reservada;
-- decisión de monorepositorio registrada en ADR-006.
+Entorno observado: Node.js `22.22.3` y npm `10.9.8`.
 
-## Validación vigente
+| Comprobación | Resultado |
+| --- | --- |
+| `npm ci` | Instalación reproducible desde el lockfile |
+| `npm run lint` | Correcto para API y móvil |
+| `npm run format:check` | Correcto para API |
+| `npm run typecheck` | Correcto para API y móvil |
+| `npm run test` | Correcto: 3 pruebas unitarias de API y 3 de `Resident` |
+| `npm run test:e2e` | Correcto: 3 pruebas HTTP de API |
+| `npm run build` | Compilación de API correcta |
+| Expo Doctor | **21/21** comprobaciones |
+| `npm run check` | Correcto; reúne todas las comprobaciones anteriores salvo `npm ci` |
+| `git diff --check` | Correcto |
 
-- Node.js: `22.21.1` en la estación inicial;
-- npm: `10.9.4`;
-- TypeScript: sin errores;
-- Git: árbol de trabajo limpio antes de iniciar esta transición;
-- Expo Doctor del 2026-09-03: 21/21 comprobaciones desde la raíz del monorepositorio;
-- configuración pública de Expo resuelta correctamente desde `apps/mobile`;
-- exportación web estática correcta desde `apps/mobile`, con cuatro rutas;
-- dependencias reproducibles mediante `package-lock.json`;
-- npm Audit: 14 vulnerabilidades moderadas transitivas, 0 High y 0 Critical; no se aplicó una corrección forzada.
+Los parches alineados mediante `npx expo install --fix` son `@expo/ui ~57.0.17`, `expo ~57.0.21`, `expo-glass-effect ~57.0.2` y `expo-router ~57.0.20`.
 
-## No implementado todavía
+## Auditoría de dependencias
 
-- aplicación NestJS dentro de `apps/api`;
-- NestJS, PostgreSQL, Prisma y Docker;
-- cliente HTTP/WebSocket del móvil;
-- autenticación;
-- repositorios y casos de uso funcionales;
-- pantallas de negocio;
-- avisos, encuestas y votos;
-- visitantes y QR;
-- alertas, ubicación y tiempo real;
-- FCM;
-- almacenamiento de fotografías;
-- incidencias;
-- Development Build y EAS configurados;
-- pruebas automatizadas y CI.
+`npm audit` informa **14 avisos moderados, 0 altos y 0 críticos**. Los moderados pertenecen a cadenas de herramientas de Expo y Expo Router; las correcciones automáticas propuestas degradan paquetes principales a versiones incompatibles con SDK 57, por lo que no se aplicaron.
 
-## Decisiones pendientes
+NestJS 12.0.1 declara `multer` 2.2.0 mediante `@nestjs/platform-express`. Esa versión sí tenía avisos altos corregidos en 2.3.0. La raíz fija 2.3.0 con `overrides`; las pruebas HTTP y la instalación limpia confirman la resolución. La API aún no acepta cargas de archivos.
 
-- estrategia y proveedor de autenticación;
-- regla de voto por unidad o residente;
-- comportamiento de encuestas obligatorias;
-- umbral de toques del botón de pánico;
-- medición de disponibilidad y latencia;
-- criterios verificables de accesibilidad;
-- proveedores de hosting y Object Storage.
-- licencia del código original de Nexora; el `LICENSE` actual fue heredado de la plantilla de Expo.
+La auditoría se registra como evidencia, pero no sustituye el análisis del alcance de cada aviso. No se utilizó `npm audit fix --force`.
 
-## Siguiente hito
+## Alcance y límites de la comprobación
 
-Ejecutar el [plan del primer avance](11-first-advance-plan.md). Después de integrar la reorganización, el siguiente paso técnico es inicializar un baseline reproducible de NestJS en `apps/api` antes de configurar PostgreSQL y Prisma.
+El workflow `.github/workflows/ci.yml` ejecuta `npm ci` y `npm run check` en pushes y Pull Requests de `main`. La validación local no incluye dispositivo físico, emulador, instalación de PostgreSQL, carga, disponibilidad ni flujo móvil-servidor porque esas piezas aún no existen.
+
+## Próximo paso
+
+Continuar con PostgreSQL, Prisma, Docker Compose y la primera migración. Después corresponde cerrar el ADR de autenticación y construir el primer flujo vertical. Seguir [primer avance](11-first-advance-plan.md) y [registro de pendientes](15-pending-decisions.md); no volver a generar NestJS sobre los archivos existentes.

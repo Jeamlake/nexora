@@ -2,134 +2,79 @@
 
 **Tu comunidad, conectada.**
 
-Nexora es una plataforma móvil de gestión y convivencia residencial diseñada para centralizar comunicación, participación comunitaria, visitantes, incidencias y respuesta temprana ante emergencias.
+Plataforma móvil de gestión y convivencia residencial para conectar residentes, administración y seguridad. Proyecto del curso **Desarrollo de Aplicaciones Móviles**, organizado en cuatro entregables acumulativos.
 
-> **Estado actual:** `Jeamlake/nexora` está organizado como monorepo. El móvil vive en `apps/mobile`; `apps/api` está reservado para el siguiente paso y todavía no contiene una API funcional.
+Nexora busca centralizar procesos dispersos entre mensajería, llamadas y registros manuales: avisos, encuestas, visitantes con QR, incidencias y alertas comunitarias. La identidad parte de un caso académico.
 
-## ¿Por qué nace Nexora?
+## Estado
 
-En el escenario analizado, la información y los procesos de una comunidad residencial pueden quedar repartidos entre grupos de mensajería, llamadas, mensajes privados y registros manuales.
+Al **2026-09-08**, el monorepositorio contiene la base móvil y una base operativa de NestJS en `apps/api`. La API valida su entorno, usa el prefijo `/api/v1`, publica un health check y un contrato OpenAPI. PostgreSQL, autenticación y el flujo móvil de perfil siguen pendientes, por lo que el primer entregable aún no está completo.
 
-El problema no es únicamente la ausencia de herramientas digitales, sino la **fragmentación de la gestión residencial**.
+La comprobación agregada ejecuta lint, formato, tipos, seis pruebas unitarias, tres pruebas HTTP de API, compilación y Expo Doctor. Todo ese conjunto pasa; Expo Doctor completa **21/21** comprobaciones. Consultar [estado y validaciones](docs/06-current-status.md) para el alcance exacto.
 
-Nexora propone reunir los principales procesos de convivencia en una sola aplicación para conectar a residentes, administración y seguridad mediante flujos organizados y trazables.
+## Documentación en español
 
-## Propuesta de valor
+Empezar por [el índice de documentación](docs/README.md).
 
-> Centralizar la vida digital de una comunidad residencial en una sola aplicación.
+- [Qué es Nexora](docs/01-project-overview.md).
+- [Por qué elegimos cada tecnología y esta arquitectura](docs/14-decision-rationale.md).
+- [Tecnologías, versiones y herramientas heredadas](docs/02-tech-stack.md).
+- [Arquitectura y límites de cada aplicación](docs/03-architecture.md).
+- [Instalación del proyecto](docs/05-installation-and-setup.md).
+- [Cuatro entregables del curso](docs/12-academic-advances.md).
+- [Pasos del primer entregable](docs/11-first-advance-plan.md).
+- [Organización del equipo](docs/13-team-coordination.md).
+- [Decisiones y dependencias pendientes](docs/15-pending-decisions.md).
 
-## Pilares
+## Organización
 
-- **Comunicar:** avisos e información oficial.
-- **Participar:** encuestas y decisiones comunitarias.
-- **Gestionar:** visitantes e incidencias.
-- **Proteger:** alertas y respuesta comunitaria.
-
-## Stack principal
-
-| Tecnología | Baseline | Uso |
-| --- | --- | --- |
-| React Native | `0.86.3` | Desarrollo móvil Android/iOS |
-| Expo | `~57.0.19` | Framework y toolchain |
-| React | `19.2.3` | Componentes e interfaz |
-| TypeScript | `~6.0.3` | Lenguaje principal |
-| Expo Router | `~57.0.18` | Navegación basada en archivos |
-| Node.js | `v22.21.1` | Entorno de desarrollo |
-| Android | API 36 | Plataforma Android de referencia |
-| NestJS | Arquitectura aceptada; workspace pendiente | API y reglas de negocio del servidor |
-| PostgreSQL | Arquitectura aceptada; pendiente | Persistencia relacional |
-| Prisma | Arquitectura aceptada; pendiente | ORM y migraciones del backend |
-| Firebase Cloud Messaging | Pendiente | Notificaciones push especializadas |
-| Git / GitHub | Activo | Control de versiones y colaboración |
-
-## Estado verificado
-
-- TypeScript sin errores.
-- Expo Doctor: 21/21 checks correctos el 2026-09-02.
-- Monorepo validado el 2026-09-03: instalación, TypeScript, configuración Expo y exportación web correctas desde la nueva estructura.
-- npm Audit: 14 vulnerabilidades moderadas transitivas; 0 High y 0 Critical. No se aplicó `--force`.
-- Android Emulator operativo.
-- Android 16 / API 36.
-- Expo Go operativo.
-- Metro Bundler compilando correctamente.
-- Repositorio Git y GitHub configurados.
-
-## Documentación
-
-Consulta [`docs/README.md`](docs/README.md).
-
-Documentos principales:
-
-- [Identidad de producto](docs/00-product-identity.md)
-- [Descripción del proyecto](docs/01-project-overview.md)
-- [Stack tecnológico](docs/02-tech-stack.md)
-- [Arquitectura](docs/03-architecture.md)
-- [Entorno de desarrollo](docs/04-development-environment.md)
-- [Instalación en otra computadora](docs/05-installation-and-setup.md)
-- [Estado actual](docs/06-current-status.md)
-- [Roadmap](docs/07-roadmap.md)
-- [Requisitos y decisiones pendientes](docs/08-requirements.md)
-- [Modelo de dominio inicial](docs/09-domain-model.md)
-- [Transición al backend propio](docs/10-backend-transition.md)
-- [Plan del primer avance](docs/11-first-advance-plan.md)
-- [Distribución de los cuatro avances](docs/12-academic-advances.md)
-- [Coordinación del equipo](docs/13-team-coordination.md)
-- [Decisiones arquitectónicas](docs/adr/)
-
-## Organización del monorepositorio
-
-```text
+~~~text
 apps/
-├── mobile/    Aplicación Expo existente
-└── api/       Frontera reservada para NestJS
-packages/      Código compartido solo cuando tenga varios consumidores
-docs/          Documentación transversal y ADR
-```
+├── mobile/    Aplicación Expo y dominio móvil inicial
+└── api/       Base HTTP de NestJS; negocio y persistencia pendientes
+packages/      Reservado para código con varios consumidores reales
+docs/          Producto, requisitos, arquitectura, decisiones y entregables
+~~~
 
-La decisión, alternativas, variables y criterios de revisión están documentados en [ADR-006](docs/adr/ADR-006-monorepo.md).
+Se usa npm workspaces y un único lockfile. Cada aplicación conserva configuración, dependencias y compilación propias. La raíz reúne instalación y comprobaciones. [ADR-006](docs/adr/ADR-006-monorepo.md).
 
-## Arquitectura objetivo
+## Tecnologías y propósito
 
-```text
-Nexora Mobile
-React Native + Expo
-        |
-        | HTTPS / WebSocket
-        v
-NestJS modular monolith
-        |
-        +-- PostgreSQL / Prisma
-        +-- Firebase Cloud Messaging
-        +-- Object Storage
-```
+| Área | Elección | Propósito |
+| --- | --- | --- |
+| Móvil | React Native, Expo, React y Expo Router | Interfaz y capacidades Android/iOS |
+| Lenguaje | TypeScript | Contratos y detección temprana de errores |
+| Servidor | NestJS como monolito modular | API, permisos y reglas de negocio |
+| Datos previstos | PostgreSQL y Prisma | Relaciones, transacciones y migraciones |
+| Comunicación prevista | REST/OpenAPI, WebSockets y FCM | Contratos, eventos y notificaciones |
+| Archivos previstos | Almacenamiento de objetos | Fotografías; proveedor pendiente |
 
-Firebase ya no es el backend principal. La evolución de esta decisión se conserva en [ADR-003](docs/adr/ADR-003-firebase.md) y [ADR-005](docs/adr/ADR-005-nestjs-postgresql.md).
+Firebase como backend completo fue reemplazado por la arquitectura propia antes de integrarse. Se conserva como opción especializada para notificaciones. Las razones, alternativas y costos están en [fundamentos](docs/14-decision-rationale.md); el [inventario](docs/02-tech-stack.md) distingue instalado, aceptado y pendiente.
 
-## Desarrollo
+## Ejecución
 
-`main` representa el estado estable.
+Usar las versiones de Node/npm indicadas en [la guía de instalación](docs/05-installation-and-setup.md).
 
-Las nuevas tareas deben realizarse en ramas como:
+Desde la raíz:
 
-- `feature/...`
-- `fix/...`
-- `docs/...`
-- `refactor/...`
-- `test/...`
-- `chore/...`
+~~~shell
+npm ci
+npm run check
+npm start
+~~~
 
-Consulta [CONTRIBUTING.md](CONTRIBUTING.md). Para preparar el proyecto en Windows, macOS o Linux, utiliza [la guía de instalación](docs/05-installation-and-setup.md).
+Para ejecutar la API en otra terminal:
 
-## Seguridad
+~~~shell
+npm run api:start:dev
+~~~
 
-No subir contraseñas, claves privadas, service accounts, tokens administrativos ni archivos `.env` reales.
+Guías específicas: [móvil](apps/mobile/README.md) y [API](apps/api/README.md).
 
-Cada aplicación mantiene su propio `.env.example`. Las variables `EXPO_PUBLIC_*` de `apps/mobile` forman parte de la configuración cliente y no deben utilizarse para secretos privados.
+## Colaboración y datos de configuración
 
-## Licencia
+`main` representa el estado estable. Las tareas se realizan mediante ramas, revisión y Pull Requests, según [CONTRIBUTING](CONTRIBUTING.md).
 
-El repositorio es público. El archivo `LICENSE` actual fue heredado de la plantilla de Expo y conserva el copyright de Expo; el equipo todavía debe tomar una decisión explícita sobre la licencia aplicable al código original de Nexora antes de la entrega final.
+Las variables `EXPO_PUBLIC_*` son visibles en el cliente. Los archivos `.env` reales, credenciales y claves privadas no se versionan.
 
----
-
-Identidad Nexora adoptada: 2026-08-26.
+El [LICENSE](LICENSE) fue heredado de Expo. La licencia del código original de Nexora sigue pendiente de decisión del equipo.

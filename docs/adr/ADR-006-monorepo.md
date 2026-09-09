@@ -6,6 +6,8 @@
 
 ## Contexto
 
+Este contexto corresponde a la decisión del 2026-09-03. El progreso posterior se registra en [estado actual](../06-current-status.md).
+
 Nexora tendrá una aplicación móvil y una API que evolucionarán como partes del mismo producto. El equipo actual está formado por cuatro colaboradores, comparte calendario académico y necesita reproducir el proyecto completo en diferentes computadoras.
 
 La propuesta anterior ubicaba el móvil y la API en repositorios independientes. Esa separación es válida, pero obligaría al equipo actual a coordinar dos clones, dos historiales, Pull Requests relacionados, contratos publicados y documentación distribuida antes de existir equipos o ciclos de entrega independientes.
@@ -166,3 +168,7 @@ Si ocurre, la separación deberá conservar historial y contrato; no se hará ú
 - [Expo SDK 57](https://docs.expo.dev/versions/v57.0.0/)
 - [Expo: trabajar con monorepos](https://docs.expo.dev/guides/monorepos/)
 - [Expo: EAS Build con monorepos](https://docs.expo.dev/build-reference/build-with-monorepos/)
+
+## Revisión documental del 2026-09-08
+
+La fecha y decisión original se conservan. Las razones, alternativas y límites se amplían en [fundamentos](../14-decision-rationale.md), contrastados con fuentes oficiales. El [inventario](../02-tech-stack.md) y el [estado actual](../06-current-status.md) distinguen la decisión de su implementación local o integrada.

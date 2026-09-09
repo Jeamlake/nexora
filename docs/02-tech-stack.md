@@ -1,112 +1,108 @@
-# 02. Stack tecnológico
+# 02. Inventario tecnológico
 
-## Principio de selección
+Corte: **2026-09-08**. Este inventario describe la base móvil y la base HTTP de API implementadas en el monorepositorio. Las razones y alternativas se desarrollan en [fundamentos](14-decision-rationale.md); los resultados de comprobación están en [estado](06-current-status.md).
 
-Las tecnologías se eligen por compatibilidad, mantenibilidad, seguridad, productividad y ajuste al dominio. Una tecnología no se adopta únicamente por ser nueva o prometer escalabilidad.
+## Cómo leer el inventario
 
-Este documento diferencia entre:
+- **Integrado:** presente en el historial local de `main`.
+- **Implementado:** presente en el código y cubierto por las comprobaciones indicadas.
+- **Aceptado:** decisión registrada, implementación pendiente.
+- **Heredado:** herramienta o configuración de plantilla; no demuestra una evaluación propia.
+- **Pendiente:** todavía requiere elección o confirmación.
 
-- **instalado:** existe actualmente en el monorepositorio;
-- **aceptado:** existe una decisión arquitectónica, pero aún no se implementó;
-- **pendiente:** necesita una decisión o validación posterior.
+`package.json` declara rangos; `package-lock.json` fija versiones resueltas. “Declarado” no significa “recomendado actualmente” ni “validado en todos los dispositivos”.
 
 ## Aplicación móvil
 
-| Tecnología | Versión actual | Estado | Uso |
-| --- | --- | --- | --- |
-| React Native | `0.86.3` | Instalado | Aplicación Android/iOS |
-| Expo | `~57.0.19` | Instalado | Framework y toolchain |
-| React | `19.2.3` | Instalado | Componentes e interfaz |
-| TypeScript | `~6.0.3` | Instalado | Lenguaje con modo estricto |
-| Expo Router | `~57.0.18` | Instalado | Navegación basada en archivos |
+Fuente: [package.json móvil](../apps/mobile/package.json), [configuración Expo](../apps/mobile/app.json) y lockfile raíz.
 
-Expo SDK 57 está asociado a React Native 0.86, React 19.2.3, React Native Web 0.21.0 y Node.js mínimo 22.13.x. Las dependencias Expo deben instalarse con `npx expo install` y validarse antes de fusionar cambios.
-
-El 2026-09-02 se alinearon los parches recomendados para SDK 57. Expo Doctor completó 21/21 comprobaciones después de actualizar `package.json` y `package-lock.json`.
-
-## Backend principal
-
-La decisión aceptada es crear una API propia dentro de `apps/api`. El móvil y la API serán aplicaciones independientes dentro del mismo monorepositorio, según [ADR-006](adr/ADR-006-monorepo.md).
-
-| Tecnología | Estado | Uso |
+| Tecnología | Versión declarada local | Uso y estado |
 | --- | --- | --- |
-| NestJS | Aceptado, no creado | API y módulos de negocio |
-| TypeScript | Aceptado | Lenguaje del backend |
-| PostgreSQL | Aceptado, no creado | Fuente de verdad relacional |
-| Prisma | Aceptado, no creado | ORM y migraciones iniciales |
-| REST | Aceptado | Interfaz principal del móvil |
-| OpenAPI/Swagger | Aceptado | Contrato y documentación de la API |
-| WebSockets | Aceptado | Eventos para clientes conectados |
-| Docker | Aceptado | Infraestructura local reproducible |
+| React Native | `0.86.3` | Base móvil integrada; Android/iOS |
+| React | `19.2.3` | Componentes y estado visual |
+| Expo | `~57.0.21` | SDK 57; parche esperado por Expo Doctor |
+| Expo Router | `~57.0.20` | Navegación por archivos; parche esperado por Expo Doctor |
+| TypeScript | `~6.0.3` | Lenguaje con modo estricto |
+| React DOM / React Native Web | `19.2.3` / `~0.21.0` | Salida web de la plantilla; no define un portal de negocio |
 
-Las versiones exactas del backend se decidirán al inicializar `apps/api`, se fijarán en el lockfile raíz y se documentarán junto al workspace. No se inventan versiones antes de comprobarlas.
+El [SDK 57](https://docs.expo.dev/versions/v57.0.0/) vincula React Native 0.86, React 19.2.3 y React Native Web 0.21.0. Su mínimo Node documentado es 22.13.x; el repositorio exige una versión más alta, indicada abajo.
 
-## Servicios especializados
+### Bibliotecas auxiliares del móvil
 
-| Servicio | Estado | Uso |
+Estas dependencias están declaradas. Se agrupan por su función; el estado “heredado” no implica que deban eliminarse sin revisar consumidores.
+
+| Grupo | Paquetes | Motivo/uso observado |
 | --- | --- | --- |
-| Firebase Cloud Messaging | Aceptado, pendiente | Notificaciones push |
-| Object Storage compatible con S3 | Proveedor pendiente | Fotografías de avisos e incidencias |
-| Autenticación | Decisión pendiente | Identidad, sesiones y proveedores externos |
+| Interfaz e integración visual | `@expo/ui`, `expo-symbols`, `expo-glass-effect`, `expo-font` | Apoyo de la plantilla y navegación; no hay sistema visual de negocio aprobado |
+| Imágenes y arranque | `expo-image`, `expo-splash-screen` | Imágenes y pantalla/animación de inicio de la plantilla |
+| Dispositivo y aspecto del sistema | `expo-device`, `expo-constants`, `expo-status-bar`, `expo-system-ui` | Información/configuración y presentación; no son módulos de negocio |
+| Enlaces | `expo-linking`, `expo-web-browser` | Integración de navegación y apertura de enlaces |
+| Navegación y zonas seguras | `react-native-screens`, `react-native-safe-area-context`, `react-native-gesture-handler` | Infraestructura visual y navegación |
+| Animación | `react-native-reanimated`, `react-native-worklets` | Animación existente de la plantilla |
+| Configuración experimental | `typedRoutes` y `reactCompiler` en `app.json` | Activados; no existe un ADR independiente que justifique su selección |
 
-Firebase deja de ser el backend completo. Su decisión histórica se conserva en [ADR-003](adr/ADR-003-firebase.md) y fue reemplazada por [ADR-005](adr/ADR-005-nestjs-postgresql.md).
+Cámara, ubicación, notificaciones, biometría y almacenamiento seguro siguen pendientes de integración. Tener Expo instalado no significa que esos flujos ya funcionen.
 
-## Tiempo real y segundo plano
+## API
 
-WebSockets y push resuelven situaciones diferentes:
+Fuente: [package.json de API](../apps/api/package.json). NestJS fue aceptado en ADR-005 y la base HTTP está implementada en el workspace `@nexora/api`.
 
-- WebSocket distribuye eventos mientras la aplicación mantiene una conexión;
-- FCM permite notificar cuando la aplicación está en segundo plano o cerrada.
-
-Ninguna tecnología garantiza por sí sola el objetivo promedio de tres segundos. La latencia deberá medirse de extremo a extremo.
-
-## Herramientas de desarrollo móvil
-
-| Herramienta | Estado |
-| --- | --- |
-| Node.js 22 LTS | Estándar del equipo |
-| npm y `package-lock.json` | Instalados y versionados |
-| Git/GitHub | Activos |
-| Android API 36 | Baseline Android |
-| Expo Go | Útil para la fase inicial |
-| Expo Development Build | Requerido cuando se incorporen integraciones nativas |
-| EAS | Instalado en la estación inicial; configuración pendiente |
-
-## Organización de paquetes
-
-| Elemento | Estado | Uso |
+| Tecnología | Declaración | Responsabilidad |
 | --- | --- | --- |
-| npm workspaces | Instalado | Administrar las aplicaciones desde una raíz |
-| `apps/mobile` | Instalado | Aplicación React Native y Expo |
-| `apps/api` | Reservado | Futura aplicación NestJS |
-| `packages` | Reservado | Contratos o utilidades con varios consumidores reales |
+| `@nestjs/common` y `@nestjs/core` | `^12.0.1` | Módulos, controladores y servicios; lockfile resuelve `12.0.1` |
+| `@nestjs/platform-express` | `^12.0.1` | Adaptador HTTP predeterminado; el lockfile reemplaza su `multer` 2.2.0 por 2.3.0 |
+| `@nestjs/config` y Joi | `^12.0.0` / `^18.2.8` | Carga y validación de `NODE_ENV` y `PORT` |
+| `@nestjs/swagger` | `^12.0.1` | Swagger y documento OpenAPI |
+| `class-validator` / `class-transformer` | `^0.15.1` / `^0.5.1` | Validación y transformación global de DTO |
+| TypeScript | `^6.0.2` | Compilación de API con modo estricto completo |
+| `reflect-metadata` | `^0.2.2` | Metadatos utilizados por decoradores/inyección de dependencias |
+| `rxjs` | `^7.8.1` | Dependencia de la plataforma NestJS |
+| ESM / NodeNext | Configuración | `type: module` e imports relativos con extensión `.js` |
 
-Existe un único `package-lock.json` en la raíz. Compartir repositorio no combina los artefactos de despliegue: móvil y API conservarán builds, variables, permisos y procesos independientes.
+La base expone `GET /api/v1/health`, Swagger en `/docs` y el contrato en `/docs/openapi.json`. También normaliza errores HTTP. No existen todavía autenticación, datos reales ni módulos de negocio.
 
-## Alternativas descartadas por ahora
+## Datos y servicios previstos
 
-### Firebase como backend completo
+| Elemento | Estado | Responsabilidad |
+| --- | --- | --- |
+| PostgreSQL | Aceptado, versión pendiente | Relaciones, transacciones y persistencia |
+| Prisma | Aceptado, versión pendiente | Acceso a datos y migraciones; verificar integración ESM |
+| Docker Compose | Aceptado, sin configuración | Base local reproducible |
+| REST / HTTPS | Base implementada; negocio pendiente | Comandos y consultas bajo `/api/v1` |
+| OpenAPI / Swagger | Base implementada | Contrato y documentación de API |
+| WebSockets | Aceptado, adaptador pendiente | Eventos para clientes conectados |
+| FCM / integración push por plataforma | Aceptado, sin implementar | Notificaciones; entrega y permisos por validar |
+| Almacenamiento de objetos | Proveedor pendiente | Fotografías y otros archivos |
+| Autenticación | Estrategia pendiente | Identidad, sesiones y proveedores externos |
+| Hosting, EAS y distribución | Configuración/proveedores pendientes | Operación de API y artefactos móviles |
 
-Reduce infraestructura, pero no es la opción adoptada para centralizar relaciones, transacciones, autorización y auditoría de Nexora.
+Firebase como backend completo fue reemplazado; se conserva su historia en [ADR-003](adr/ADR-003-firebase.md). Supabase no está seleccionado y sigue siendo una alternativa posible de servicios administrados. Ninguna herramienta acredita automáticamente tres segundos, 99 % o 500 unidades.
 
-### Supabase como backend completo
+## Pruebas y calidad
 
-Es una alternativa válida basada en PostgreSQL y reduciría trabajo operativo. No fue elegida porque el proyecto busca mantener las reglas detrás de una API explícita y modular propia.
+| Área | Herramientas presentes | Alcance actual |
+| --- | --- | --- |
+| Móvil | Jest `~29.7.0`, `jest-expo ~57.0.5`, `@react-native/jest-preset 0.86.3`, `@types/jest` | Tres pruebas de `Resident` |
+| Móvil | ESLint `^9.39.5` y `eslint-config-expo ~57.0.2` | Revisión estática de Expo |
+| API | Vitest `^4.1.2`, `@nestjs/testing ^12.0.1`, Supertest `^7.0.0` | Tres pruebas unitarias y tres pruebas HTTP |
+| API | `@vitest/coverage-v8` y resolución nativa de Vite | Cobertura disponible; sin porcentaje mínimo definido |
+| API | Oxlint `^1.58.0`, Prettier `^3.4.2` | Lint y comprobación de formato |
+| Transversal | TypeScript, Expo Doctor, scripts npm y GitHub Actions | Ver [cobertura real de check](06-current-status.md) |
 
-### Microservicios
+Tipos `@types/react`, `@types/express`, `@types/node` y `@types/supertest` apoyan el análisis estático. `@nestjs/cli`, `@nestjs/schematics` y `source-map-support` son herramientas de desarrollo. Se retiraron `@nestjs/mau`, `deploy` y `vite-tsconfig-paths` porque no respondían a una decisión vigente o duplicaban soporte nativo.
 
-No existe una necesidad medida que justifique su complejidad. El punto de partida será un monolito modular que puede desplegarse horizontalmente y evolucionar después.
+## Entorno y organización
 
-## Resumen
+| Elemento | Referencia actual | Motivo |
+| --- | --- | --- |
+| Node.js | `>=22.22.3 <23`; estación comprobada `22.22.3` | Consistencia del entorno; requisito del repositorio |
+| npm | `>=10`; `packageManager: npm@10.9.8` | Gestor común del equipo |
+| npm workspaces | `apps/*` y `packages/*` | Instalación y scripts desde una raíz |
+| Lockfile | Uno, en la raíz | Versiones resueltas compartidas |
+| Android API 36 | Referencia del emulador inicial | Pruebas Android reproducibles |
+| Expo Go | Base móvil inicial | Iteración; no cubre todas las integraciones nativas |
+| Compilación de desarrollo | Pendiente | Bibliotecas/configuración nativas propias |
+| Git / GitHub | Configurados | Historial y revisión |
+| VS Code, GitHub Desktop, NVM | Opcionales | Comodidad local, sin imponer un sistema operativo |
 
-```text
-React Native + Expo + TypeScript
-              |
-              v
-        NestJS + TypeScript
-              |
-              v
-     PostgreSQL + Prisma
-
-Complementos: WebSockets + FCM + Object Storage
-```
+No hay evidencia de un estudio separado que motivara exactamente el parche mínimo Node 22.22.3; se registra el requisito observado sin inventar su historia. La instalación sigue [05-installation-and-setup.md](05-installation-and-setup.md).

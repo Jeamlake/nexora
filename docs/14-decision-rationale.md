@@ -95,7 +95,11 @@ En Nexora, dos escaneos simultáneos no deberían consumir dos veces el mismo pa
 
 **Prisma:** ADR-005 lo acepta para acceso a datos con TypeScript y evolución del esquema mediante migraciones. Se espera reducir código repetitivo; hay que aprender la herramienta y revisar consultas y migraciones. No existe una comparativa propia que lo declare superior a otros ORM. [Integración de Prisma en NestJS](https://docs.nestjs.com/recipes/prisma).
 
-Prisma todavía no tiene versión elegida. Antes de instalarlo deben verificarse documentación y compatibilidad con la API ESM actual, incluidos generación de cliente y migraciones. Los ejemplos de otra versión no son instrucciones verificadas para Nexora.
+Para el entregable 1 se fijan Prisma CLI y Client en `6.12.0`. La evaluación comenzó con 7.10, pero `npm audit` detectó avisos altos en la cadena del CLI desde 6.13; 6.12 ofrece el esquema, migraciones, seed y cliente requeridos sin esos avisos. El proyecto genera el cliente antes de los checks y no adopta Prisma 8 mientras siga como versión candidata. [Integración de Prisma en NestJS](https://docs.nestjs.com/recipes/prisma).
+
+PostgreSQL se ejecuta mediante la imagen oficial `18.6-alpine`. A partir de PostgreSQL 18 la imagen cambió su volumen declarado a `/var/lib/postgresql`; Compose monta esa ruta para que los datos sobrevivan a la recreación del contenedor. [Imagen oficial de PostgreSQL](https://hub.docker.com/_/postgres).
+
+**Autenticación:** el primer corte usa identidad propia porque ya necesita integrar roles, perfil y sesiones con la API propia sin configurar un proveedor externo. La contraseña usa scrypt, el access token es corto y el refresh token se rota y puede revocarse. SecureStore protege la copia nativa. La comparación, costos y alcance están en [ADR-007](adr/ADR-007-autenticacion-y-sesiones.md).
 
 **Fotografías:** ADR-005 separa archivos en almacenamiento de objetos y referencias/metadatos en PostgreSQL. Esto mantiene independiente la gestión de archivos y datos relacionales. Proveedor, límites, permisos y retención siguen pendientes.
 
@@ -124,7 +128,7 @@ El correo a contactos de RF-ALT-05 es una **simulación**; no exige un proveedor
 
 npm workspaces administra paquetes desde la raíz y el lockfile fija la resolución de dependencias. Expo detecta el monorepositorio mediante workspaces. [npm](https://docs.npmjs.com/cli/v10/using-npm/workspaces/), [Expo](https://docs.expo.dev/guides/monorepos/).
 
-Docker Compose está previsto para describir base de datos local, redes y volúmenes de forma reproducible. Aún no existe `compose.yaml`. [Docker Compose](https://docs.docker.com/compose/intro/compose-application-model/).
+Docker Compose describe PostgreSQL local, su health check, puerto y volumen reproducible en `compose.yaml`. [Docker Compose](https://docs.docker.com/compose/intro/compose-application-model/).
 
 Git conserva historia; ramas y Pull Requests agrupan cambios revisables. GitHub aloja la colaboración. SSH es una opción de autenticación y HTTPS sigue siendo válido. GitHub Desktop y VS Code son herramientas opcionales.
 

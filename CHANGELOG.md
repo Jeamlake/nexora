@@ -4,6 +4,18 @@ Todos los cambios relevantes del proyecto se documentarán aquí.
 
 ## Unreleased
 
+### Entregable 1 — Identidad y perfil (2026-09-10)
+
+- Se incorpora PostgreSQL 18.6 mediante Docker Compose, Prisma 6.12, migración inicial y seed de demostración.
+- Se modelan condominios, unidades, usuarios, residentes, contactos y sesiones; PostgreSQL rechaza un cuarto contacto.
+- La API implementa login, rotación de refresh token, logout revocable, JWT de acceso y autorización para tres roles.
+- El health check comprueba PostgreSQL y OpenAPI documenta autenticación, perfil y listado administrativo.
+- Expo reemplaza la interfaz de plantilla por login y perfil conectados a datos reales.
+- La sesión nativa se guarda con SecureStore; el cliente maneja red, expiración, renovación, carga, error y cierre.
+- Se agregan pruebas de contraseña, cliente HTTP, mapeo, persistencia, permisos y ciclo completo de sesión.
+- CI levanta PostgreSQL y ejecuta migración, seed y todas las comprobaciones.
+- ADR-007 registra la decisión de autenticación y la guía 16 documenta la demostración reproducible.
+
 ### API y comprobaciones — Base operativa (2026-09-08)
 
 - Se completa `apps/api` con NestJS 12, TypeScript estricto, ESM y configuración validada.

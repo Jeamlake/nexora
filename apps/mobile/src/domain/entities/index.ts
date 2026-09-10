@@ -7,3 +7,4 @@ export {
 } from './Resident';
 export type { Unit, UnitLocation } from './Unit';
 export type { User, UserRole } from './User';
+export type { Condominium, ResidentProfile } from './ResidentProfile';

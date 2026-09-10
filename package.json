@@ -22,6 +22,13 @@
     "ios": "npm run ios --workspace @nexora/mobile",
     "web": "npm run web --workspace @nexora/mobile",
     "api:start:dev": "npm run start:dev --workspace @nexora/api",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres",
+    "db:generate": "npm run prisma:generate --workspace @nexora/api",
+    "db:migrate": "npm run prisma:deploy --workspace @nexora/api",
+    "db:reset": "npm run prisma:reset --workspace @nexora/api",
+    "db:seed": "npm run prisma:seed --workspace @nexora/api",
     "build": "npm run build --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "format:check": "npm run format:check --workspaces --if-present",
@@ -29,7 +36,7 @@
     "test:e2e": "npm run test:e2e --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "doctor": "npm run doctor --workspace @nexora/mobile",
-    "check": "npm run lint && npm run format:check && npm run typecheck && npm run test && npm run test:e2e && npm run build && npm run doctor"
+    "check": "npm run db:generate && npm run lint && npm run format:check && npm run typecheck && npm run test && npm run test:e2e && npm run build && npm run doctor"
   },
   "engines": {
     "node": ">=22.22.3 <23",

@@ -4,7 +4,7 @@
 
 Esta guía permite que un colaborador con acceso a GitHub prepare el monorepositorio de Nexora desde cero en Windows, macOS o Linux. No depende de las rutas utilizadas por la computadora original.
 
-Al 2026-09-08, el monorepositorio contiene una base NestJS operativa en `apps/api`. PostgreSQL y Prisma siguen pendientes; no se debe regenerar NestJS sobre los archivos existentes. Ver [estado actual](06-current-status.md).
+Al 2026-09-10, el monorepositorio contiene el flujo completo del entregable 1. La ruta corta de demostración está en [16-demostracion-entregable-1.md](16-demostracion-entregable-1.md). No se debe regenerar NestJS ni Expo sobre los archivos existentes.
 
 ## Compatibilidad por plataforma
 
@@ -138,18 +138,30 @@ cp apps/mobile/.env.example apps/mobile/.env.local
 cp apps/api/.env.example apps/api/.env
 ```
 
-El archivo móvil contiene `EXPO_PUBLIC_API_URL`; el móvil todavía no la consume mediante un cliente HTTP funcional. La API usa `NODE_ENV` y `PORT`, carga sus archivos desde `apps/api` y rechaza valores inválidos al iniciar.
+El móvil consume `EXPO_PUBLIC_API_URL`. La API valida `NODE_ENV`, `PORT`, `DATABASE_URL`, el secreto JWT y las duraciones de sesión al iniciar.
 
 La API ya implementa el prefijo `/api/v1`. Utilizar según el cliente los siguientes valores:
 
 | Cliente | Valor de ejemplo |
 | --- | --- |
 | Web o iOS Simulator | `http://localhost:3000/api/v1` |
-| Android Emulator estándar | `http://10.0.2.2:3000/api/v1` |
+| Android Emulator estándar | Puede conservar `localhost`; el cliente lo convierte a `10.0.2.2` |
 | Dispositivo físico | `http://IP_LAN_DE_LA_COMPUTADORA:3000/api/v1` |
 | Backend remoto | URL HTTPS del entorno |
 
 Las variables `EXPO_PUBLIC_*` se incorporan al bundle del cliente y nunca deben contener secretos.
+
+## Preparar PostgreSQL
+
+Docker Desktop debe estar activo. Desde la raíz:
+
+```shell
+npm run db:up
+npm run db:migrate
+npm run db:seed
+```
+
+El volumen `nexora_postgres_data` conserva los datos entre reinicios. `npm run db:reset` elimina y reconstruye únicamente la base indicada por `DATABASE_URL`; revisar siempre la variable antes de usarlo.
 
 ## Validar la instalación
 
@@ -159,7 +171,7 @@ Ejecutar la validación completa:
 npm run check
 ```
 
-Este script ejecuta lint de ambos workspaces, comprobación de formato de API, typecheck, pruebas unitarias, tres pruebas HTTP, compilación de API y Expo Doctor. Al 2026-09-08 todo el conjunto pasa y Expo Doctor completa 21/21; ver [resultados exactos](06-current-status.md).
+Este script genera Prisma Client y ejecuta lint, formato, tipos, pruebas unitarias y HTTP contra PostgreSQL, compilaciones y Expo Doctor. Ver [resultados exactos](06-current-status.md).
 
 ## Ejecutar la base API local
 
@@ -169,7 +181,7 @@ Desde la raíz, en una terminal independiente:
 npm run api:start:dev
 ```
 
-Escucha en `PORT` o `3000`. Expone `GET /api/v1/health`, Swagger en `/docs` y OpenAPI JSON en `/docs/openapi.json`; no requiere PostgreSQL todavía. Los comandos y límites están en [la guía de API](../apps/api/README.md).
+Escucha en `PORT` o `3000`. Requiere PostgreSQL y expone health, autenticación, perfil, Swagger y OpenAPI. Los contratos están en [la guía de API](../apps/api/README.md).
 
 ## Ejecutar con un dispositivo físico
 

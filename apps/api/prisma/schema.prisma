@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN_DIRECTIVE
+  RESIDENT
+  SECURITY_GUARD
+}
+
+enum ResidentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Condominium {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  units     Unit[]
+
+  @@map("condominiums")
+}
+
+model Unit {
+  id            String      @id @default(uuid()) @db.Uuid
+  condominiumId String      @map("condominium_id") @db.Uuid
+  code          String
+  tower         String?
+  pavilion      String?
+  block         String?
+  floor         String?
+  isActive      Boolean     @default(true) @map("is_active")
+  condominium   Condominium @relation(fields: [condominiumId], references: [id], onDelete: Restrict)
+  residents     Resident[]
+
+  @@unique([condominiumId, code])
+  @@map("units")
+}
+
+model User {
+  id           String    @id @default(uuid()) @db.Uuid
+  displayName  String    @map("display_name")
+  email        String    @unique
+  phone        String?
+  passwordHash String    @map("password_hash")
+  role         UserRole
+  isActive     Boolean   @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  lastLoginAt  DateTime? @map("last_login_at")
+  resident     Resident?
+  sessions     Session[]
+
+  @@map("users")
+}
+
+model Resident {
+  id                String             @id @default(uuid()) @db.Uuid
+  userId            String             @unique @map("user_id") @db.Uuid
+  unitId            String             @map("unit_id") @db.Uuid
+  status            ResidentStatus     @default(ACTIVE)
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  unit              Unit               @relation(fields: [unitId], references: [id], onDelete: Restrict)
+  emergencyContacts EmergencyContact[]
+
+  @@index([unitId])
+  @@map("residents")
+}
+
+model EmergencyContact {
+  id           String   @id @default(uuid()) @db.Uuid
+  residentId   String   @map("resident_id") @db.Uuid
+  name         String
+  phone        String
+  relationship String
+  resident     Resident @relation(fields: [residentId], references: [id], onDelete: Cascade)
+
+  @@index([residentId])
+  @@map("emergency_contacts")
+}
+
+model Session {
+  id               String    @id @default(uuid()) @db.Uuid
+  userId           String    @map("user_id") @db.Uuid
+  refreshTokenHash String    @unique @map("refresh_token_hash")
+  expiresAt        DateTime  @map("expires_at")
+  revokedAt        DateTime? @map("revoked_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}

@@ -2,79 +2,79 @@
 
 **Tu comunidad, conectada.**
 
-Plataforma móvil de gestión y convivencia residencial para conectar residentes, administración y seguridad. Proyecto del curso **Desarrollo de Aplicaciones Móviles**, organizado en cuatro entregables acumulativos.
-
-Nexora busca centralizar procesos dispersos entre mensajería, llamadas y registros manuales: avisos, encuestas, visitantes con QR, incidencias y alertas comunitarias. La identidad parte de un caso académico.
+Aplicación móvil para gestión y convivencia residencial. Conecta residentes, administración y seguridad alrededor de avisos, encuestas, visitas, incidencias y alertas comunitarias. Es el proyecto del curso **Desarrollo de Aplicaciones Móviles** y se organiza en cuatro entregables acumulativos.
 
 ## Estado
 
-Al **2026-09-08**, el monorepositorio contiene la base móvil y una base operativa de NestJS en `apps/api`. La API valida su entorno, usa el prefijo `/api/v1`, publica un health check y un contrato OpenAPI. PostgreSQL, autenticación y el flujo móvil de perfil siguen pendientes, por lo que el primer entregable aún no está completo.
+El entregable 1 implementa el primer flujo vertical completo:
 
-La comprobación agregada ejecuta lint, formato, tipos, seis pruebas unitarias, tres pruebas HTTP de API, compilación y Expo Doctor. Todo ese conjunto pasa; Expo Doctor completa **21/21** comprobaciones. Consultar [estado y validaciones](docs/06-current-status.md) para el alcance exacto.
+```text
+Expo -> NestJS/OpenAPI -> Prisma -> PostgreSQL
+```
 
-## Documentación en español
+Incluye inicio y cierre de sesión, renovación revocable, tres roles, perfil residente, condominio, unidad, contactos de emergencia, migración, seed, Docker Compose, pruebas y CI. El móvil consulta datos reales de PostgreSQL por medio de la API.
 
-Empezar por [el índice de documentación](docs/README.md).
+Avisos/encuestas/visitantes corresponden al entregable 2; alertas/incidencias/capacidades nativas al 3; y endurecimiento, recuperación, Google, biometría y distribución final al 4.
 
-- [Qué es Nexora](docs/01-project-overview.md).
-- [Por qué elegimos cada tecnología y esta arquitectura](docs/14-decision-rationale.md).
-- [Tecnologías, versiones y herramientas heredadas](docs/02-tech-stack.md).
-- [Arquitectura y límites de cada aplicación](docs/03-architecture.md).
-- [Instalación del proyecto](docs/05-installation-and-setup.md).
-- [Cuatro entregables del curso](docs/12-academic-advances.md).
-- [Pasos del primer entregable](docs/11-first-advance-plan.md).
-- [Organización del equipo](docs/13-team-coordination.md).
-- [Decisiones y dependencias pendientes](docs/15-pending-decisions.md).
+## Inicio rápido
+
+Requiere Node.js 22.22.3, npm 10 o superior y Docker Desktop.
+
+```bash
+npm ci
+cp apps/api/.env.example apps/api/.env
+cp apps/mobile/.env.example apps/mobile/.env.local
+npm run db:up
+npm run db:migrate
+npm run db:seed
+```
+
+Luego usar dos terminales:
+
+```bash
+npm run api:start:dev
+```
+
+```bash
+npm start
+```
+
+Cuenta de demostración: `residente@nexora.local` / `Nexora2026!`.
+
+Abrir [health](http://localhost:3000/api/v1/health) y [Swagger](http://localhost:3000/docs). El guion completo está en [demostración del entregable 1](docs/16-demostracion-entregable-1.md).
+
+## Validación
+
+Con la base migrada y sembrada:
+
+```bash
+npm run check
+```
+
+El comando genera Prisma Client y ejecuta lint, formato, tipos, pruebas unitarias y HTTP, compilaciones y Expo Doctor. GitHub Actions crea PostgreSQL, aplica la migración y carga el seed antes de repetir el mismo control.
 
 ## Organización
 
-~~~text
-apps/
-├── mobile/    Aplicación Expo y dominio móvil inicial
-└── api/       Base HTTP de NestJS; negocio y persistencia pendientes
-packages/      Reservado para código con varios consumidores reales
-docs/          Producto, requisitos, arquitectura, decisiones y entregables
-~~~
+```text
+apps/mobile/    cliente Expo con Presentation, Domain y Data
+apps/api/       API NestJS y Prisma
+packages/       reservado para código realmente compartido
+docs/           producto, requisitos, decisiones y entregables
+compose.yaml    PostgreSQL local reproducible
+```
 
-Se usa npm workspaces y un único lockfile. Cada aplicación conserva configuración, dependencias y compilación propias. La raíz reúne instalación y comprobaciones. [ADR-006](docs/adr/ADR-006-monorepo.md).
+## Documentación en español
 
-## Tecnologías y propósito
+- [Índice general](docs/README.md)
+- [Qué es Nexora](docs/01-project-overview.md)
+- [Por qué se eligieron las tecnologías](docs/14-decision-rationale.md)
+- [Arquitectura](docs/03-architecture.md)
+- [Instalación](docs/05-installation-and-setup.md)
+- [Los cuatro entregables](docs/12-academic-advances.md)
+- [Plan del entregable 1](docs/11-first-advance-plan.md)
+- [Autenticación y sesiones](docs/adr/ADR-007-autenticacion-y-sesiones.md)
+- [Demostración del entregable 1](docs/16-demostracion-entregable-1.md)
 
-| Área | Elección | Propósito |
-| --- | --- | --- |
-| Móvil | React Native, Expo, React y Expo Router | Interfaz y capacidades Android/iOS |
-| Lenguaje | TypeScript | Contratos y detección temprana de errores |
-| Servidor | NestJS como monolito modular | API, permisos y reglas de negocio |
-| Datos previstos | PostgreSQL y Prisma | Relaciones, transacciones y migraciones |
-| Comunicación prevista | REST/OpenAPI, WebSockets y FCM | Contratos, eventos y notificaciones |
-| Archivos previstos | Almacenamiento de objetos | Fotografías; proveedor pendiente |
+`main` representa el estado estable. Los cambios se revisan por Pull Request según [CONTRIBUTING](CONTRIBUTING.md). Los `.env`, secretos y datos personales reales no se versionan.
 
-Firebase como backend completo fue reemplazado por la arquitectura propia antes de integrarse. Se conserva como opción especializada para notificaciones. Las razones, alternativas y costos están en [fundamentos](docs/14-decision-rationale.md); el [inventario](docs/02-tech-stack.md) distingue instalado, aceptado y pendiente.
-
-## Ejecución
-
-Usar las versiones de Node/npm indicadas en [la guía de instalación](docs/05-installation-and-setup.md).
-
-Desde la raíz:
-
-~~~shell
-npm ci
-npm run check
-npm start
-~~~
-
-Para ejecutar la API en otra terminal:
-
-~~~shell
-npm run api:start:dev
-~~~
-
-Guías específicas: [móvil](apps/mobile/README.md) y [API](apps/api/README.md).
-
-## Colaboración y datos de configuración
-
-`main` representa el estado estable. Las tareas se realizan mediante ramas, revisión y Pull Requests, según [CONTRIBUTING](CONTRIBUTING.md).
-
-Las variables `EXPO_PUBLIC_*` son visibles en el cliente. Los archivos `.env` reales, credenciales y claves privadas no se versionan.
-
-El [LICENSE](LICENSE) fue heredado de Expo. La licencia del código original de Nexora sigue pendiente de decisión del equipo.
+El [LICENSE](LICENSE) fue heredado de Expo; la licencia del código original de Nexora sigue pendiente de decisión del equipo.

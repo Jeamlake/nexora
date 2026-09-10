@@ -22,6 +22,7 @@ export function configureApplication(app: INestApplication): void {
     .setTitle('Nexora API')
     .setDescription('Contrato HTTP de la plataforma Nexora')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const openApiDocument = SwaggerModule.createDocument(app, openApiConfig);
 

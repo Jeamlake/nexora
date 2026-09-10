@@ -19,7 +19,7 @@ Node.js ejecuta herramientas JavaScript y el servidor NestJS. npm instala depend
 | Expo Go | Iteración de la base móvil | Limitado a sus capacidades incluidas |
 | Compilación de desarrollo | Configuración y módulos nativos propios | Pendiente de incorporar |
 | EAS CLI | Compilación/distribución mediante EAS | Configuración pendiente |
-| Docker Compose | PostgreSQL local reproducible | Previsto; todavía no configurado |
+| Docker Compose | PostgreSQL local reproducible | Requerido para API y pruebas HTTP del entregable 1 |
 
 Las capacidades oficiales y motivos se enlazan desde [fundamentos](14-decision-rationale.md).
 

@@ -213,7 +213,7 @@ Una modificación del contenido de un avance debe:
 
 ## Estado actual
 
-- **Avance activo:** 1.
-- **Completado al 2026-09-08:** monorepositorio, base móvil, workspace NestJS, configuración HTTP, health check, OpenAPI, pruebas y CI inicial.
-- **Siguiente paso:** PostgreSQL, Prisma, Docker Compose, primera migración y seed.
-- **Evidencia:** [estado actual](06-current-status.md); el primer entregable aún no está completo.
+- **Avance implementado:** 1 — fundamentos, identidad y perfil.
+- **Completado al 2026-09-10:** flujo Expo–NestJS–Prisma–PostgreSQL con sesiones, roles, perfil, seed, pruebas y CI.
+- **Siguiente avance funcional:** 2 — comunidad, votaciones y visitantes, después de cerrar sus decisiones.
+- **Evidencia:** [estado actual](06-current-status.md) y [guion de demostración](16-demostracion-entregable-1.md).

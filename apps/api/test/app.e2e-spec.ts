@@ -188,7 +188,7 @@ describe('Nexora API (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await app?.close();
   });
 
   async function login(email: string): Promise<SessionResponse> {

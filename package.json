@@ -26,7 +26,7 @@
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f postgres",
     "db:generate": "npm run prisma:generate --workspace @nexora/api",
-    "db:migrate": "npm run prisma:deploy --workspace @nexora/api",
+    "db:migrate": "npm run db:generate && npm run prisma:deploy --workspace @nexora/api",
     "db:reset": "npm run prisma:reset --workspace @nexora/api",
     "db:seed": "npm run prisma:seed --workspace @nexora/api",
     "build": "npm run build --workspaces --if-present",

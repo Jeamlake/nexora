@@ -1,17 +1,22 @@
 # 15. Decisiones pendientes y orden de resolución
 
-Revisión: 2026-09-08. Este registro reúne preguntas que afectan la ejecución. No cambia decisiones aceptadas ni asigna nombres, proveedores o fechas sin acuerdo.
+Revisión: 2026-09-10. Este registro reúne preguntas que afectan la ejecución. No cambia decisiones aceptadas ni asigna nombres, proveedores o fechas sin acuerdo.
 
-## Antes de cerrar el primer entregable
+## Pendiente académico del primer entregable
 
 | ID | Tema | Por qué importa y evidencia de cierre |
 | --- | --- | --- |
 | PD-01 | Rúbrica, fechas, formato y evaluación individual | Contrastar el plan interno con el curso y registrar correspondencia con los cuatro avances |
-| PD-03 | Versiones de PostgreSQL/Prisma y Docker Compose | Falta base, migraciones y seed; verificar integración ESM e instalación limpia |
-| PD-04 | Autenticación y sesiones | Aprobar ADR de identidad propia o administrada, tokens, renovación, revocación, almacenamiento y recuperación |
-| PD-05 | Datos y pertenencia a condominio | El modelo móvil inicial no es el modelo completo del servidor; revisar permisos, esquema y contrato del perfil |
 
 Los diez pasos de ejecución siguen en [el primer avance](11-first-advance-plan.md).
+
+## Decisiones cerradas al implementar el primer entregable
+
+| ID | Resolución | Evidencia |
+| --- | --- | --- |
+| PD-03 | PostgreSQL 18.6 en Compose y Prisma 6.12 fijado después de auditoría | Esquema, migración, seed, `npm audit` y CI |
+| PD-04 | Autenticación propia, JWT corto, refresh opaco rotado/revocado y SecureStore | [ADR-007](adr/ADR-007-autenticacion-y-sesiones.md) y pruebas HTTP |
+| PD-05 | Perfil servidor con condominio, unidad, usuario, residente y máximo tres contactos | Migración, endpoint `/profile/me` y prueba de persistencia |
 
 ## Decisiones cerradas en la base de API
 

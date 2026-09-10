@@ -52,7 +52,7 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 3 — Levantar PostgreSQL y Prisma
 
-**Estado: siguiente paso.**
+**Estado: completado en el entregable 1.**
 
 - crear `compose.yaml` para desarrollo local;
 - configurar PostgreSQL sin versionar credenciales reales;
@@ -65,7 +65,7 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 4 — Completar el baseline de la API
 
-**Estado: base HTTP completada y verificada el 2026-09-08.** Al completar el paso 3, el health check se ampliará para comprobar la base de datos.
+**Estado: completado.** El health check comprueba la conexión real con PostgreSQL.
 
 - validar variables de entorno al arrancar;
 - establecer el prefijo `/api/v1`;
@@ -79,6 +79,8 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 5 — Decidir la autenticación
 
+**Estado: completado.** La decisión está en [ADR-007](adr/ADR-007-autenticacion-y-sesiones.md).
+
 - comparar autenticación propia y proveedor administrado;
 - documentar amenazas, costos y responsabilidades;
 - decidir access tokens, refresh tokens y revocación;
@@ -87,6 +89,8 @@ Al terminar el avance, un colaborador debe poder:
 **Evidencia esperada:** ADR de autenticación aceptado y sin decisiones críticas implícitas.
 
 ### Paso 6 — Implementar autenticación y roles
+
+**Estado: completado.** La API implementa credenciales con scrypt, access/refresh, rotación, revocación y los tres roles.
 
 - crear identidad, credenciales y sesiones;
 - almacenar contraseñas mediante un algoritmo adecuado;
@@ -99,6 +103,8 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 7 — Implementar usuarios, residentes y unidades en la API
 
+**Estado: completado.** Prisma y PostgreSQL conservan el perfil seed; la base impide un cuarto contacto.
+
 - modelar condominios, unidades, usuarios, residentes y contactos;
 - aplicar la regla de máximo tres contactos de emergencia;
 - crear las migraciones y datos seed;
@@ -109,6 +115,8 @@ Al terminar el avance, un colaborador debe poder:
 **Evidencia esperada:** el perfil se obtiene desde PostgreSQL y respeta las reglas del dominio.
 
 ### Paso 8 — Conectar el móvil con la API
+
+**Estado: completado.** Data implementa el repositorio Domain, normaliza errores y almacena tokens con SecureStore.
 
 - leer la URL desde `EXPO_PUBLIC_API_URL`;
 - crear el cliente HTTP dentro de Data;
@@ -121,6 +129,8 @@ Al terminar el avance, un colaborador debe poder:
 
 ### Paso 9 — Construir el primer corte vertical
 
+**Estado: completado.** Expo contiene login, restauración, perfil, estados y cierre de sesión.
+
 - crear la pantalla de inicio de sesión;
 - mantener la sesión del usuario;
 - consultar el perfil autenticado;
@@ -131,6 +141,8 @@ Al terminar el avance, un colaborador debe poder:
 **Evidencia esperada:** demostración móvil completa con datos reales del seed.
 
 ### Paso 10 — Validar y entregar el avance
+
+**Estado: completado en código y documentación; la evidencia final corresponde a los checks del PR.** El guion está en [16-demostracion-entregable-1.md](16-demostracion-entregable-1.md).
 
 - ejecutar pruebas unitarias, de integración y de contrato necesarias;
 - comprobar instalación desde cero en otra computadora o entorno limpio;
@@ -143,7 +155,7 @@ Al terminar el avance, un colaborador debe poder:
 
 ## Referencias de organización
 
-Las razones del stack están en [fundamentos](14-decision-rationale.md). La rúbrica, versiones de datos, autenticación y cierre de herramientas se siguen en [decisiones pendientes](15-pending-decisions.md).
+Las razones del stack están en [fundamentos](14-decision-rationale.md). Prisma/PostgreSQL y autenticación ya están decididos; la rúbrica y el formato académico se siguen en [decisiones pendientes](15-pending-decisions.md).
 
 ## Orden y progreso
 
@@ -152,21 +164,21 @@ Las razones del stack están en [fundamentos](14-decision-rationale.md). La rúb
         ↓
 2. Workspace API — completado
         ↓
-3. PostgreSQL y Prisma — siguiente
+3. PostgreSQL y Prisma — completado
         ↓
-4. Baseline NestJS — base HTTP completada; ampliar health después del paso 3
+4. Baseline NestJS — completado
         ↓
-5. ADR de autenticación
+5. ADR de autenticación — completado
         ↓
-6. Autenticación y roles
+6. Autenticación y roles — completado
         ↓
-7. Residentes y unidades
+7. Residentes y unidades — completado
         ↓
-8. Cliente móvil
+8. Cliente móvil — completado
         ↓
-9. Corte vertical
+9. Corte vertical — completado
         ↓
-10. Validación y entrega
+10. Validación y entrega — completado; sujeto a checks del PR
 ```
 
 El paso 4 se adelantó porque su base HTTP no dependía de PostgreSQL. El orden restante conserva las dependencias. No se comenzarán módulos del segundo avance para ocultar una integración incompleta del primero. Si un paso revela un problema, se corrige en la capa responsable antes de continuar.

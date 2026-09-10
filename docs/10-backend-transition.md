@@ -15,25 +15,26 @@ Los hitos A–D de esta página son trabajos técnicos del primer avance; **no s
 - NestJS y PostgreSQL aceptados como backend principal;
 - arquitectura, stack, roadmap y guía de instalación actualizados;
 - variable pública `EXPO_PUBLIC_API_URL` definida como contrato de configuración;
-- área `apps/mobile/src/data/api` reservada para el futuro adaptador HTTP;
+- cliente HTTP y repositorio implementados en `apps/mobile/src/data/api`;
 - decisión de monorepositorio registrada mediante ADR-006;
 - aplicación móvil trasladada a `apps/mobile`;
 - npm workspaces y lockfile raíz establecidos.
 - base NestJS con configuración validada y prefijo `/api/v1`;
 - health check y contrato OpenAPI publicados;
 - pruebas, compilación y CI agregados al monorepositorio.
+- PostgreSQL/Prisma, migración y seed reproducibles;
+- autenticación, sesiones, roles y perfil;
+- login y perfil móvil conectados a la API.
 
-### En curso
+### Transición completada para el primer corte
 
-Al 2026-09-08, el siguiente frente es la persistencia con PostgreSQL y Prisma. Consultar [estado y validaciones](06-current-status.md).
+Al 2026-09-10 funciona el recorrido PostgreSQL–Prisma–NestJS–HTTP–Data–Domain–Presentation. Consultar [estado y validaciones](06-current-status.md).
 
-### Pendiente
+### Pendiente para módulos posteriores
 
-- configurar PostgreSQL, Prisma y Docker;
-- definir autenticación mediante un ADR separado;
-- implementar el primer corte vertical de usuarios/residentes;
-- implementar el cliente HTTP en `apps/mobile`;
-- añadir pruebas de contrato e integración.
+- tiempo real y notificaciones;
+- archivos y fotografías;
+- funciones de los entregables 2 a 4.
 
 ## Responsabilidad de cada workspace
 
@@ -92,7 +93,7 @@ NestJS API
 
 ### Hito B — Baseline de `apps/api`
 
-**Estado: parcial. Base HTTP completada; persistencia pendiente.**
+**Estado: completado para el entregable 1.**
 
 - workspace y políticas Git del monorepositorio: completado;
 - NestJS con TypeScript estricto: completado;
@@ -106,6 +107,8 @@ NestJS API
 
 ### Hito C — Autenticación
 
+**Estado: completado mediante ADR-007 y pruebas.**
+
 - ADR comparando proveedor administrado y autenticación propia;
 - modelo de identidad y sesión;
 - autorización por roles;
@@ -113,6 +116,8 @@ NestJS API
 - pruebas de rutas protegidas.
 
 ### Hito D — Primer corte vertical
+
+**Estado: completado con login y perfil residente.**
 
 Implementar una funcionalidad pequeña de extremo a extremo antes de generar todos los módulos:
 
@@ -147,7 +152,7 @@ Valores habituales durante desarrollo:
 | Dispositivo físico | `http://IP_LAN_DE_LA_COMPUTADORA:3000/api/v1` |
 | Entorno remoto | URL HTTPS asignada al entorno |
 
-El prefijo `/api/v1` ya está implementado. El cliente HTTP móvil sigue pendiente.
+El prefijo `/api/v1` y el cliente HTTP móvil están implementados. Android Emulator traduce automáticamente `localhost` a `10.0.2.2`.
 
 ## Condición de finalización
 
@@ -155,7 +160,7 @@ La transición arquitectónica estará completamente operativa cuando:
 
 1. todos los workspaces puedan instalarse desde cero siguiendo su documentación;
 2. PostgreSQL pueda levantarse de forma reproducible;
-3. `GET /api/v1/health` responda e incluya la futura dependencia de base de datos;
+3. `GET /api/v1/health` responda e incluya PostgreSQL;
 4. Swagger exponga el contrato;
 5. el móvil pueda comunicarse con la API usando `EXPO_PUBLIC_API_URL`;
 6. CI valide las dos aplicaciones y el conjunto del monorepositorio;

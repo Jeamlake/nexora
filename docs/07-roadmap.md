@@ -44,9 +44,9 @@
 
 ## Fase 3 — Baseline de `apps/api`
 
-**Estado: en curso; base HTTP completada y capa de datos pendiente**
+**Estado: completado en el entregable 1**
 
-Completado y verificado en el corte del 2026-09-08:
+Completado en el corte del 2026-09-10:
 
 - workspace `@nexora/api` con NestJS y TypeScript estricto;
 - configuración de entorno validada;
@@ -55,13 +55,13 @@ Completado y verificado en el corte del 2026-09-08:
 - pruebas unitarias, pruebas HTTP, compilación y CI;
 - guía monorepo para Windows, macOS y Linux.
 
-Pendiente para cerrar la fase:
-
 - PostgreSQL mediante Docker Compose;
 - Prisma, migraciones y seed;
 - comprobación de salud de la base de datos.
 
 ## Fase 4 — Identidad, usuarios y residencia
+
+**Estado: completado en el entregable 1**
 
 - ADR de autenticación;
 - identidad y sesiones;

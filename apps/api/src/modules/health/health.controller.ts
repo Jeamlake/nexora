@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
+import type { Response } from 'express';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { HealthResponseDto } from './dto/health-response.dto.js';
 import { HealthService } from './health.service.js';
@@ -11,7 +12,11 @@ export class HealthController {
   @Get()
   @ApiOperation({ summary: 'Comprueba la disponibilidad básica de la API' })
   @ApiOkResponse({ type: HealthResponseDto })
-  public getStatus(): HealthResponseDto {
-    return this.healthService.getStatus();
+  public async getStatus(
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<HealthResponseDto> {
+    const status = await this.healthService.getStatus();
+    response.status(status.status === 'ok' ? 200 : 503);
+    return status;
   }
 }

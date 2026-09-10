@@ -4,7 +4,7 @@
 
 Este documento describe el **primer modelo de dominio implementado** en Nexora.
 
-No representa todavía autenticación, persistencia, comunicación con la API, pantallas ni flujos funcionales completos.
+El modelo participa en el flujo de autenticación y perfil. Data transforma el DTO de la API en estas entidades y vuelve a aplicar la regla de contactos; PostgreSQL conserva la autoridad final mediante una restricción de migración.
 
 ## Objetivo
 
@@ -97,25 +97,20 @@ Este modelo prepara principalmente:
 
 También prepara parcialmente estructuras necesarias para RF-COM-07 y RF-ALT-04 mediante la localización de la unidad.
 
-## Fuera de alcance en esta fase
+## Fuera de alcance del entregable 1
 
 Todavía no se implementan:
 
 - registro;
-- login;
 - Google Sign-In;
 - recuperación de contraseña;
 - biometría;
-- persistencia;
-- integración con la API;
 - validación administrativa del registro;
-- UI;
-- casos de uso;
-- repositorios.
+- edición móvil de datos del perfil.
 
-## Cambios locales observados el 2026-09-08
+## Integración del 2026-09-10
 
-La copia de trabajo incorpora una clase `Resident` que valida el máximo de contactos al construirse, copia el arreglo y congela la colección. Tres pruebas comprueban aceptación de tres contactos, rechazo del cuarto y aislamiento respecto del arreglo recibido. Esto no congela profundamente cada objeto de contacto ni valida una API; los cambios todavía están sin integrar. Ver [estado actual](06-current-status.md).
+`ResidentProfile` reúne usuario, residente, condominio y unidad. `AuthRepository` define login, renovación, cierre y consulta; `HttpAuthRepository` implementa el contrato sin introducir dependencias de infraestructura en Domain. Las pruebas cubren la entidad y el mapeo.
 
 ## Regla arquitectónica
 

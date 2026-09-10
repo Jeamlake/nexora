@@ -2,7 +2,7 @@
 
 ## Estado
 
-La estructura por capas y el dominio inicial existen en `apps/mobile`. Al 2026-09-08, `apps/api` contiene una base NestJS operativa con configuración, `/api/v1`, health check, OpenAPI y manejo uniforme de errores. Los módulos de negocio, persistencia y comunicaciones de este documento siguen siendo el diseño objetivo. Consultar [estado actual](06-current-status.md) y [fundamentos](14-decision-rationale.md).
+Al 2026-09-10 está implementado el primer flujo vertical: Presentation y sesión en Expo, casos de uso y contratos en Domain, adaptador HTTP en Data, autenticación/perfil en NestJS y persistencia Prisma/PostgreSQL. Los módulos posteriores de comunidad, visitas, alertas e incidencias siguen como diseño objetivo. Consultar [estado actual](06-current-status.md) y [fundamentos](14-decision-rationale.md).
 
 No debe confundirse arquitectura diseñada con funcionalidad implementada.
 
@@ -120,7 +120,8 @@ apps/api/src/
 ├── config/
 ├── modules/
 │   ├── health/             Implementado
-│   ├── auth/
+│   ├── auth/               Implementado
+│   ├── profile/            Implementado
 │   ├── users/
 │   ├── condominiums/
 │   ├── units/
@@ -135,7 +136,7 @@ apps/api/src/
 └── main.ts
 ```
 
-`common`, `config` y `modules/health` están implementados. Los demás módulos son orientativos y se crearán cuando corresponda a su flujo funcional. La estructura real actual se documenta en [apps/api/README.md](../apps/api/README.md).
+`common`, `config`, `database`, `modules/health`, `modules/auth` y `modules/profile` están implementados. Los demás módulos son orientativos y se crearán cuando corresponda a su flujo funcional. La estructura real está en [apps/api/README.md](../apps/api/README.md).
 
 ## Autoridad de las reglas
 
@@ -167,7 +168,7 @@ FCM se utilizará para notificar según plataforma, permisos y estado del dispos
 ## Datos y archivos
 
 - PostgreSQL conserva datos estructurados, relaciones, estados y auditoría.
-- Prisma administra el acceso tipado y las migraciones iniciales.
+- Prisma 6.12 administra el acceso tipado, la migración inicial y el seed del entregable 1.
 - Object Storage conserva fotografías y otros binarios.
 - PostgreSQL conserva la referencia, metadatos y permisos del archivo.
 
@@ -189,4 +190,5 @@ Redis, colas y microservicios no forman parte del baseline. Se introducirán ún
 - [ADR-004: Arquitectura por capas](adr/ADR-004-layered-architecture.md)
 - [ADR-005: NestJS y PostgreSQL](adr/ADR-005-nestjs-postgresql.md)
 - [ADR-006: Monorepositorio](adr/ADR-006-monorepo.md)
+- [ADR-007: Autenticación y sesiones](adr/ADR-007-autenticacion-y-sesiones.md)
 - [Plan de transición](10-backend-transition.md)

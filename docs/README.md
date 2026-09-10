@@ -8,7 +8,7 @@ Nexora es el proyecto del curso **Desarrollo de Aplicaciones Móviles**, organiz
 2. **Por qué estas tecnologías y esta organización:** [fundamentos de las decisiones](14-decision-rationale.md).
 3. **Qué existe realmente:** [estado actual](06-current-status.md) y [tecnologías](02-tech-stack.md).
 4. **Cómo se entregará:** [cuatro avances](12-academic-advances.md), [primer avance](11-first-advance-plan.md) y [decisiones pendientes](15-pending-decisions.md).
-5. **Cómo colaborar:** [instalación](05-installation-and-setup.md) y [CONTRIBUTING](../CONTRIBUTING.md).
+5. **Cómo ejecutarlo:** [demostración del entregable 1](16-demostracion-entregable-1.md), [instalación](05-installation-and-setup.md) y [CONTRIBUTING](../CONTRIBUTING.md).
 
 ## Producto y requisitos
 
@@ -40,6 +40,7 @@ Los ADR conservan lo decidido y su evolución. Una ampliación documental no cam
 | [ADR-004: Capas](adr/ADR-004-layered-architecture.md) | Aceptado |
 | [ADR-005: NestJS y PostgreSQL](adr/ADR-005-nestjs-postgresql.md) | Aceptado; implementación parcial |
 | [ADR-006: Monorepositorio](adr/ADR-006-monorepo.md) | Aceptado e integrado |
+| [ADR-007: Autenticación y sesiones](adr/ADR-007-autenticacion-y-sesiones.md) | Aceptado e implementado |
 
 ## Trabajo diario y entregables
 
@@ -53,6 +54,7 @@ Los ADR conservan lo decidido y su evolución. Una ampliación documental no cam
 | [12. Cuatro avances](12-academic-advances.md) | Alcance y demostración de cada entrega |
 | [13. Coordinación](13-team-coordination.md) | Responsables, revisión y colaboración |
 | [15. Pendientes](15-pending-decisions.md) | Decisiones por resolver y dependencias del calendario |
+| [16. Demostración del entregable 1](16-demostracion-entregable-1.md) | Guion reproducible, cuentas seed y evidencia |
 
 Guías locales: [móvil](../apps/mobile/README.md), [API](../apps/api/README.md), [capas del móvil](../apps/mobile/src/README.md) y [paquetes compartidos](../packages/README.md). La historia está en [CHANGELOG](../CHANGELOG.md).
 

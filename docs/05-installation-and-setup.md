@@ -67,6 +67,18 @@ npm --version
 
 Después de la reparación, cerrar la terminal integrada con la papelera y abrir una terminal Git Bash nueva si conserva el error. Este es un falso positivo conocido del modo `shim`: ocurre antes de ejecutar los scripts de Nexora. Primero debe responder npm y después se puede usar `npm ci`. Ver el [diagnóstico de NVM for Windows](https://github.com/nvm-windows/nvm/issues/1379).
 
+Si `NVM4306` reaparece, utilizar el modo `link`, que ejecuta directamente la versión activa y evita la verificación defectuosa del shim:
+
+```shell
+nvm use link
+nvm use 22.22.3
+nvm env
+where.exe node
+where.exe npm
+```
+
+En modo `link`, las primeras rutas de `node` y `npm` deben pertenecer al enlace `.nodejs` creado junto al directorio de datos mostrado por `nvm env`. Si aparece antes una ruta `.shim` u otro `.nodejs`, eliminar esas entradas antiguas del `Path` del usuario y conservar el directorio que contiene `nvm.exe` seguido del `.nodejs` activo. Después, cerrar todas las ventanas de VS Code y volver a abrir el proyecto. El modo `link` no selecciona automáticamente la versión indicada por `.nvmrc`; ejecutar `nvm use 22.22.3` cuando se haya activado otra versión.
+
 No es necesario instalar Expo CLI globalmente. El proyecto usa la versión incluida en sus dependencias mediante `npx expo`.
 
 ## Clonar el proyecto
